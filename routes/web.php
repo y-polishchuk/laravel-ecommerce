@@ -17,10 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/about', function () {
-    return view('about');
+Route::get('/home', function () {
+    return "This is Home Page.";
 });
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::get('/about', function () {
+    return view('about');
+})->middleware('check');
+
+Route::get('/contact', 'App\Http\Controllers\ContactController@index');
