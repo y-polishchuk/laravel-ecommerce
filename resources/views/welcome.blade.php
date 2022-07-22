@@ -40,7 +40,12 @@
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
 
                 </div>
-                <h1 class="underline text-gray-900 dark:text-white">Home Page</h1>
+                <div class="dark:text-white">
+                <h1>Home Page</h1>
+                <a href="{{ url('/') }}">Home</a> | 
+                <a href="{{ URL::to('/about') }}">About</a> | 
+                <a href="{{ route('contact') }}">Contact</a> | 
+                </div>
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     <div class="grid grid-cols-1 md:grid-cols-2">
                         <div class="p-6">
