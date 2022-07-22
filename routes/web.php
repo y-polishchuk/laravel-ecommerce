@@ -26,3 +26,13 @@ Route::get('/about', function () {
 });
 
 Route::get('/contact', 'App\Http\Controllers\ContactController@index')->name('contact');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

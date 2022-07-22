@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Home Page</title>
+        <title>Dashboard Page</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
@@ -41,8 +41,8 @@
 
                 </div>
                 <div class="dark:text-white">
-                <h1>Home Page</h1>
-                <a href="{{ url('/') }}">Home</a> | 
+                <h1>Dashboard Page</h1>
+                <a href="{{ url('/') }}">Dashboard</a> | 
                 <a href="{{ URL::to('/about') }}">About</a> | 
                 <a href="{{ route('contact') }}">Contact</a> | 
                 </div>
