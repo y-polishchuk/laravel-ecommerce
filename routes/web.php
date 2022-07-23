@@ -29,6 +29,9 @@ Route::get('/about', function () {
 
 Route::get('/contact', 'App\Http\Controllers\ContactController@index')->name('contact');
 
+//Category Controller
+Route::get('/categories', 'App\Http\Controllers\CategoryController@index')->name('categories');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
