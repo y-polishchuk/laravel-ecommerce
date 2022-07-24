@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function all()
     {
-        return view('admin.category.index');
+        //$categories = Category::all();
+        $categories = Category::latest()->get(); //reverse order
+        return view('admin.category.index', compact('categories'));
     }
 
     public function add(Request $request)
@@ -25,21 +27,21 @@ class CategoryController extends Controller
             'category_name.max' => 'Category Name Less Than 255Chars.',
         ]);
 
-        // Category::insert([
-        //     'category_name' => $request->category_name,
-        //     'user_id' => Auth::user()->id,
-        //     'created_at' => Carbon::now()
-        // ]);
+        Category::insert([
+            'category_name' => $request->category_name,
+            'user_id' => Auth::user()->id,
+            'created_at' => Carbon::now()
+        ]);
 
         // $category = new Category();
         // $category->category_name = $request->category_name;
         // $category->user_id = Auth::user()->id;
         // $category->save();
 
-        $data = array();
-        $data['category_name'] = $request->category_name;
-        $data['user_id'] = Auth::user()->id;
-        DB::table('categories')->insert($data);
+        // $data = array();
+        // $data['category_name'] = $request->category_name;
+        // $data['user_id'] = Auth::user()->id;
+        // DB::table('categories')->insert($data);
 
         return Redirect()->back()->with('success', 'Category Inserted Successfully!');
     }

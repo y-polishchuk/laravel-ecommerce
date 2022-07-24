@@ -30,7 +30,7 @@ Route::get('/about', function () {
 Route::get('/contact', 'App\Http\Controllers\ContactController@index')->name('contact');
 
 //Category Controller
-Route::get('/categories', 'App\Http\Controllers\CategoryController@index')->name('categories');
+Route::get('/categories', 'App\Http\Controllers\CategoryController@all')->name('categories');
 
 Route::post('/categories/add', 'App\Http\Controllers\CategoryController@add')->name('categories.store');
 
