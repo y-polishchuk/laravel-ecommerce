@@ -13,8 +13,8 @@ class CategoryController extends Controller
     public function all()
     {
         //$categories = Category::all();
-        //$categories = Category::latest()->get(); //reverse order
-        $categories = DB::table('categories')->latest()->get();
+        //$categories = Category::latest()->paginate(5); //reverse order
+        $categories = DB::table('categories')->latest()->paginate(5);
         return view('admin.category.index', compact('categories'));
     }
 
