@@ -32,6 +32,8 @@ Route::get('/contact', 'App\Http\Controllers\ContactController@index')->name('co
 //Category Controller
 Route::get('/categories', 'App\Http\Controllers\CategoryController@index')->name('categories');
 
+Route::post('/categories/add', 'App\Http\Controllers\CategoryController@add')->name('categories.store');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
