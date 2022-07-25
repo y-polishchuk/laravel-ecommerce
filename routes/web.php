@@ -38,6 +38,10 @@ Route::get('/categories/edit/{id}', 'App\Http\Controllers\CategoryController@edi
 
 Route::post('/categories/update/{id}', 'App\Http\Controllers\CategoryController@update')->name('categories.update');
 
+Route::get('/softdelete/categories/{id}', 'App\Http\Controllers\CategoryController@softDelete')->name('softdelete.categories');
+
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

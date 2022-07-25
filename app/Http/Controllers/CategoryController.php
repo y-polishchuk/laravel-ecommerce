@@ -18,8 +18,9 @@ class CategoryController extends Controller
         //     ->latest()->paginate(5);
     
         $categories = Category::latest()->paginate(5); //reverse order
+        $trashCat = Category::onlyTrashed()->latest()->paginate(3);
         // $categories = DB::table('categories')->latest()->paginate(5);
-        return view('admin.category.index', compact('categories'));
+        return view('admin.category.index', compact('categories', 'trashCat'));
     }
 
     public function add(Request $request)
@@ -70,5 +71,12 @@ class CategoryController extends Controller
 
         DB::table('categories')->where('id', $id)->update($data);
         return Redirect()->route('categories')->with('success', 'Category Updated Successfully!');
+    }
+
+    public function softDelete($id)
+    {
+        $delete = Category::find($id)->delete();
+        
+        return Redirect()->back()->with('success', 'Category SoftDeleted Successfully!');
     }
 }
