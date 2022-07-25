@@ -34,6 +34,10 @@ Route::get('/categories', 'App\Http\Controllers\CategoryController@all')->name('
 
 Route::post('/categories/add', 'App\Http\Controllers\CategoryController@add')->name('categories.store');
 
+Route::get('/categories/edit/{id}', 'App\Http\Controllers\CategoryController@edit')->name('categories.edit');
+
+Route::post('/categories/update/{id}', 'App\Http\Controllers\CategoryController@update')->name('categories.update');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
