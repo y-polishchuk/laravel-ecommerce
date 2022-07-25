@@ -119,8 +119,8 @@
       {{ Carbon\Carbon::parse($category->created_at)->diffForHumans() }} 
         @endif
     </td>
-    <td><a href="{{ route('categories.edit', $category->id) }}" class="btn btn-info">Edit</a>
-    <a href="" class="btn btn-danger">Delete</a>
+    <td><a href="{{ url('categories/restore/'.$category->id) }}" class="btn btn-info">Restore</a>
+    <a href="{{ url('categories/permdelete/'.$category->id) }}" class="btn btn-danger">PermDelete</a>
     </td>
     </tr>
     @endforeach

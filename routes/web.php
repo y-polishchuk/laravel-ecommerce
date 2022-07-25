@@ -37,9 +37,10 @@ Route::post('/categories/add', 'App\Http\Controllers\CategoryController@add')->n
 Route::get('/categories/edit/{id}', 'App\Http\Controllers\CategoryController@edit')->name('categories.edit');
 
 Route::post('/categories/update/{id}', 'App\Http\Controllers\CategoryController@update')->name('categories.update');
+Route::get('/categories/softdelete/{id}', 'App\Http\Controllers\CategoryController@softDelete')->name('softdelete.categories');
 
-Route::get('/softdelete/categories/{id}', 'App\Http\Controllers\CategoryController@softDelete')->name('softdelete.categories');
-
+Route::get('/categories/restore/{id}', 'App\Http\Controllers\CategoryController@restore')->name('categories.restore');
+Route::get('/categories/permdelete/{id}', 'App\Http\Controllers\CategoryController@pDelete')->name('categories.permdelete');
 
 
 Route::middleware([
