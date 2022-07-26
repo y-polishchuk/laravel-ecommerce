@@ -46,8 +46,8 @@
       {{ Carbon\Carbon::parse($brand->created_at)->diffForHumans() }} 
         @endif
     </td>
-    <td><a href="{{ url('brands/edit/'.$brand->id) }}" class="btn btn-info">Edit</a>
-    <a href="{{ url('brands/delete/'.$brand->id) }}" class="btn btn-danger">Delete</a>
+    <td><a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-info">Edit</a>
+    <a href="{{ route('brands.delete', $brand->id) }}" onclick="return confirm('Are you sure, you want to delete this Brand?')" class="btn btn-danger">Delete</a>
     </td>
     </tr>
     @endforeach

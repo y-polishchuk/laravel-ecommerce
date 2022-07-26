@@ -49,6 +49,7 @@ Route::get('/brands', 'App\Http\Controllers\BrandController@all')->name('brands'
 Route::post('/brands/add', 'App\Http\Controllers\BrandController@add')->name('brands.store');
 Route::get('/brands/edit/{id}', 'App\Http\Controllers\BrandController@edit')->name('brands.edit');
 Route::post('/brands/update/{id}', 'App\Http\Controllers\BrandController@update')->name('brands.update');
+Route::get('/brands/delete/{id}', 'App\Http\Controllers\BrandController@delete')->name('brands.delete');
 
 Route::middleware([
     'auth:sanctum',
