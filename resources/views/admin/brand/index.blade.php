@@ -38,7 +38,7 @@
       <th scope="row"> {{ $brands->firstItem()+$loop->index }} </th> 
       <!-- get a number of the first element in result + the index of the current item -->
       <td> {{ $brand->brand_name }} </td>
-      <td> <img src="" alt=""> </td>
+      <td> <img src="{{ asset($brand->brand_image) }}" style="height:40px;"> </td>
       <td> 
         @if($brand->created_at == null)
         <span class="text-danger">No Date Set</span>
@@ -46,8 +46,8 @@
       {{ Carbon\Carbon::parse($brand->created_at)->diffForHumans() }} 
         @endif
     </td>
-    <td><a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-info">Edit</a>
-    <a href="{{ route('softdelete.brands', $brand->id) }}" class="btn btn-danger">Delete</a>
+    <td><a href="" class="btn btn-info">Edit</a>
+    <a href="" class="btn btn-danger">Delete</a>
     </td>
     </tr>
     @endforeach
@@ -63,7 +63,7 @@
 
         <div class="card-body">
         
-<form action="{{ route('categories.store') }}" method="POST">
+<form action="{{ route('brands.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Brand Name</label>

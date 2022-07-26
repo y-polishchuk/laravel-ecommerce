@@ -46,6 +46,7 @@ Route::get('/categories/permdelete/{id}', 'App\Http\Controllers\CategoryControll
 // For Brand Route
 
 Route::get('/brands', 'App\Http\Controllers\BrandController@all')->name('brands');
+Route::post('/brands/add', 'App\Http\Controllers\BrandController@add')->name('brands.store');
 
 Route::middleware([
     'auth:sanctum',
