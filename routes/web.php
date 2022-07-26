@@ -29,7 +29,8 @@ Route::get('/about', function () {
 
 Route::get('/contact', 'App\Http\Controllers\ContactController@index')->name('contact');
 
-//Category Controller
+// For Category Route
+
 Route::get('/categories', 'App\Http\Controllers\CategoryController@all')->name('categories');
 
 Route::post('/categories/add', 'App\Http\Controllers\CategoryController@add')->name('categories.store');
@@ -42,6 +43,9 @@ Route::get('/categories/softdelete/{id}', 'App\Http\Controllers\CategoryControll
 Route::get('/categories/restore/{id}', 'App\Http\Controllers\CategoryController@restore')->name('categories.restore');
 Route::get('/categories/permdelete/{id}', 'App\Http\Controllers\CategoryController@pDelete')->name('categories.permdelete');
 
+// For Brand Route
+
+Route::get('/brands', 'App\Http\Controllers\BrandController@all')->name('brands');
 
 Route::middleware([
     'auth:sanctum',
