@@ -21,7 +21,7 @@
                     </x-jet-nav-link>
 
                     <x-jet-nav-link href="{{ route('brands') }}">
-                        Brand
+                        All Brands
                     </x-jet-nav-link>
                 </div>
             </div>
