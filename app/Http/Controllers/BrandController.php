@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use App\Models\Multipic;
 use Illuminate\Support\Carbon;
 use Image;
 
@@ -15,7 +16,7 @@ class BrandController extends Controller
         return view('admin.brand.index', compact('brands'));
     }
 
-    public function add(Request $request)
+    public function addBrand(Request $request)
     {
         $validated = $request->validate([
             'brand_name' => 'required|unique:brands|min:4',
@@ -104,5 +105,36 @@ class BrandController extends Controller
         $delete = Brand::find($id)->delete();
         
         return Redirect()->back()->with('success', 'Brand is Deleted Successfully!');
+    }
+
+    // This is for Multi Image all method
+
+    public function multipic()
+    {
+        $images = Multipic::all();
+        return view('admin.multipic.index', compact('images'));
+    }
+
+    public function addImg(Request $request)
+    {
+        $validated = $request->validate([
+            'image' => 'required',
+        ]);
+
+        $images = $request->file('image');
+
+        foreach($images as $multi_img) {
+
+        $name_gen = hexdec(uniqid()).'.'.$multi_img->getClientOriginalExtension();
+        $last_img = 'image/multi/'.$name_gen;
+        Image::make($multi_img)->resize(300,300)->save($last_img);
+
+        Multipic::insert([
+            'image' => $last_img,
+            'created_at' => Carbon::now()
+        ]);
+        }// end of the foreach
+
+        return Redirect()->back()->with('success', 'Images are Inserted Successfully!');
     }
 }

@@ -46,10 +46,15 @@ Route::get('/categories/permdelete/{id}', 'App\Http\Controllers\CategoryControll
 // For Brand Route
 
 Route::get('/brands', 'App\Http\Controllers\BrandController@all')->name('brands');
-Route::post('/brands/add', 'App\Http\Controllers\BrandController@add')->name('brands.store');
+Route::post('/brands/add', 'App\Http\Controllers\BrandController@addBrand')->name('brands.store');
 Route::get('/brands/edit/{id}', 'App\Http\Controllers\BrandController@edit')->name('brands.edit');
 Route::post('/brands/update/{id}', 'App\Http\Controllers\BrandController@update')->name('brands.update');
 Route::get('/brands/delete/{id}', 'App\Http\Controllers\BrandController@delete')->name('brands.delete');
+
+// Multi Image Route
+
+Route::get('/multi-images', 'App\Http\Controllers\BrandController@multipic')->name('multi.image');
+Route::post('/multi-images/add', 'App\Http\Controllers\BrandController@addImg')->name('images.store');
 
 Route::middleware([
     'auth:sanctum',

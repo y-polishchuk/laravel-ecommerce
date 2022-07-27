@@ -21,7 +21,11 @@
                     </x-jet-nav-link>
 
                     <x-jet-nav-link href="{{ route('brands') }}">
-                        All Brands
+                        Brands
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('multi.image') }}">
+                        Multi Image
                     </x-jet-nav-link>
                 </div>
             </div>
