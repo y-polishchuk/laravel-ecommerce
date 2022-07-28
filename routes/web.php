@@ -71,3 +71,5 @@ Route::middleware([
         return view('admin.index');
     })->name('dashboard');
 });
+
+Route::get('/user-logout', 'App\Http\Controllers\BrandController@logout')->name('user.logout');
