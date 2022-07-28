@@ -66,8 +66,8 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        //$users = User::all();
-        $users = DB::table('users')->get();
-        return view('dashboard', compact('users'));
+        // $users = User::all();
+        // $users = DB::table('users')->get();
+        return view('admin.index');
     })->name('dashboard');
 });
