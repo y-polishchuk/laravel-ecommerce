@@ -1,10 +1,6 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit Brand <b></b>
-            
-        </h2>
-    </x-slot>
+@extends('admin.admin_master')
+
+@section('admin')
 
     <div class="py-12">
         
@@ -46,7 +42,7 @@
 </div>
 
 <div class="mb-3">
-<img src="{{ asset($brand->brand_image) }}" style="heigth:200px;">
+<img src="{{ asset($brand->brand_image) }}" width="400px">
 </div>
   
   <button type="submit" class="btn btn-primary">Update Brand</button>
@@ -58,4 +54,4 @@
         </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

@@ -1,10 +1,6 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            All Brands <b></b>
-            
-        </h2>
-    </x-slot>
+@extends('admin.admin_master')
+
+@section('admin')
 
     <div class="py-12">
         
@@ -38,7 +34,7 @@
       <th scope="row"> {{ $brands->firstItem()+$loop->index }} </th> 
       <!-- get a number of the first element in result + the index of the current item -->
       <td> {{ $brand->brand_name }} </td>
-      <td> <img src="{{ asset($brand->brand_image) }}" style="height:40px;"> </td>
+      <td> <img src="{{ asset($brand->brand_image) }}" height="40px"> </td>
       <td> 
         @if($brand->created_at == null)
         <span class="text-danger">No Date Set</span>
@@ -92,4 +88,5 @@
 
 
     </div>
-</x-app-layout>
+
+@endsection

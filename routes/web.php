@@ -20,7 +20,8 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 Route::get('/', function () {
-    return view('home');
+    $brands = DB::table('brands')->get();
+    return view('home', compact('brands'));
 });
 
 Route::get('/home', function () {
@@ -59,6 +60,15 @@ Route::get('/brands/delete/{id}', 'App\Http\Controllers\BrandController@delete')
 
 Route::get('/multi-images', 'App\Http\Controllers\BrandController@multipic')->name('multi.image');
 Route::post('/multi-images/add', 'App\Http\Controllers\BrandController@addImg')->name('images.store');
+
+// Admin All Route
+
+Route::get('/sliders', 'App\Http\Controllers\HomeController@homeSlider')->name('sliders.home');
+Route::get('/sliders/add', 'App\Http\Controllers\HomeController@add')->name('sliders.add');
+Route::post('/sliders/store', 'App\Http\Controllers\HomeController@store')->name('sliders.store');
+Route::get('/sliders/edit/{id}', 'App\Http\Controllers\HomeController@edit')->name('sliders.edit');
+Route::post('/sliders/update/{id}', 'App\Http\Controllers\HomeController@update')->name('sliders.update');
+Route::get('/sliders/delete/{id}', 'App\Http\Controllers\HomeController@delete')->name('sliders.delete');
 
 Route::middleware([
     'auth:sanctum',
