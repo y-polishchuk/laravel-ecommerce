@@ -8,11 +8,11 @@
         <div class="row">
 
         <div class="col-md-9">
-        <h4>Home Slider</h4>
+        <h4>Home About</h4>
         </div>
         
         <div class="col-md-3">
-        <a href="{{ route('sliders.add') }}"><button class="btn btn-info">Add Slider</button></a>
+        <a href="{{ route('about.add') }}"><button class="btn btn-info">Add About Info</button></a>
         </div>
 
         <div class="col-md-12">
@@ -23,30 +23,30 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
-        <div class="card-header">All Sliders</div>
+        <div class="card-header">All About Data</div>
 
 <table class="table">
   <thead>
     <tr>
       <th scope="col" width="5%">SL No</th>
-      <th scope="col" width="15%">Slider Title</th>
-      <th scope="col" width="25%">Description</th>
-      <th scope="col" width="10%">Image</th>
+      <th scope="col" width="15%">Home Title</th>
+      <th scope="col" width="20%">Short Description</th>
+      <th scope="col" width="25%">Long Description</th>
       <th scope="col" width="15%">Action</th>
     </tr>
   </thead>
   <tbody>
     @php($i = 1)
-    @foreach($sliders as $slider) 
+    @foreach($homeabout as $about) 
     <tr>
       <th scope="row"> {{ $i++ }} </th> 
       
-      <td> {{ $slider->title }} </td>
-      <td> {{ $slider->description }} </td>
-      <td> <img src="{{ asset($slider->image) }}" style="height:40px;"> </td>
+      <td> {{ $about->title }} </td>
+      <td> {{ $about->short_des }} </td>
+      <td> {{ $about->long_des }} </td>
       
-    <td><a href="{{ route('sliders.edit', $slider->id) }}" class="btn btn-info">Edit</a>
-    <a href="{{ route('sliders.delete', $slider->id) }}" onclick="return confirm('Are you sure, you want to delete this Slider?')" class="btn btn-danger">Delete</a>
+    <td><a href="{{ route('about.edit', $about->id) }}" class="btn btn-info">Edit</a>
+    <a href="{{ route('about.delete', $about->id) }}" onclick="return confirm('Are you sure, you want to delete this About?')" class="btn btn-danger">Delete</a>
     </td>
     </tr>
     @endforeach

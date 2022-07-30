@@ -21,7 +21,8 @@ Route::get('/email/verify', function () {
 
 Route::get('/', function () {
     $brands = DB::table('brands')->get();
-    return view('home', compact('brands'));
+    $abouts = DB::table('home_abouts')->first();
+    return view('home', compact('brands', 'abouts'));
 });
 
 Route::get('/home', function () {
@@ -34,7 +35,7 @@ Route::get('/about', function () {
 
 Route::get('/contact', 'App\Http\Controllers\ContactController@index')->name('contact');
 
-// For Category Route
+// For Category Routes
 
 Route::get('/categories', 'App\Http\Controllers\CategoryController@all')->name('categories');
 
@@ -48,7 +49,7 @@ Route::get('/categories/softdelete/{id}', 'App\Http\Controllers\CategoryControll
 Route::get('/categories/restore/{id}', 'App\Http\Controllers\CategoryController@restore')->name('categories.restore');
 Route::get('/categories/permdelete/{id}', 'App\Http\Controllers\CategoryController@pDelete')->name('categories.permdelete');
 
-// For Brand Route
+// For Brand Routes
 
 Route::get('/brands', 'App\Http\Controllers\BrandController@all')->name('brands');
 Route::post('/brands/add', 'App\Http\Controllers\BrandController@addBrand')->name('brands.store');
@@ -56,19 +57,30 @@ Route::get('/brands/edit/{id}', 'App\Http\Controllers\BrandController@edit')->na
 Route::post('/brands/update/{id}', 'App\Http\Controllers\BrandController@update')->name('brands.update');
 Route::get('/brands/delete/{id}', 'App\Http\Controllers\BrandController@delete')->name('brands.delete');
 
-// Multi Image Route
+// Multi Image Routes
 
 Route::get('/multi-images', 'App\Http\Controllers\BrandController@multipic')->name('multi.image');
 Route::post('/multi-images/add', 'App\Http\Controllers\BrandController@addImg')->name('images.store');
 
-// Admin All Route
+// Admin All Routes
 
-Route::get('/sliders', 'App\Http\Controllers\HomeController@homeSlider')->name('sliders.home');
-Route::get('/sliders/add', 'App\Http\Controllers\HomeController@add')->name('sliders.add');
-Route::post('/sliders/store', 'App\Http\Controllers\HomeController@store')->name('sliders.store');
-Route::get('/sliders/edit/{id}', 'App\Http\Controllers\HomeController@edit')->name('sliders.edit');
-Route::post('/sliders/update/{id}', 'App\Http\Controllers\HomeController@update')->name('sliders.update');
-Route::get('/sliders/delete/{id}', 'App\Http\Controllers\HomeController@delete')->name('sliders.delete');
+Route::get('/home/sliders', 'App\Http\Controllers\HomeController@homeSlider')->name('sliders.home');
+Route::get('/home/sliders/add', 'App\Http\Controllers\HomeController@add')->name('sliders.add');
+Route::post('/home/sliders/store', 'App\Http\Controllers\HomeController@store')->name('sliders.store');
+Route::get('/home/sliders/edit/{id}', 'App\Http\Controllers\HomeController@edit')->name('sliders.edit');
+Route::post('/home/sliders/update/{id}', 'App\Http\Controllers\HomeController@update')->name('sliders.update');
+Route::get('/home/sliders/delete/{id}', 'App\Http\Controllers\HomeController@delete')->name('sliders.delete');
+
+// Home About All Routes
+
+Route::get('/home/about', 'App\Http\Controllers\AboutController@homeAbout')->name('about.home');
+Route::get('/home/about/add', 'App\Http\Controllers\AboutController@addAbout')->name('about.add');
+Route::post('/home/about/store', 'App\Http\Controllers\AboutController@storeAbout')->name('about.store');
+Route::get('/home/about/edit/{id}', 'App\Http\Controllers\AboutController@edit')->name('about.edit');
+Route::post('/home/about/update/{id}', 'App\Http\Controllers\AboutController@update')->name('about.update');
+Route::get('/home/about/delete/{id}', 'App\Http\Controllers\AboutController@delete')->name('about.delete');
+
+
 
 Route::middleware([
     'auth:sanctum',

@@ -29,8 +29,8 @@ class HomeController extends Controller
             'image' => 'required|mimes:jpg,jpeg,png',
         ],
         [
-            'title.required' => 'Please, Input Brand Name.',
-            'title.min' => 'Brand Name Must Be Longer Than 5 Chars.',
+            'title.required' => 'Please, Input Slider Title.',
+            'title.min' => 'Slider Title Must Be Longer Than 5 Chars.',
         ]);
 
         $slider_image = $request->file('image');
