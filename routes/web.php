@@ -22,7 +22,8 @@ Route::get('/email/verify', function () {
 Route::get('/', function () {
     $brands = DB::table('brands')->get();
     $abouts = DB::table('home_abouts')->first();
-    return view('home', compact('brands', 'abouts'));
+    $services = DB::table('home_services')->get();
+    return view('home', compact('brands', 'abouts', 'services'));
 });
 
 Route::get('/home', function () {
@@ -80,7 +81,14 @@ Route::get('/home/about/edit/{id}', 'App\Http\Controllers\AboutController@edit')
 Route::post('/home/about/update/{id}', 'App\Http\Controllers\AboutController@update')->name('about.update');
 Route::get('/home/about/delete/{id}', 'App\Http\Controllers\AboutController@delete')->name('about.delete');
 
+// Home Services All Routes
 
+Route::get('/home/services', 'App\Http\Controllers\ServiceController@homeService')->name('services.home');
+Route::get('/home/services/add', 'App\Http\Controllers\ServiceController@addService')->name('services.add');
+Route::post('/home/services/store', 'App\Http\Controllers\ServiceController@storeService')->name('services.store');
+Route::get('/home/services/edit/{id}', 'App\Http\Controllers\ServiceController@edit')->name('services.edit');
+Route::post('/home/services/update/{id}', 'App\Http\Controllers\ServiceController@update')->name('services.update');
+Route::get('/home/services/delete/{id}', 'App\Http\Controllers\ServiceController@delete')->name('services.delete');
 
 Route::middleware([
     'auth:sanctum',

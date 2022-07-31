@@ -21,14 +21,14 @@
     <label for="exampleFormControlTextarea1">Short Description</label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="short_des" placeholder="Short Description"></textarea>
 </div>
-@error('description')
+@error('short_des')
     <span class="text-danger"> {{ $message }}</span>
 @enderror
 <div class="form-group">
     <label for="exampleFormControlTextarea1">Long Description</label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="long_des" placeholder="Long Description"></textarea>
 </div>
-@error('description')
+@error('long_des')
     <span class="text-danger"> {{ $message }}</span>
 @enderror
 <div class="form-footer pt-4 pt-5 mt-4 border-top">
