@@ -91,6 +91,11 @@ Route::get('/home/services/edit/{id}', 'App\Http\Controllers\ServiceController@e
 Route::post('/home/services/update/{id}', 'App\Http\Controllers\ServiceController@update')->name('services.update');
 Route::get('/home/services/delete/{id}', 'App\Http\Controllers\ServiceController@delete')->name('services.delete');
 
+// Portfolio Page Route
+
+Route::get('/portfolio', 'App\Http\Controllers\PortfolioController@portfolio')->name('portfolio');
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
