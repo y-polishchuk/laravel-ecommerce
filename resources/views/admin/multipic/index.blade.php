@@ -1,10 +1,6 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Multi Picture <b></b>
-            
-        </h2>
-    </x-slot>
+@extends('admin.admin_master')
+
+  @section('admin')
 
     <div class="py-12">
         
@@ -24,7 +20,7 @@
 
 <div class="col-md-4 mt-5">
     
-    <div class="card" style="width: 16rem;">
+    <div class="card">
         <img src="{{ asset($multi->image) }}" class="rounded" alt="">
 
     </div>
@@ -62,4 +58,4 @@
 
 
     </div>
-</x-app-layout>
+@endsection

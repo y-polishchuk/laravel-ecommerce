@@ -23,7 +23,8 @@ Route::get('/', function () {
     $brands = DB::table('brands')->get();
     $abouts = DB::table('home_abouts')->first();
     $services = DB::table('home_services')->get();
-    return view('home', compact('brands', 'abouts', 'services'));
+    $images = DB::table('multipics')->get();
+    return view('home', compact('brands', 'abouts', 'services', 'images'));
 });
 
 Route::get('/home', function () {
@@ -52,16 +53,16 @@ Route::get('/categories/permdelete/{id}', 'App\Http\Controllers\CategoryControll
 
 // For Brand Routes
 
-Route::get('/brands', 'App\Http\Controllers\BrandController@all')->name('brands');
-Route::post('/brands/add', 'App\Http\Controllers\BrandController@addBrand')->name('brands.store');
-Route::get('/brands/edit/{id}', 'App\Http\Controllers\BrandController@edit')->name('brands.edit');
-Route::post('/brands/update/{id}', 'App\Http\Controllers\BrandController@update')->name('brands.update');
-Route::get('/brands/delete/{id}', 'App\Http\Controllers\BrandController@delete')->name('brands.delete');
+Route::get('/home/brands', 'App\Http\Controllers\BrandController@all')->name('brands');
+Route::post('/home/brands/add', 'App\Http\Controllers\BrandController@addBrand')->name('brands.store');
+Route::get('/home/brands/edit/{id}', 'App\Http\Controllers\BrandController@edit')->name('brands.edit');
+Route::post('/home/brands/update/{id}', 'App\Http\Controllers\BrandController@update')->name('brands.update');
+Route::get('/home/brands/delete/{id}', 'App\Http\Controllers\BrandController@delete')->name('brands.delete');
 
 // Multi Image Routes
 
-Route::get('/multi-images', 'App\Http\Controllers\BrandController@multipic')->name('multi.image');
-Route::post('/multi-images/add', 'App\Http\Controllers\BrandController@addImg')->name('images.store');
+Route::get('/home/portfolio', 'App\Http\Controllers\BrandController@multipic')->name('multi.image');
+Route::post('/home/portfolio/add', 'App\Http\Controllers\BrandController@addImg')->name('images.store');
 
 // Admin All Routes
 
