@@ -35,7 +35,6 @@ Route::get('/about', function () {
     return view('about');
 });
 
-Route::get('/contact', 'App\Http\Controllers\ContactController@index')->name('contact');
 
 // For Category Routes
 
@@ -95,6 +94,21 @@ Route::get('/home/services/delete/{id}', 'App\Http\Controllers\ServiceController
 
 Route::get('/portfolio', 'App\Http\Controllers\PortfolioController@portfolio')->name('portfolio');
 
+// Admin Contact Page Route
+
+Route::get('/admin/contact', 'App\Http\Controllers\ContactController@adminContact')->name('admin.contact');
+Route::get('/admin/contact/add', 'App\Http\Controllers\ContactController@adminAddContact')->name('contact.add');
+Route::post('/admin/contact/store', 'App\Http\Controllers\ContactController@adminStoreContact')->name('contact.store');
+Route::get('/admin/contact/edit/{id}', 'App\Http\Controllers\ContactController@adminEditContact')->name('contact.edit');
+Route::post('/admin/contact/update/{id}', 'App\Http\Controllers\ContactController@adminUpdateContact')->name('contact.update');
+Route::get('/admin/contact/delete/{id}', 'App\Http\Controllers\ContactController@adminDeleteContact')->name('contact.delete');
+Route::get('/admin/message', 'App\Http\Controllers\ContactController@adminMessage')->name('admin.message');
+Route::get('/admin/message/delete/{id}', 'App\Http\Controllers\ContactController@adminDeleteMessage')->name('message.delete');
+
+// Home Contact Page Route
+
+Route::get('/contact', 'App\Http\Controllers\ContactController@contact')->name('contact');
+Route::post('/contact/form', 'App\Http\Controllers\ContactController@contactForm')->name('contact.form');
 
 Route::middleware([
     'auth:sanctum',
