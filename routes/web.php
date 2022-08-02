@@ -123,3 +123,8 @@ Route::middleware([
 });
 
 Route::get('/user-logout', 'App\Http\Controllers\BrandController@logout')->name('user.logout');
+
+// Change Password and User Profile Route
+
+Route::get('/password', 'App\Http\Controllers\ChangePassController@changePass')->name('password.change');
+Route::post('/password/update', 'App\Http\Controllers\ChangePassController@updatePass')->name('password.update');
