@@ -45,7 +45,7 @@ class BrandController extends Controller
 
         $name_gen = hexdec(uniqid()).'.'.$brand_image->getClientOriginalExtension();
         $last_img = 'image/brand/'.$name_gen;
-        Image::make($brand_image)->fit(450,450)->save($last_img);   // Here I deleted resize(400,400)
+        Image::make($brand_image)->resizeCanvas(0, 0,'center', true)->save($last_img);   // Here I deleted resize(400,400)
 
         Brand::insert([
             'brand_name' => $request->brand_name,

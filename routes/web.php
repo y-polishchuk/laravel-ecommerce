@@ -127,5 +127,10 @@ Route::get('/user-logout', 'App\Http\Controllers\BrandController@logout')->name(
 
 // Change Password and User Profile Route
 
-Route::get('/password', 'App\Http\Controllers\ChangePassController@changePass')->name('password.change');
-Route::post('/password/update', 'App\Http\Controllers\ChangePassController@updatePass')->name('password.update');
+Route::get('/user/password', 'App\Http\Controllers\ChangePassController@changePass')->name('password.change');
+Route::post('/user/password/update', 'App\Http\Controllers\ChangePassController@updatePass')->name('password.update');
+
+// User Profile
+
+Route::get('/user/profile', 'App\Http\Controllers\ChangePassController@profileUpdate')->name('profile.update');
+Route::post('/user/profile/update', 'App\Http\Controllers\ChangePassController@userUpdateProfile')->name('update.user.profile');
