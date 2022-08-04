@@ -60,8 +60,9 @@ Route::get('/home/brands/delete/{id}', 'App\Http\Controllers\BrandController@del
 
 // Multi Image Routes
 
-Route::get('/home/portfolio', 'App\Http\Controllers\BrandController@multipic')->name('multi.image');
-Route::post('/home/portfolio/add', 'App\Http\Controllers\BrandController@addImg')->name('images.store');
+Route::get('/home/portfolio', 'App\Http\Controllers\MultiController@multipic')->name('multi.image');
+Route::post('/home/portfolio/add', 'App\Http\Controllers\MultiController@addImg')->name('images.store');
+Route::get('/home/portfolio/delete/{id}', 'App\Http\Controllers\MultiController@deleteMulti')->name('images.delete');
 
 // Admin All Routes
 

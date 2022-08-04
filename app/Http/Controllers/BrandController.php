@@ -45,7 +45,7 @@ class BrandController extends Controller
 
         $name_gen = hexdec(uniqid()).'.'.$brand_image->getClientOriginalExtension();
         $last_img = 'image/brand/'.$name_gen;
-        Image::make($brand_image)->fit(400,400)->save($last_img);
+        Image::make($brand_image)->fit(450,450)->save($last_img);   // Here I deleted resize(400,400)
 
         Brand::insert([
             'brand_name' => $request->brand_name,
@@ -100,8 +100,7 @@ class BrandController extends Controller
             ]);
     
             return Redirect()->back()->with('success', 'Brand Updated Successfully!');
-        }
-        
+        }  
     }
 
     public function delete($id)
@@ -113,38 +112,7 @@ class BrandController extends Controller
         
         return Redirect()->back()->with('success', 'Brand is Deleted Successfully!');
     }
-
-    // This is for Multi Image all method
-
-    public function multipic()
-    {
-        $images = Multipic::all();
-        return view('admin.multipic.index', compact('images'));
-    }
-
-    public function addImg(Request $request)
-    {
-        $validated = $request->validate([
-            'image' => 'required',
-        ]);
-
-        $images = $request->file('image');
-
-        foreach($images as $multi_img) {
-
-        $name_gen = hexdec(uniqid()).'.'.$multi_img->getClientOriginalExtension();
-        $last_img = 'image/multi/'.$name_gen;
-        Image::make($multi_img)->fit(400,400)->save($last_img);
-
-        Multipic::insert([
-            'image' => $last_img,
-            'created_at' => Carbon::now()
-        ]);
-        }// end of the foreach
-
-        return Redirect()->back()->with('success', 'Images are Inserted Successfully!');
-    }
-
+  
     public function logout()
     {
         Auth::logout();

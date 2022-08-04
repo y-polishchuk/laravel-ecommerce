@@ -18,13 +18,16 @@
 
     @foreach($images as $multi)
 
-<div class="col-md-4 mt-5">
+<div class="col-md-4 mt-5 mb-3">
     
-    <div class="card">
-        <img src="{{ asset($multi->image) }}" class="rounded" alt="">
+    <div class="card" >
+        <img src="{{ asset($multi->image) }}" alt="" class="card-img-top">
+        <div class="card-body">
+        <a href="{{ route('images.delete', $multi->id) }}" onclick="return confirm('Are you sure, you want to delete this Image?')" class="btn btn-danger">Delete</a>
+        </div>
 
     </div>
-
+    
 </div>
 
     @endforeach    
