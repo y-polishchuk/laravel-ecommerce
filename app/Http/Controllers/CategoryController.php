@@ -25,7 +25,7 @@ class CategoryController extends Controller
     
         $categories = Category::latest()->paginate(5); //reverse order
         $trashCat = Category::onlyTrashed()->latest()->paginate(3);
-        // $categories = DB::table('categories')->latest()->paginate(5);
+        
         return view('admin.category.index', compact('categories', 'trashCat'));
     }
 
@@ -55,7 +55,12 @@ class CategoryController extends Controller
         // $data['user_id'] = Auth::user()->id;
         // DB::table('categories')->insert($data);
 
-        return Redirect()->back()->with('success', 'Category Inserted Successfully!');
+        $notification = array(
+            'message' => 'Category Is Inserted Successfully!',
+            'alert-type' => 'success',
+        );
+
+        return Redirect()->back()->with($notification);
     }
 
     public function edit($id)
@@ -76,27 +81,48 @@ class CategoryController extends Controller
         $data['user_id'] = Auth::user()->id;
 
         DB::table('categories')->where('id', $id)->update($data);
-        return Redirect()->route('categories')->with('success', 'Category Updated Successfully!');
+
+        $notification = array(
+            'message' => 'Category Is Updated Successfully!',
+            'alert-type' => 'info',
+        );
+
+        return Redirect()->route('categories')->with($notification);
     }
 
     public function softDelete($id)
     {
         $delete = Category::find($id)->delete();
+
+        $notification = array(
+            'message' => 'Category Is SoftDeleted Successfully!',
+            'alert-type' => 'info',
+        );
         
-        return Redirect()->back()->with('success', 'Category SoftDeleted Successfully!');
+        return Redirect()->back()->with($notification);
     }
 
     public function restore($id)
     {
         $delete = Category::withTrashed()->find($id)->restore();
+
+        $notification = array(
+            'message' => 'Category Is Restored Successfully!',
+            'alert-type' => 'info',
+        );
         
-        return Redirect()->back()->with('success', 'Category Restored Successfully!');
+        return Redirect()->back()->with($notification);
     }
 
     public function permDelete($id)
     {
         $delete = Category::onlyTrashed()->find($id)->forceDelete();
+
+        $notification = array(
+            'message' => 'Category Is Deleted Permanently!',
+            'alert-type' => 'warning',
+        );
         
-        return Redirect()->back()->with('success', 'Category Deleted Permanently!');
+        return Redirect()->back()->with($notification);
     }
 }

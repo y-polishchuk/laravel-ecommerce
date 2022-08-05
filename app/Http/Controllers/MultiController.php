@@ -42,7 +42,12 @@ class MultiController extends Controller
         ]);
         }// end of the foreach
 
-        return Redirect()->back()->with('success', 'Images are Inserted Successfully!');
+        $notification = array(
+            'message' => 'Images are Inserted Successfully!',
+            'alert-type' => 'success',
+        );
+
+        return Redirect()->back()->with($notification);
     }
 
     public function deleteMulti($id)
@@ -51,8 +56,13 @@ class MultiController extends Controller
         $old_image = $multipic->image;
         unlink($old_image);
         $delete = Multipic::find($id)->delete();
+
+        $notification = array(
+            'message' => 'Image Is Deleted Successfully!',
+            'alert-type' => 'warning',
+        );
         
-        return Redirect()->back()->with('success', 'Image is Deleted Successfully!');
+        return Redirect()->back()->with($notification);
     }
 
     public function logout()

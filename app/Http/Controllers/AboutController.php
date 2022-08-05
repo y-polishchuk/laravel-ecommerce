@@ -39,7 +39,12 @@ class AboutController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-        return Redirect()->route('about.home')->with('success', 'About is Inserted Successfully!');
+        $notification = array(
+            'message' => 'About Is Inserted Successfully!',
+            'alert-type' => 'success',
+        );
+
+        return Redirect()->route('about.home')->with($notification);
     }
 
     public function edit($id)
@@ -56,8 +61,8 @@ class AboutController extends Controller
             'long_des' => 'required|min:55',
         ],
         [
-            'title.required' => 'Please, Input HomeAbout Title.',
-            'title.min' => 'HomeAbout Title Must Be Longer Than 5 Chars.',
+            'title.required' => 'Please, Input Title.',
+            'title.min' => 'Title Must Be Longer Than 5 Chars.',
         ]);
 
         HomeAbout::find($id)->update([
@@ -66,12 +71,23 @@ class AboutController extends Controller
             'long_des' => $request->long_des
         ]);
 
-        return Redirect()->route('about.home')->with('success', 'About is Updated Successfully!');
+        $notification = array(
+            'message' => 'About Is Updated Successfully!',
+            'alert-type' => 'info',
+        );
+
+        return Redirect()->route('about.home')->with($notification);
     }
 
     public function delete($id)
     {
         $delete = HomeAbout::find($id)->delete();
-        return Redirect()->back()->with('success', 'About is Deleted Successfully!');
+
+        $notification = array(
+            'message' => 'About Is Deleted Successfully!',
+            'alert-type' => 'warning',
+        );
+
+        return Redirect()->back()->with($notification);
     }
 }

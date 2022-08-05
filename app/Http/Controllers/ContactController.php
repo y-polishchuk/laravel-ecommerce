@@ -38,7 +38,12 @@ class ContactController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-        return Redirect()->route('admin.contact')->with('success', 'Contact is Inserted Successfully!');
+        $notification = array(
+            'message' => 'Contact Is Inserted Successfully!',
+            'alert-type' => 'success',
+        );
+
+        return Redirect()->route('admin.contact')->with($notification);
     }
 
     public function adminEditContact($id)
@@ -61,13 +66,24 @@ class ContactController extends Controller
             'address' => $request->address,
         ]);
 
-        return Redirect()->route('admin.contact')->with('success', 'Contact is Updated Successfully!');
+        $notification = array(
+            'message' => 'Contact Is Updated Successfully!',
+            'alert-type' => 'info',
+        );
+
+        return Redirect()->route('admin.contact')->with($notification);
     }
 
     public function adminDeleteContact($id)
     {
         $delete = Contact::find($id)->delete();
-        return Redirect()->back()->with('success', 'Contact is Deleted Successfully!');
+
+        $notification = array(
+            'message' => 'Contact Is Deleted Successfully!',
+            'alert-type' => 'warning',
+        );
+
+        return Redirect()->back()->with($notification);
     }
 
     public function contact()
@@ -93,7 +109,12 @@ class ContactController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
-        return Redirect()->route('contact')->with('success', 'Your Message Is Sent Successfully!');
+        $notification = array(
+            'message' => 'Your Message Is Sent Successfully!',
+            'alert-type' => 'info',
+        );
+
+        return Redirect()->route('contact')->with($notification);
     }
 
     public function adminMessage()
@@ -105,6 +126,12 @@ class ContactController extends Controller
     public function adminDeleteMessage($id)
     {
         $delete = ContactForm::find($id)->delete();
-        return Redirect()->back()->with('success', 'Message is Deleted Successfully!');
+
+        $notification = array(
+            'message' => 'Message Is Deleted Successfully!',
+            'alert-type' => 'warning',
+        );
+
+        return Redirect()->back()->with($notification);
     }
 }

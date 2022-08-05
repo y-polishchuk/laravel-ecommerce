@@ -28,9 +28,20 @@ class ChangePassController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
             Auth::logout();
-            return redirect()->route('login')->with('success', 'Password Is Changed Successfully.');
+
+            $notification = array(
+                'message' => 'Password Is Changed Successfully!',
+                'alert-type' => 'success',
+            );
+
+            return redirect()->route('login')->with($notification);
         } else {
-            return redirect()->back()->with('error', 'Current Password Is Invalid.');
+            $notification = array(
+                'message' => 'Current Password Is Invalid.',
+                'alert-type' => 'error',
+            );
+
+            return redirect()->back()->with($notification);
         }
     }
 
@@ -71,7 +82,12 @@ class ChangePassController extends Controller
         $user->email = $request->email;
         $user->save();
 
-        return redirect()->back()->with('success', 'User Profile Is Updated Successfully!');
+        $notification = array(
+            'message' => 'User Profile Is Updated Successfully!',
+            'alert-type' => 'success',
+        );
+
+        return redirect()->back()->with($notification);
        } else {
         return redirect()->back();
        }

@@ -53,7 +53,12 @@ class BrandController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-        return Redirect()->back()->with('success', 'Brand Inserted Successfully!');
+        $notification = array(
+            'message' => 'Brand Is Inserted Successfully!',
+            'alert-type' => 'success',
+        );
+
+        return Redirect()->back()->with($notification);
     }
 
     public function edit($id)
@@ -91,16 +96,29 @@ class BrandController extends Controller
                 'brand_image' => $last_img,
                 'created_at' => Carbon::now()
             ]);
+
+            $notification = array(
+                'message' => 'Brand Is Updated Successfully!',
+                'alert-type' => 'info',
+            );
     
-            return Redirect()->back()->with('success', 'Brand Updated Successfully!');
+            return Redirect()->back()->with($notification);
+    
         } else {
             Brand::find($id)->update([
                 'brand_name' => $request->brand_name,
                 'created_at' => Carbon::now()
             ]);
+
+            $notification = array(
+                'message' => 'Brand Is Updated Successfully!',
+                'alert-type' => 'warning',
+            );
     
-            return Redirect()->back()->with('success', 'Brand Updated Successfully!');
+            return Redirect()->back()->with($notification);
         }  
+
+        
     }
 
     public function delete($id)
@@ -109,8 +127,13 @@ class BrandController extends Controller
         $old_image = $brand->brand_image;
         unlink($old_image);
         $delete = Brand::find($id)->delete();
+
+        $notification = array(
+            'message' => 'Brand Is Deleted Successfully!',
+            'alert-type' => 'warning',
+        );
         
-        return Redirect()->back()->with('success', 'Brand is Deleted Successfully!');
+        return Redirect()->back()->with($notification);
     }
   
     public function logout()
