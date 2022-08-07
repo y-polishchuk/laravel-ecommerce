@@ -43,7 +43,7 @@
       
       <td> {{ $slider->title }} </td>
       <td> {{ $slider->description }} </td>
-      <td> <img src="{{ secure_asset($slider->image) }}" style="height:40px;"> </td>
+      <td> <img src="{{ asset($slider->image) }}" style="height:40px;"> </td>
       
     <td><a href="{{ route('sliders.edit', $slider->id) }}" class="btn btn-info">Edit</a>
     <a href="{{ route('sliders.delete', $slider->id) }}" onclick="return confirm('Are you sure, you want to delete this Slider?')" class="btn btn-danger">Delete</a>

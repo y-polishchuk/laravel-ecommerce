@@ -14,7 +14,7 @@
 
       @foreach($sliders as $key=>$slider)
         <!-- Slide 1 -->
-        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}" style="background-image: url({{ secure_asset($slider->image) }});">
+        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}" style="background-image: url({{ asset($slider->image) }});">
           <div class="carousel-container">
             <div class="carousel-content animate__animated animate__fadeInUp">
               <h2>{{ $slider->title }}</h2>
