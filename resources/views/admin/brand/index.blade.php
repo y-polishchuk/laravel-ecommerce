@@ -29,7 +29,7 @@
       <th scope="row"> {{ $brands->firstItem()+$loop->index }} </th> 
       <!-- get a number of the first element in result + the index of the current item -->
       <td> {{ $brand->brand_name }} </td>
-      <td> <img src="{{ asset($brand->brand_image) }}" height="40px"> </td>
+      <td> <img src="{{ secure_asset($brand->brand_image) }}" height="40px"> </td>
       <td> 
         @if($brand->created_at == null)
         <span class="text-danger">No Date Set</span>

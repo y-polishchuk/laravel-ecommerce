@@ -47,7 +47,7 @@
     <span class="text-danger"> {{ $message }}</span>
 @enderror
 <div class="form-group">
-<img src="{{ asset($slider->image) }}" width="660px">
+<img src="{{ secure_asset($slider->image) }}" width="660px">
 </div>
 
 <div class="form-footer pt-4 pt-5 mt-4 border-top">

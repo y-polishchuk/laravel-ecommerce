@@ -37,7 +37,7 @@
 </div>
 
 <div class="mb-3">
-<img src="{{ asset($brand->brand_image) }}" width="400px">
+<img src="{{ secure_asset($brand->brand_image) }}" width="400px">
 </div>
   
   <button type="submit" class="btn btn-primary">Update Brand</button>
