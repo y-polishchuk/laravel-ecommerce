@@ -71,12 +71,12 @@ class ChangePassController extends Controller
         if($user_image) {
         $name_gen = hexdec(uniqid()).'.'.$user_image->getClientOriginalExtension();
         $last_img = 'profile-photos/'.$name_gen;
-        Image::make($user_image)->save('storage/'.$last_img);
+        Image::make($user_image)->fit(400,400)->save('user/'.$last_img);
 
         if($old_image) {
-            unlink('storage/'.$old_image);
+            unlink('user/'.$old_image);
         }
-        $user->profile_photo_path = $last_img; // here laravel adds automatically 'storage/' to display image at avatar
+        $user->profile_photo_path = $last_img; 
         }
         $user->name = $request->name;
         $user->email = $request->email;
