@@ -367,8 +367,7 @@ INSERT INTO sliders (id, title, description, image, created_at, updated_at) VALU
 --
 
 INSERT INTO users (id, name, email, email_verified_at, password, two_factor_secret, two_factor_recovery_codes, two_factor_confirmed_at, remember_token, current_team_id, profile_photo_path, created_at, updated_at) VALUES
-(1, 'John', 'admin@gmail.com', '2022-07-28 06:08:44', '$2y$10$h1HGRUTy05sVvoZukpcUPu77jG7zICEcaKO0VKTMYDdk8L7ebQDU6', NULL, NULL, NULL, NULL, NULL, 'profile-photos/CYcF6QsKPrG6guKnkvVn0315weHoJw6Z4cu2xfCX.jpg', '2022-07-22 15:31:36', '2022-07-28 06:08:44'),
-(2, 'Chandler', 'chandler@gmail.com', '2022-07-28 06:51:58', '$2y$10$WSR268RIUZDdCuOLPA9lGOlMWpzPP5wp1iXeDIkT/Nw/N5hutfZQO', NULL, NULL, NULL, NULL, NULL, 'profile-photos/uz7fG8syyLayBXFfg6B7MedhRIInq9PnuZ3WvG9q.jpg', '2022-07-23 02:38:41', '2022-07-28 06:51:58'),
-(3, 'Test', 'test@gmail.com', '2022-07-28 06:48:01', '$2y$10$1PYbDGlZmSoPiL.fk3HrIuEPTH4KcVxHtNIepyhiNIizto5PjPlda', NULL, NULL, NULL, 'hGZNPzf3TaEkcbNGVbo86szBGbvPu8CobHvw6GYbMaibndzmbnDkoiUVoBLQ', NULL, 'profile-photos/oErCA9vSRKxQVfYFlcAwy7ZWpaKsJRkYmgNS3z1b.jpg', '2022-07-23 07:21:30', '2022-07-28 06:48:22'),
-(4, 'Joey', 'joey@gmail.com', '2022-07-28 12:22:40', '$2y$10$FevHRlCSSHo8WKwO/0WYkO6npEmpdJHZf/hhF2qAQJgCBEEtdFCOO', NULL, NULL, NULL, NULL, NULL, 'profile-photos/1740299595935411.jpg', '2022-07-28 12:22:04', '2022-08-05 02:57:07');
-COMMIT;
+(3, 'Test', 'test@gmail.com', '2022-07-28 06:48:01', '$2y$10$1PYbDGlZmSoPiL.fk3HrIuEPTH4KcVxHtNIepyhiNIizto5PjPlda', NULL, NULL, NULL, '7Nbqbo1szEYxBulVk3jNAGSsn7zMTZ4sL96L4BX0ITfDjlf9lPZp9HVD1iR4', NULL, 'profile-photos/1740583291890685.jpg', '2022-07-23 07:21:30', '2022-08-08 06:06:21'),
+(4, 'Joey', 'joey@gmail.com', '2022-07-28 12:22:40', '$2y$10$FevHRlCSSHo8WKwO/0WYkO6npEmpdJHZf/hhF2qAQJgCBEEtdFCOO', NULL, NULL, NULL, NULL, NULL, 'profile-photos/1740583254449891.jpg', '2022-07-28 12:22:04', '2022-08-08 06:05:45'),
+(2, 'Chandler', 'chandler@gmail.com', '2022-07-28 06:51:58', '$2y$10$WSR268RIUZDdCuOLPA9lGOlMWpzPP5wp1iXeDIkT/Nw/N5hutfZQO', NULL, NULL, NULL, NULL, NULL, 'profile-photos/1740583222711568.jpg', '2022-07-23 02:38:41', '2022-08-08 06:05:15'),
+(1, 'Ross', 'admin@gmail.com', '2022-07-28 06:08:44', '$2y$10$h1HGRUTy05sVvoZukpcUPu77jG7zICEcaKO0VKTMYDdk8L7ebQDU6', NULL, NULL, NULL, NULL, NULL, 'profile-photos/1740582909830699.jpg', '2022-07-22 15:31:36', '2022-08-08 06:00:16');
