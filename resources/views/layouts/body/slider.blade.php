@@ -1,6 +1,5 @@
   @php
-  $sliders =DB::table('sliders')->get();
-
+  $sliders = DB::table('sliders')->get();
 
   @endphp
   
