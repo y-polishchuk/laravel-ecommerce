@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title></title>
+  <title>Admin Register</title>
 
   <!-- GOOGLE FONTS -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet"/>
@@ -48,7 +48,7 @@
               <div class="card">
                 <div class="card-header bg-primary">
                   <div class="app-brand">
-                    <a href="/index.html">
+                    <a href="/">
                       <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" width="30"
                         height="33" viewBox="0 0 30 33">
                         <g fill="none" fill-rule="evenodd">
