@@ -45,7 +45,7 @@
                           
 <li  class="active" >
   <a class="sidenav-item-link" href="{{ route('sliders.home') }}">
-    <span class="nav-text">Slider</span>
+    <span class="nav-text">Home Slider</span>
     
   </a>
 </li>
@@ -78,16 +78,33 @@
                   </li>
                 
 
-                
+                  <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#services"
+                      aria-expanded="false" aria-controls="services">
+                      <i class="mdi mdi-folder-multiple-outline"></i>
+                      <span class="nav-text">Services</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="services"
+                      data-parent="#sidebar-menu">
+                      <div class="sub-menu">
+                      <li  class="active" >
+                        <a class="sidenav-item-link" href="{{ route('admin.services.features') }}">
+                          <span class="nav-text">Features</span>
+                        </a>
+                      </li>
+
+                      </div>
+                    </ul>
+                  </li>
 
                 
                   <li  class="has-sub" >
-                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#ui-elements"
-                      aria-expanded="false" aria-controls="ui-elements">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#contact"
+                      aria-expanded="false" aria-controls="contact">
                       <i class="mdi mdi-folder-multiple-outline"></i>
                       <span class="nav-text">Contact Page</span> <b class="caret"></b>
                     </a>
-                    <ul  class="collapse"  id="ui-elements"
+                    <ul  class="collapse"  id="contact"
                       data-parent="#sidebar-menu">
                       <div class="sub-menu">
                       <li  class="active" >
@@ -104,10 +121,6 @@
                       </div>
                     </ul>
                   </li>
-                
-
-                
-
                 
                   <li  class="has-sub" >
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#charts"
@@ -140,12 +153,12 @@
 
                 
                   <li  class="has-sub" >
-                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#pages"
-                      aria-expanded="false" aria-controls="pages">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#lastpages"
+                      aria-expanded="false" aria-controls="lastpages">
                       <i class="mdi mdi-image-filter-none"></i>
                       <span class="nav-text">Pages</span> <b class="caret"></b>
                     </a>
-                    <ul  class="collapse"  id="pages"
+                    <ul  class="collapse"  id="lastpages"
                       data-parent="#sidebar-menu">
                       <div class="sub-menu">
                         

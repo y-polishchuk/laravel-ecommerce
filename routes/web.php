@@ -95,6 +95,16 @@ Route::get('/home/services/delete/{id}', 'App\Http\Controllers\ServiceController
 
 Route::get('/portfolio', 'App\Http\Controllers\PortfolioController@portfolio')->name('portfolio');
 
+// Services Page Route
+
+Route::get('/services', 'App\Http\Controllers\ServicesPageController@services')->name('page.services');
+Route::get('/admin/services/features', 'App\Http\Controllers\ServicesPageController@features')->name('admin.services.features');
+Route::get('/admin/services/features/add', 'App\Http\Controllers\ServicesPageController@adminAddFeature')->name('feature.add');
+Route::post('/admin/services/features/store', 'App\Http\Controllers\ServicesPageController@adminStoreFeature')->name('feature.store');
+Route::get('/admin/services/features/edit/{id}', 'App\Http\Controllers\ServicesPageController@adminEditFeature')->name('feature.edit');
+Route::post('/admin/services/features/update/{id}', 'App\Http\Controllers\ServicesPageController@adminUpdateFeature')->name('feature.update');
+Route::get('/admin/services/features/delete/{id}', 'App\Http\Controllers\ServicesPageController@adminDeleteFeature')->name('feature.delete');
+
 // Admin Contact Page Route
 
 Route::get('/admin/contact', 'App\Http\Controllers\ContactController@adminContact')->name('admin.contact');

@@ -37,6 +37,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   <script src="{{ asset('backend/assets/plugins/nprogress/nprogress.js') }}"></script>
+  <script src="https://cdn.tiny.cloud/1/r8r412l1lee864u4n30scz4udpz3what0jtke2jt92pb8n5y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 
 
@@ -228,7 +229,16 @@
 <script src="{{ asset('backend/assets/js/map.js') }}"></script>
 <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+<script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'a11ychecker advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinycomments tinymcespellchecker',
+      toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter image editimage pageembed permanentpen table tableofcontents',
+      toolbar_mode: 'floating',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+    });
+</script>
 <script>
 @if(Session::has('message'))
 var type = "{{ Session::get('alert-type', 'info') }}"

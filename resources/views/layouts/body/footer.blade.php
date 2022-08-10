@@ -14,8 +14,10 @@ $contacts = DB::table('contacts')->first();
             <p>
             {{ $contacts->address }} 
             <br><br>
-              <strong>Phone:</strong> {{ $contacts->phone }}<br>
-              <strong>Email:</strong> {{ $contacts->email }}<br>
+              <strong>Phone:</strong>
+              <p>{{ $contacts->phone }}</p>
+              <strong>Email:</strong> 
+              <p>{{ $contacts->email }}</p>
             </p>
           </div>
 
