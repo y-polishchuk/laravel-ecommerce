@@ -16,8 +16,8 @@
         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}" style="background-image: url({{ asset($slider->image) }});">
           <div class="carousel-container">
             <div class="carousel-content animate__animated animate__fadeInUp">
-              <h2>{{ $slider->title }}</h2>
-              <p>{{ $slider->description }}</p>
+              <h2>{{ strip_tags($slider->title) }}</h2>
+              <p>{{ strip_tags($slider->description) }}</p>
               <div class="text-center"><a href="" class="btn-get-started">Read More</a></div>
             </div>
           </div>

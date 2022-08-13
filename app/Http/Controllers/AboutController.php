@@ -10,7 +10,7 @@ class AboutController extends Controller
 {
     public function homeAbout()
     {
-        $homeabout = HomeAbout::latest()->get();
+        $homeabout = HomeAbout::first()->get();
         return view('admin.home.index', compact('homeabout'));
     }
 

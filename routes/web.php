@@ -64,7 +64,7 @@ Route::get('/home/portfolio', 'App\Http\Controllers\MultiController@multipic')->
 Route::post('/home/portfolio/add', 'App\Http\Controllers\MultiController@addImg')->name('images.store');
 Route::get('/home/portfolio/delete/{id}', 'App\Http\Controllers\MultiController@deleteMulti')->name('images.delete');
 
-// Admin All Routes
+// Admin Sliders Routes
 
 Route::get('/home/sliders', 'App\Http\Controllers\HomeController@homeSlider')->name('sliders.home');
 Route::get('/home/sliders/add', 'App\Http\Controllers\HomeController@add')->name('sliders.add');
@@ -91,9 +91,38 @@ Route::get('/home/services/edit/{id}', 'App\Http\Controllers\ServiceController@e
 Route::post('/home/services/update/{id}', 'App\Http\Controllers\ServiceController@update')->name('services.update');
 Route::get('/home/services/delete/{id}', 'App\Http\Controllers\ServiceController@delete')->name('services.delete');
 
-// Portfolio Page Route
+// About Us Page Route
 
-Route::get('/portfolio', 'App\Http\Controllers\PortfolioController@portfolio')->name('portfolio');
+Route::get('/about', 'App\Http\Controllers\AboutPageController@aboutUs')->name('page.about');
+
+// Team Routes
+
+Route::get('/about/team', 'App\Http\Controllers\TeamController@aboutTeam')->name('page.about_team');
+Route::get('/admin/about/team', 'App\Http\Controllers\TeamController@team')->name('admin.team');
+Route::get('/admin/about/team/add', 'App\Http\Controllers\TeamController@adminAddMember')->name('member.add');
+Route::post('/admin/about/team/store', 'App\Http\Controllers\TeamController@adminStoreMember')->name('member.store');
+Route::get('/admin/about/team/edit/{id}', 'App\Http\Controllers\TeamController@adminEditMember')->name('member.edit');
+Route::post('/admin/about/team/update/{id}', 'App\Http\Controllers\TeamController@adminUpdateMember')->name('member.update');
+Route::get('/admin/about/team/delete/{id}', 'App\Http\Controllers\TeamController@adminDeleteMember')->name('member.delete');
+
+// Skills Routes
+
+Route::get('/admin/about/skills', 'App\Http\Controllers\SkillController@skills')->name('admin.skills');
+Route::post('/admin/about/skills/store', 'App\Http\Controllers\SkillController@adminStoreSkill')->name('skill.store');
+Route::get('/admin/about/skills/edit/{id}', 'App\Http\Controllers\SkillController@adminEditSkill')->name('skill.edit');
+Route::post('/admin/about/skills/update/{id}', 'App\Http\Controllers\SkillController@adminUpdateSkill')->name('skill.update');
+Route::get('/admin/about/skills/delete/{id}', 'App\Http\Controllers\SkillController@adminDeleteSkill')->name('skill.delete');
+
+// Testimonials Routes
+
+Route::get('/about/testimonials', 'App\Http\Controllers\TestimonialController@aboutTes')->name('page.about_tes');
+Route::get('/admin/about/testimonials', 'App\Http\Controllers\TestimonialController@tes')->name('admin.tes');
+Route::get('/admin/about/testimonials/add', 'App\Http\Controllers\TestimonialController@adminAddTes')->name('tes.add');
+Route::post('/admin/about/testimonials/store', 'App\Http\Controllers\TestimonialController@adminStoreTes')->name('tes.store');
+Route::get('/admin/about/testimonials/edit/{id}', 'App\Http\Controllers\TestimonialController@adminEditTes')->name('tes.edit');
+Route::post('/admin/about/testimonials/update/{id}', 'App\Http\Controllers\TestimonialController@adminUpdateTes')->name('tes.update');
+Route::get('/admin/about/testimonials/delete/{id}', 'App\Http\Controllers\TestimonialController@adminDeleteTes')->name('tes.delete');
+
 
 // Services Page Route
 
@@ -104,6 +133,29 @@ Route::post('/admin/services/features/store', 'App\Http\Controllers\ServicesPage
 Route::get('/admin/services/features/edit/{id}', 'App\Http\Controllers\ServicesPageController@adminEditFeature')->name('feature.edit');
 Route::post('/admin/services/features/update/{id}', 'App\Http\Controllers\ServicesPageController@adminUpdateFeature')->name('feature.update');
 Route::get('/admin/services/features/delete/{id}', 'App\Http\Controllers\ServicesPageController@adminDeleteFeature')->name('feature.delete');
+
+// Portfolio Page Route
+
+Route::get('/portfolio', 'App\Http\Controllers\PortfolioController@portfolio')->name('portfolio');
+
+// Pricing Page Route
+
+Route::get('/pricing', 'App\Http\Controllers\PricingController@pricing')->name('page.pricing');
+Route::get('/admin/pricing', 'App\Http\Controllers\PricingController@adminPricing')->name('admin.pricing');
+Route::get('/admin/pricing/add', 'App\Http\Controllers\PricingController@adminAddPrice')->name('price.add');
+Route::post('/admin/pricing/store', 'App\Http\Controllers\PricingController@adminStorePrice')->name('price.store');
+Route::get('/admin/pricing/edit/{id}', 'App\Http\Controllers\PricingController@adminEditPrice')->name('price.edit');
+Route::post('/admin/pricing/{id}', 'App\Http\Controllers\PricingController@adminUpdatePrice')->name('price.update');
+Route::get('/admin/pricing/delete/{id}', 'App\Http\Controllers\PricingController@adminDeletePrice')->name('price.delete');
+
+// FAQ Admin Route
+
+Route::get('/admin/faq', 'App\Http\Controllers\FAQController@adminFAQ')->name('admin.faq');
+Route::get('/admin/faq/add', 'App\Http\Controllers\FAQController@adminAddFAQ')->name('faq.add');
+Route::post('/admin/faq/store', 'App\Http\Controllers\FAQController@adminStoreFAQ')->name('faq.store');
+Route::get('/admin/faq/edit/{id}', 'App\Http\Controllers\FAQController@adminEditFAQ')->name('faq.edit');
+Route::post('/admin/faq/{id}', 'App\Http\Controllers\FAQController@adminUpdateFAQ')->name('faq.update');
+Route::get('/admin/faq/delete/{id}', 'App\Http\Controllers\FAQController@adminDeleteFAQ')->name('faq.delete');
 
 // Admin Contact Page Route
 

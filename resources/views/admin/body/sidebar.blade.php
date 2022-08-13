@@ -77,6 +77,34 @@
                     </ul>
                   </li>
                 
+                  <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#about"
+                      aria-expanded="false" aria-controls="about">
+                      <i class="mdi mdi-folder-multiple-outline"></i>
+                      <span class="nav-text">About Us</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="about"
+                      data-parent="#sidebar-menu">
+                      <div class="sub-menu">
+                      <li  class="active" >
+                        <a class="sidenav-item-link" href="{{ route('admin.team') }}">
+                          <span class="nav-text">Our Team</span>
+                        </a>
+                      </li>
+                      <li  class="active" >
+                        <a class="sidenav-item-link" href="{{ route('admin.skills') }}">
+                          <span class="nav-text">Our Skills</span>
+                        </a>
+                      </li>
+                      <li  class="active" >
+                        <a class="sidenav-item-link" href="{{ route('admin.tes') }}">
+                          <span class="nav-text">Testimonials</span>
+                        </a>
+                      </li>
+
+                      </div>
+                    </ul>
+                  </li>
 
                   <li  class="has-sub" >
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#services"
@@ -90,6 +118,30 @@
                       <li  class="active" >
                         <a class="sidenav-item-link" href="{{ route('admin.services.features') }}">
                           <span class="nav-text">Features</span>
+                        </a>
+                      </li>
+
+                      </div>
+                    </ul>
+                  </li>
+
+                  <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#pricing"
+                      aria-expanded="false" aria-controls="pricing">
+                      <i class="mdi mdi-folder-multiple-outline"></i>
+                      <span class="nav-text">Pricing</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="pricing"
+                      data-parent="#sidebar-menu">
+                      <div class="sub-menu">
+                      <li class="active" >
+                        <a class="sidenav-item-link" href="{{ route('admin.pricing') }}">
+                          <span class="nav-text">Prices</span>
+                        </a>
+                      </li>
+                      <li class="active" >
+                        <a class="sidenav-item-link" href="{{ route('admin.faq') }}">
+                          <span class="nav-text">FAQ</span>
                         </a>
                       </li>
 

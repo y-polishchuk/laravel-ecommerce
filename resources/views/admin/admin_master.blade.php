@@ -142,7 +142,7 @@
                     <ul class="dropdown-menu dropdown-menu-right">
                       <!-- User image -->
                       <li class="dropdown-header">
-                        <img src="{{ Auth::user()->profile_photo_url }}" class="img-circle" alt="User Image" />
+                        <img src="{{ Auth::user()->profile_photo_path }}" class="img-circle" alt="User Image" />
                         <div class="d-inline-block">
                         {{ Auth::user()->name }}<small class="pt-1">{{ Auth::user()->email }}</small>
                         </div>
@@ -232,6 +232,7 @@
 <script>
     tinymce.init({
       selector: 'textarea',
+      branding: false,
       plugins: 'a11ychecker advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinycomments tinymcespellchecker',
       toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter image editimage pageembed permanentpen table tableofcontents',
       toolbar_mode: 'floating',
