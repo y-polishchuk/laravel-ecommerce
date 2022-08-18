@@ -1,10 +1,6 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            All Categories <b></b>
-            
-        </h2>
-    </x-slot>
+@extends('admin.admin_master')
+
+@section('admin')
 
     <div class="py-12">
         
@@ -114,8 +110,8 @@
       {{ Carbon\Carbon::parse($category->created_at)->diffForHumans() }} 
         @endif
     </td>
-    <td><a href="{{ url('categories/restore/'.$category->id) }}" class="btn btn-info">Restore</a>
-    <a href="{{ url('categories/permdelete/'.$category->id) }}" class="btn btn-danger">PermDelete</a>
+    <td><a href="{{ route('categories.restore', $category->id) }}" class="btn btn-info">Restore</a>
+    <a href="{{ route('categories.permdelete', $category->id) }}" class="btn btn-danger">PermDelete</a>
     </td>
     </tr>
     @endforeach
@@ -135,4 +131,4 @@
 <!-- End Trash -->
 
     </div>
-</x-app-layout>
+@endsection

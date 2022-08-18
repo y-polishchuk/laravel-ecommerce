@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,11 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // if(env('APP_ENV') !== 'local') {
-        //     URL::forceScheme('https');
-        // }
+        Paginator::useBootstrap();
 
-        //check that app is local
+    //check that app is local
     if ($this->app->isLocal()) {
     //if local register your services you require for development
         $this->app->register('Barryvdh\Debugbar\ServiceProvider');

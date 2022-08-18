@@ -72,46 +72,27 @@ class HomeController extends Controller
             'title.min' => 'Slider Title Must Be Longer Than 4 Chars.',
         ]);
 
+        $slider = Slider::find($id);
         $old_image = $request->old_image;
         $slider_image = $request->file('image');
 
         if($slider_image) {
-            $name_gen = hexdec(uniqid());
-            $img_ext = strtolower($slider_image->getClientOriginalExtension());
-            $img_name = $name_gen.'.'.$img_ext;
-            $up_location = 'image/slider/';
-            $last_img = $up_location.$img_name;
-            $slider_image->move($up_location,$img_name);
+            $img_name = hexdec(uniqid()).'.'.strtolower($slider_image->getClientOriginalExtension());
+            $path = 'image/slider/'.$img_name;
+            Image::make($slider_image->getRealPath())->resize(1920, 1080)->save($path);
+            $slider->image = $path;
+            $slider->save();
     
             unlink($old_image);
-    
-            Slider::find($id)->update([
-                'title' => $request->title,
-                'description' => $request->description,
-                'image' => $last_img,
-                'updated_at' => Carbon::now()
-            ]);
-    
-            $notification = array(
-                'message' => 'Slider Is Updated Successfully!',
-                'alert-type' => 'info',
-            );
-
-            return Redirect()->back()->with($notification);
-        } else {
-            Slider::find($id)->update([
-                'title' => $request->title,
-                'description' => $request->description,
-                'updated_at' => Carbon::now()
-            ]);
-    
-            $notification = array(
-                'message' => 'Info About Slider Is Updated Successfully!',
-                'alert-type' => 'warning',
-            );
-
-            return Redirect()->back()->with('success', 'Slider is Updated Successfully!');
         }
+        $slider->update($request->except('image'));
+    
+        $notification = array(
+            'message' => 'Slider Is Updated Successfully!',
+            'alert-type' => 'info',
+        );
+
+        return Redirect()->back()->with($notification);
         
     }
 

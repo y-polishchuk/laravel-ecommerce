@@ -72,24 +72,20 @@ class TestimonialController extends Controller
             'photo' => 'mimes:jpg,jpeg,png',
         ]);
 
+        $tes = Testimonial::find($id);
         $old_image = $request->old_image;
         $tes_photo = $request->file('photo');
 
         if($tes_photo) {
         $name_gen = hexdec(uniqid()).'.'.$tes_photo->getClientOriginalExtension();
-        $last_img = 'image/testims/'.$name_gen;
-        $tes_photo->move('image/testims/',$name_gen);
-        
+        $path = 'image/testims/'.$name_gen;
+        Image::make($tes_photo->getRealPath())->fit(400, 400)->save($path);
+        $tes->photo = $path;
+        $tes->save();
     
         unlink($old_image);
-
-        Testimonial::find($id)->update([
-            'name' => $request->name,
-            'position' => $request->position,
-            'text' => $request->text,
-            'photo' => $last_img,
-            'updated_at' => Carbon::now()
-        ]);
+        }
+        $tes->update($request->except('photo'));
 
         $notification = array(
             'message' => 'Testimonial Is Updated Successfully!',
@@ -97,21 +93,6 @@ class TestimonialController extends Controller
         );
 
         return Redirect()->back()->with($notification);
-        } else {
-            Testimonial::find($id)->update([
-                'name' => $request->name,
-                'position' => $request->position,
-                'text' => $request->text,
-                'updated_at' => Carbon::now()
-            ]);
-    
-            $notification = array(
-                'message' => 'Testimonial Is Updated Successfully!',
-                'alert-type' => 'info',
-            );
-    
-            return Redirect()->back()->with($notification);
-        }
     }
 
     public function adminDeleteTes($id)

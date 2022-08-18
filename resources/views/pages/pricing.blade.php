@@ -52,11 +52,11 @@
 
         <div class="faq-list">
           <ul>
-@php($i = 1)            
+           
 @foreach($faqs as $faq)
           <li data-aos="fade-up" >
-              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" class="collapse" href="#faq-list-{{ $i++ }}">{{ strip_tags($faq->question) }}<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-{{ $i - 1 }}" class="collapse show" data-parent=".faq-list">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" class="collapse" href="#faq-list-{{ $faq->id }}">{{ strip_tags($faq->question) }}<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-{{ $faq->id }}" class="collapse show" data-parent=".faq-list">
                 <p>
                 {{ strip_tags($faq->answer) }}
                 </p>

@@ -149,6 +149,40 @@
                     </ul>
                   </li>
 
+
+                  <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#blog"
+                      aria-expanded="false" aria-controls="blog">
+                      <i class="mdi mdi-folder-multiple-outline"></i>
+                      <span class="nav-text">Blog</span> <b class="caret"></b>
+                    </a>
+                    <ul  class="collapse"  id="blog"
+                      data-parent="#sidebar-menu">
+                      <div class="sub-menu">
+                      <li class="active" >
+                        <a class="sidenav-item-link" href="{{ route('admin.authorship') }}">
+                          <span class="nav-text">Authors</span>
+                        </a>
+                      </li>
+                      <li class="active" >
+                        <a class="sidenav-item-link" href="{{ route('admin.articles') }}">
+                          <span class="nav-text">Articles</span>
+                        </a>
+                      </li>
+                      <li class="active" >
+                        <a class="sidenav-item-link" href="{{ route('categories') }}">
+                          <span class="nav-text">Categories</span>
+                        </a>
+                      </li>
+                      <li class="active" >
+                        <a class="sidenav-item-link" href="{{ route('admin.tags') }}">
+                          <span class="nav-text">Tags</span>
+                        </a>
+                      </li>
+                      </div>
+                    </ul>
+                  </li>
+
                 
                   <li  class="has-sub" >
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#contact"

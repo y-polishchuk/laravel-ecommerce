@@ -142,7 +142,7 @@
                     <ul class="dropdown-menu dropdown-menu-right">
                       <!-- User image -->
                       <li class="dropdown-header">
-                        <img src="{{ Auth::user()->profile_photo_path }}" class="img-circle" alt="User Image" />
+                        <img src="{{ Auth::user()->profile_photo_url }}" class="img-circle" alt="User Image" />
                         <div class="d-inline-block">
                         {{ Auth::user()->name }}<small class="pt-1">{{ Auth::user()->email }}</small>
                         </div>

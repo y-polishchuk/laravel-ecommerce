@@ -30,7 +30,7 @@
           <li><a href="{{ url('/services') }}">Services</a></li>
           <li><a href="{{ route('portfolio') }}">Portfolio</a></li>
           <li><a href="{{ route('page.pricing') }}">Pricing</a></li>
-          <li><a href="blog.html">Blog</a></li>
+          <li><a href="{{ route('page.blog') }}">Blog</a></li>
           <li><a href="{{ route('contact') }}">Contact</a></li>
           <li><a href="{{ route('login') }}">Login</a></li>
 

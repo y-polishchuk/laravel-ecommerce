@@ -80,52 +80,28 @@ class TeamController extends Controller
             'linkedin' => 'required'
         ]);
 
+        $member = TeamMember::find($id);
         $old_image = $request->old_image;
         $member_photo = $request->file('photo');
 
         if($member_photo) {
         $name_gen = hexdec(uniqid()).'.'.$member_photo->getClientOriginalExtension();
-        $last_img = 'image/team/'.$name_gen;
-        $member_photo->move('image/team/',$name_gen);
-        
+        $path = 'image/team/'.$name_gen;
+        Image::make($member_photo->getRealPath())->resize(500, 500)->save($path);
+        $member->photo = $path;
+        $member->save();
     
         unlink($old_image);
+        }
 
-        TeamMember::find($id)->update([
-            'name' => $request->name,
-            'position' => $request->position,
-            'photo' => $last_img,
-            'twitter' => $request->twitter,
-            'facebook' => $request->facebook,
-            'instagram' => $request->instagram,
-            'linkedin' => $request->linkedin,
-            'updated_at' => Carbon::now()
-        ]);
-
+        $member->update($request->except('photo'));
+        
         $notification = array(
             'message' => 'Team Member Is Updated Successfully!',
             'alert-type' => 'info',
         );
 
         return Redirect()->back()->with($notification);
-        } else {
-            TeamMember::find($id)->update([
-                'name' => $request->name,
-                'position' => $request->position,
-                'twitter' => $request->twitter,
-                'facebook' => $request->facebook,
-                'instagram' => $request->instagram,
-                'linkedin' => $request->linkedin,
-                'updated_at' => Carbon::now()
-            ]);
-    
-            $notification = array(
-                'message' => 'Team Member Is Updated Successfully!',
-                'alert-type' => 'info',
-            );
-    
-            return Redirect()->back()->with($notification);
-        }
     }
 
     public function adminDeleteMember($id)

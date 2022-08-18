@@ -23,7 +23,7 @@ class CategoryController extends Controller
         //     ->select('categories.*', 'users.name')
         //     ->latest()->paginate(5);
     
-        $categories = Category::latest()->paginate(5); //reverse order
+        $categories = Category::paginate(5);
         $trashCat = Category::onlyTrashed()->latest()->paginate(3);
         
         return view('admin.category.index', compact('categories', 'trashCat'));
@@ -65,8 +65,8 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        // $category = Category::find($id);
-        $category = DB::table('categories')->where('id', $id)->first();
+        $category = Category::find($id);
+        // $category = DB::table('categories')->where('id', $id)->first();
         return view('admin.category.edit', compact('category'));
     }
 

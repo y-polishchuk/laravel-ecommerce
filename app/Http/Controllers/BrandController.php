@@ -35,13 +35,6 @@ class BrandController extends Controller
         ]);
 
         $brand_image = $request->file('brand_image');
-        
-        // $name_gen = hexdec(uniqid());
-        // $img_ext = strtolower($brand_image->getClientOriginalExtension());
-        // $img_name = $name_gen.'.'.$img_ext;
-        // $up_location = 'image/brand/';
-        // $last_img = $up_location.$img_name;
-        // $brand_image->move($up_location,$img_name);
 
         $name_gen = hexdec(uniqid()).'.'.$brand_image->getClientOriginalExtension();
         $last_img = 'image/brand/'.$name_gen;
@@ -78,46 +71,27 @@ class BrandController extends Controller
             'brand_name.min' => 'Brand Name Must Be Longer Than 4 Chars.',
         ]);
 
+        $brand = Brand::find($id);
         $old_image = $request->old_image;
         $brand_image = $request->file('brand_image');
 
         if($brand_image) {
-            $name_gen = hexdec(uniqid());
-            $img_ext = strtolower($brand_image->getClientOriginalExtension());
-            $img_name = $name_gen.'.'.$img_ext;
-            $up_location = 'image/brand/';
-            $last_img = $up_location.$img_name;
-            $brand_image->move($up_location,$img_name);
-    
+            $img_name = hexdec(uniqid()).'.'.strtolower($brand_image->getClientOriginalExtension());
+            $path = 'image/brand/'.$img_name;
+            Image::make($brand_image->getRealPath())->resizeCanvas(0, 0,'center', true)->save($path);
+            $brand->brand_image = $path;
+            $brand->save();
+
             unlink($old_image);
-    
-            Brand::find($id)->update([
-                'brand_name' => $request->brand_name,
-                'brand_image' => $last_img,
-                'created_at' => Carbon::now()
-            ]);
+        }
+        $brand->update($request->except('brand_image'));
 
-            $notification = array(
-                'message' => 'Brand Is Updated Successfully!',
-                'alert-type' => 'info',
-            );
+        $notification = array(
+            'message' => 'Brand Is Updated Successfully!',
+            'alert-type' => 'info',
+        );
     
-            return Redirect()->back()->with($notification);
-    
-        } else {
-            Brand::find($id)->update([
-                'brand_name' => $request->brand_name,
-                'created_at' => Carbon::now()
-            ]);
-
-            $notification = array(
-                'message' => 'Brand Is Updated Successfully!',
-                'alert-type' => 'warning',
-            );
-    
-            return Redirect()->back()->with($notification);
-        }  
-
+        return Redirect()->back()->with($notification);
         
     }
 

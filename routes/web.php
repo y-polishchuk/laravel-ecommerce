@@ -38,17 +38,17 @@ Route::get('/about', function () {
 
 // For Category Routes
 
-Route::get('/categories', 'App\Http\Controllers\CategoryController@all')->name('categories');
+Route::get('/admin/categories', 'App\Http\Controllers\CategoryController@all')->name('categories');
 
-Route::post('/categories/add', 'App\Http\Controllers\CategoryController@add')->name('categories.store');
+Route::post('/admin/categories/add', 'App\Http\Controllers\CategoryController@add')->name('categories.store');
 
-Route::get('/categories/edit/{id}', 'App\Http\Controllers\CategoryController@edit')->name('categories.edit');
+Route::get('/admin/categories/edit/{id}', 'App\Http\Controllers\CategoryController@edit')->name('categories.edit');
 
-Route::post('/categories/update/{id}', 'App\Http\Controllers\CategoryController@update')->name('categories.update');
-Route::get('/categories/softdelete/{id}', 'App\Http\Controllers\CategoryController@softDelete')->name('softdelete.categories');
+Route::post('/admin/categories/update/{id}', 'App\Http\Controllers\CategoryController@update')->name('categories.update');
+Route::get('/admin/categories/softdelete/{id}', 'App\Http\Controllers\CategoryController@softDelete')->name('softdelete.categories');
 
-Route::get('/categories/restore/{id}', 'App\Http\Controllers\CategoryController@restore')->name('categories.restore');
-Route::get('/categories/permdelete/{id}', 'App\Http\Controllers\CategoryController@pDelete')->name('categories.permdelete');
+Route::get('/admin/categories/restore/{id}', 'App\Http\Controllers\CategoryController@restore')->name('categories.restore');
+Route::get('/admin/categories/permdelete/{id}', 'App\Http\Controllers\CategoryController@permDelete')->name('categories.permdelete');
 
 // For Brand Routes
 
@@ -156,6 +156,42 @@ Route::post('/admin/faq/store', 'App\Http\Controllers\FAQController@adminStoreFA
 Route::get('/admin/faq/edit/{id}', 'App\Http\Controllers\FAQController@adminEditFAQ')->name('faq.edit');
 Route::post('/admin/faq/{id}', 'App\Http\Controllers\FAQController@adminUpdateFAQ')->name('faq.update');
 Route::get('/admin/faq/delete/{id}', 'App\Http\Controllers\FAQController@adminDeleteFAQ')->name('faq.delete');
+
+// Blog Page Route
+
+Route::get('/blog', 'App\Http\Controllers\BlogController@blog')->name('page.blog');
+Route::get('/blog/post/{id}', 'App\Http\Controllers\BlogController@blogSingle')->name('blog.single');
+Route::get('/blog/category/{id}', 'App\Http\Controllers\BlogController@category')->name('blog.category');
+Route::get('/blog/tag/{id}', 'App\Http\Controllers\BlogController@tag')->name('blog.tag');
+
+// Author Routes
+
+Route::get('/admin/blog/authorship', 'App\Http\Controllers\AuthorController@authorship')->name('admin.authorship');
+Route::get('/admin/blog/author/add', 'App\Http\Controllers\AuthorController@adminAddAuthor')->name('author.add');
+Route::post('/admin/blog/author/store', 'App\Http\Controllers\AuthorController@adminStoreAuthor')->name('author.store');
+Route::get('/admin/blog/author/edit/{id}', 'App\Http\Controllers\AuthorController@adminEditAuthor')->name('author.edit');
+Route::post('/admin/blog/author/update/{id}', 'App\Http\Controllers\AuthorController@adminUpdateAuthor')->name('author.update');
+Route::get('/admin/blog/author/delete/{id}', 'App\Http\Controllers\AuthorController@adminDeleteAuthor')->name('author.delete');
+
+// Article Route
+
+Route::get('/blog/articles/{id}', 'App\Http\Controllers\ArticleController@article')->name('page.article');
+Route::get('/admin/blog/articles', 'App\Http\Controllers\ArticleController@adminArticle')->name('admin.articles');
+Route::get('/admin/blog/articles/add', 'App\Http\Controllers\ArticleController@adminAddArticle')->name('article.add');
+Route::post('/admin/blog/articles/store', 'App\Http\Controllers\ArticleController@adminStoreArticle')->name('article.store');
+Route::get('/admin/blog/articles/edit/{id}', 'App\Http\Controllers\ArticleController@adminEditArticle')->name('article.edit');
+Route::post('/admin/blog/articles/update/{id}', 'App\Http\Controllers\ArticleController@adminUpdateArticle')->name('article.update');
+Route::get('/admin/blog/articles/delete/{id}', 'App\Http\Controllers\ArticleController@adminDeleteArticle')->name('article.delete');
+
+// Admin Tag Route
+
+Route::get('/admin/blog/tags', 'App\Http\Controllers\TagController@adminTag')->name('admin.tags');
+Route::post('/admin/blog/tags/store', 'App\Http\Controllers\TagController@adminStoreTag')->name('tag.store');
+Route::get('/admin/blog/tags/edit/{id}', 'App\Http\Controllers\TagController@adminEditTag')->name('tag.edit');
+Route::post('/admin/blog/tags/update/{id}', 'App\Http\Controllers\TagController@adminUpdateTag')->name('tag.update');
+Route::get('/admin/blog/tags/softdelete/{id}', 'App\Http\Controllers\TagController@tagSoftDelete')->name('tag.softdelete');
+Route::get('/admin/blog/tags/restore/{id}', 'App\Http\Controllers\TagController@tagRestore')->name('tag.restore');
+Route::get('/admin/blog/tags/permdelete/{id}', 'App\Http\Controllers\TagController@tagPermDelete')->name('tag.permdelete');
 
 // Admin Contact Page Route
 
