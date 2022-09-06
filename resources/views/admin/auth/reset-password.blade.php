@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>User Reset Password</title>
+  <title>Admin Reset Password</title>
 
   <!-- GOOGLE FONTS -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet"/>
@@ -56,7 +56,7 @@
                       <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
                     </g>
                   </svg>
-                  <span class="brand-name">User Dashboard</span>
+                  <span class="brand-name">Admin Dashboard</span>
                 </a>
               </div>
             </div>
@@ -65,7 +65,7 @@
 
               <h4 class="text-dark mb-5">Reset Password</h4>
               <x-jet-validation-errors class="form-group col-md-12 mb-4 text-danger" />
-              <form method="POST" action="{{ route('password.update') }}">
+              <form method="POST" action="{{ route('admin.pass-reset.update') }}">
                 @csrf
                 <input type="hidden" name="token" value="{{ $request->route('token') }}">
                 <div class="row">

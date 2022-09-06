@@ -56,7 +56,7 @@
                           <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
                         </g>
                       </svg>
-                      <span class="brand-name">User Dashboard</span>
+                      <span class="brand-name">Dashboard</span>
                     </a>
                   </div>
                 </div>
@@ -70,9 +70,6 @@
                       </div>
                       <div class="form-group col-md-12 mb-4">
                         <input type="email" name="email" :value="old('email')" class="form-control input-lg" aria-describedby="emailHelp" placeholder="Email" required>
-                      </div>
-                      <div class="form-group col-md-12 mb-4">
-                        <input type="phone" name="mobile" :value="old('mobile')" class="form-control input-lg" aria-describedby="phoneHelp" placeholder="Mobile" required>
                       </div>
                       <div class="form-group col-md-12 ">
                         <input type="password" name="password" class="form-control input-lg" placeholder="Password" required autocomplete="new-password">

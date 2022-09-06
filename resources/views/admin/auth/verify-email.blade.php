@@ -56,46 +56,36 @@
                           <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
                         </g>
                       </svg>
-                      <span class="brand-name">User Dashboard</span>
+                      <span class="brand-name">Dashboard</span>
                     </a>
                   </div>
                 </div>
                 <div class="card-body p-5">
-                  <h4 class="text-dark mb-5">Sign Up</h4>
-                  <form method="POST" action="{{ route('register') }}">
-                    @csrf
+                  <h4 class="text-dark mb-5">Email Verify</h4>
+                  
                     <div class="row">
                       <div class="form-group col-md-12 mb-4">
-                        <input type="text" name="name" :value="old('name')" class="form-control input-lg" aria-describedby="nameHelp" placeholder="Name" required autofocus autocomplete="name">
+                      {{ __('Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
                       </div>
-                      <div class="form-group col-md-12 mb-4">
-                        <input type="email" name="email" :value="old('email')" class="form-control input-lg" aria-describedby="emailHelp" placeholder="Email" required>
-                      </div>
-                      <div class="form-group col-md-12 mb-4">
-                        <input type="phone" name="mobile" :value="old('mobile')" class="form-control input-lg" aria-describedby="phoneHelp" placeholder="Mobile" required>
-                      </div>
-                      <div class="form-group col-md-12 ">
-                        <input type="password" name="password" class="form-control input-lg" placeholder="Password" required autocomplete="new-password">
-                      </div>
-                      <div class="form-group col-md-12 ">
-                        <input type="password" name="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" required autocomplete="new-password">
-                      </div>
-                      <div class="col-md-12">
-                        <div class="d-inline-block mr-3">
-                          <label class="control control-checkbox">
-                            <input type="checkbox" />
-                            <div class="control-indicator"></div>
-                            I Agree the terms and conditions
-                          </label>
-                    
+                      @if (session('status') == 'verification-link-sent')
+                        <div class="form-group col-md-12 mb-4 font-medium text-sm text-green-600">
+                            {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
                         </div>
-                        <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Sign Up</button>
-                        <p>Already have an account?
-                          <a class="text-blue" href="{{ route('login') }}">Sign in</a>
-                        </p>
+                      @endif
+                      <form method="POST" action="{{ route('verification.send') }}">
+                        @csrf
+                      <div class="col-md-12">
+                        <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Resend Verification Email</button>
                       </div>
+                      </form>
+                      <form method="GET" action="{{ route('admin.logout') }}">
+                        @csrf
+                      <div class="col-md-12">
+                        <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Log Out</button>
+                      </div>
+                      </form>
                     </div>
-                  </form>
+                  
 
                 </div>
               </div>

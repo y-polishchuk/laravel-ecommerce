@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Admin;
+use App\Models\User;
 use Auth;
 use Image;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Contracts\LogoutResponse;
 
-class ChangePassController extends Controller
+class UserChangePassController extends Controller
 {
     public function changePass()
     {
-        return view('admin.body.change_pass');
+        return view('user.body.change_pass');
     }
 
     public function updatePass(Request $request)
@@ -25,9 +25,9 @@ class ChangePassController extends Controller
 
         $hashedPass = Auth::user()->password;
         if(Hash::check($request->old_password, $hashedPass)) {
-            $admin = Admin::find(Auth::id());
-            $admin->password = Hash::make($request->password);
-            $admin->save();
+            $user = User::find(Auth::id());
+            $user->password = Hash::make($request->password);
+            $user->save();
             Auth::logout();
 
             $notification = array(
@@ -35,7 +35,7 @@ class ChangePassController extends Controller
                 'alert-type' => 'success',
             );
 
-            return redirect()->route('admin.login')->with($notification);
+            return redirect()->route('login')->with($notification);
         } else {
             $notification = array(
                 'message' => 'Current Password Is Invalid.',
@@ -49,42 +49,42 @@ class ChangePassController extends Controller
     public function profileUpdate()
     {
         if(Auth::user()) {
-            $admin = Admin::find(Auth::user()->id);
-            if($admin) {
-                return view('admin.body.update_profile', compact('admin'));
+            $user = User::find(Auth::user()->id);
+            if($user) {
+                return view('user.body.update_profile', compact('user'));
             }
         }
     }
 
-    public function adminUpdateProfile(Request $request)
+    public function userUpdateProfile(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required',
             'email' => 'required',
         ]);
 
-        $admin = Admin::find(Auth::user()->id);
+        $user = User::find(Auth::user()->id);
        
-        if($admin) {
+        if($user) {
         $old_image = $request->old_image;
-        $admin_image = $request->file('admin_image');
+        $user_image = $request->file('user_image');
 
-        if($admin_image) {
-        $name_gen = hexdec(uniqid()).'.'.$admin_image->getClientOriginalExtension();
+        if($user_image) {
+        $name_gen = hexdec(uniqid()).'.'.$user_image->getClientOriginalExtension();
         $last_img = 'profile-photos/'.$name_gen;
-        Image::make($admin_image)->fit(400,400)->save('storage/'.$last_img);
+        Image::make($user_image)->fit(400,400)->save('storage/'.$last_img);
 
         if($old_image) {
             unlink('storage/'.$old_image);
         }
-        $admin->profile_photo_path = $last_img; 
+        $user->profile_photo_path = $last_img; 
         }
-        $admin->name = $request->name;
-        $admin->email = $request->email;
-        $admin->save();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
 
         $notification = array(
-            'message' => 'Admin Profile Is Updated Successfully!',
+            'message' => 'User Profile Is Updated Successfully!',
             'alert-type' => 'success',
         );
 
@@ -96,7 +96,7 @@ class ChangePassController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::guard('admin')->logout();
+        Auth::guard('web')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -104,3 +104,4 @@ class ChangePassController extends Controller
         return app(LogoutResponse::class);
     }
 }
+

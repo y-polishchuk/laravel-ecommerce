@@ -11,12 +11,6 @@ use Auth;
 
 class BrandController extends Controller
 {
-    
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function all()
     {
         $brands = Brand::latest()->paginate(5);
@@ -108,11 +102,5 @@ class BrandController extends Controller
         );
         
         return Redirect()->back()->with($notification);
-    }
-  
-    public function logout()
-    {
-        Auth::logout();
-        return Redirect()->route('login');
     }
 }

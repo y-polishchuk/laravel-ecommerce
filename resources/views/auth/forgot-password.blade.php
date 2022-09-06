@@ -56,7 +56,7 @@
                       <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
                     </g>
                   </svg>
-                  <span class="brand-name">Dashboard</span>
+                  <span class="brand-name">User Dashboard</span>
                 </a>
               </div>
             </div>

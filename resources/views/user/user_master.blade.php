@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Easy - Admin Dashboard</title>
+  <title>Easy - User Dashboard</title>
 
   <!-- GOOGLE FONTS -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet"/>
@@ -56,7 +56,7 @@
           ——— LEFT SIDEBAR WITH FOOTER
           =====================================
         -->
-@include('admin.body.sidebar')
+@include('user.body.sidebar')
 
       
 
@@ -136,25 +136,25 @@
                   <!-- User Account -->
                   <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                      <img src="{{ Auth::user()->profile_photo_url }}" class="user-image" alt="User Image" />
-                      <span class="d-none d-lg-inline-block">{{ Auth::user()->name }}</span>
+                      <img src="{{ Auth::guard('web')->user()->profile_photo_url }}" class="user-image" alt="User Image" />
+                      <span class="d-none d-lg-inline-block">{{ Auth::guard('web')->user()->name }}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                       <!-- User image -->
                       <li class="dropdown-header">
-                        <img src="{{ Auth::user()->profile_photo_url }}" class="img-circle" alt="User Image" />
+                        <img src="{{ Auth::guard('web')->user()->profile_photo_url }}" class="img-circle" alt="User Image" />
                         <div class="d-inline-block">
-                        {{ Auth::user()->name }}<small class="pt-1">{{ Auth::user()->email }}</small>
+                        {{ Auth::guard('web')->user()->name }}<small class="pt-1">{{ Auth::guard('web')->user()->email }}</small>
                         </div>
                       </li>
 
                       <li>
-                        <a href="{{ route('admin.profile.update') }}">
+                        <a href="{{ route('user.profile.show') }}">
                           <i class="mdi mdi-account"></i> My Profile
                         </a>
                       </li>
                       <li>
-                        <a href="{{ route('admin.password.change') }}">
+                        <a href="{{ route('user.password.change') }}">
                           <i class="mdi mdi-email"></i> Change Password
                         </a>
                       </li>
@@ -166,7 +166,7 @@
                       </li>
 
                       <li class="dropdown-footer">
-                        <a href="{{ route('admin.logout') }}"> <i class="mdi mdi-logout"></i> Log Out </a>
+                        <a href="{{ route('user.logout') }}"> <i class="mdi mdi-logout"></i> Log Out </a>
                       </li>
                     </ul>
                   </li>
@@ -180,7 +180,7 @@
 
         <div class="content-wrapper">
           <div class="content">						 
-@yield('admin')
+@yield('user')
 
           </div>
         </div>

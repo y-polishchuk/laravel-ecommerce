@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>User Reset Password</title>
+  <title>Admin Forgot Password</title>
 
   <!-- GOOGLE FONTS -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet"/>
@@ -56,30 +56,31 @@
                       <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
                     </g>
                   </svg>
-                  <span class="brand-name">User Dashboard</span>
+                  <span class="brand-name">Admin Dashboard</span>
                 </a>
               </div>
             </div>
 
             <div class="card-body p-5">
 
-              <h4 class="text-dark mb-5">Reset Password</h4>
-              <x-jet-validation-errors class="form-group col-md-12 mb-4 text-danger" />
-              <form method="POST" action="{{ route('password.update') }}">
+              <h4 class="text-dark mb-5">Get Password Reset Link</h4>
+              <form method="POST" action="{{ route('admin.password.email') }}">
                 @csrf
-                <input type="hidden" name="token" value="{{ $request->route('token') }}">
                 <div class="row">
+                <div class="form-group col-md-12 mb-4 text-dark">
+                {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+                </div>
+                @if (session('status'))
+                <div class="form-group col-md-12 mb-4 text-success">
+                {{ session('status') }}
+                </div>
+                 @endif
+                    <x-jet-validation-errors class="form-group col-md-12 mb-4 text-danger" />
                   <div class="form-group col-md-12 mb-4">
-                    <input type="email" name="email" class="form-control input-lg" aria-describedby="emailHelp" placeholder="Email" value="{{ $request->email }}" required autofocus>
+                    <input type="email" name="email" class="form-control input-lg" aria-describedby="emailHelp" placeholder="Email" :value="old('email')" required autofocus>
                   </div>
-                  <div class="form-group col-md-12">
-                    <input type="password" name="password" class="form-control input-lg" placeholder="New Password" required autocomplete="new-password">
-                  </div>
-                  <div class="form-group col-md-12 ">
-                    <input type="password" name="password_confirmation" class="form-control input-lg" placeholder="Password Confirmation" required autocomplete="new-password">
-                  </div>
-                  <div class="col-md-12">
-                    <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Reset Password</button>
+                  <div class="col-md-12"> 
+                    <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Email Password Reset Link</button>
                   </div>
                 </div>
               </form>
@@ -89,7 +90,7 @@
       </div>
       <div class="copyright pl-0">
         <p class="text-center">&copy; 2018 Copyright Dashboard by
-          <a class="text-primary" href="http://www.google.com/" target="_blank">Google</a>.
+          <a class="text-primary" href="https://www.google.com/" target="_blank">Google</a>.
         </p>
       </div>
     </div>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>User Reset Password</title>
+  <title>Admin Login</title>
 
   <!-- GOOGLE FONTS -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet"/>
@@ -56,30 +56,41 @@
                       <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
                     </g>
                   </svg>
-                  <span class="brand-name">User Dashboard</span>
+                  <span class="brand-name">Admin Dashboard</span>
                 </a>
               </div>
             </div>
 
             <div class="card-body p-5">
 
-              <h4 class="text-dark mb-5">Reset Password</h4>
+              <h4 class="text-dark mb-5">Sign In as Admin</h4>
               <x-jet-validation-errors class="form-group col-md-12 mb-4 text-danger" />
-              <form method="POST" action="{{ route('password.update') }}">
+              @if (session('status'))
+              <div class="form-group col-md-12 mb-4 text-success">
+                {{ session('status') }}
+              </div>
+              @endif
+              <form method="POST" action="{{ route('admin.login') }}">
                 @csrf
-                <input type="hidden" name="token" value="{{ $request->route('token') }}">
                 <div class="row">
                   <div class="form-group col-md-12 mb-4">
-                    <input type="email" name="email" class="form-control input-lg" aria-describedby="emailHelp" placeholder="Email" value="{{ $request->email }}" required autofocus>
-                  </div>
-                  <div class="form-group col-md-12">
-                    <input type="password" name="password" class="form-control input-lg" placeholder="New Password" required autocomplete="new-password">
+                    <input type="email" name="email" class="form-control input-lg" aria-describedby="emailHelp" placeholder="Email">
                   </div>
                   <div class="form-group col-md-12 ">
-                    <input type="password" name="password_confirmation" class="form-control input-lg" placeholder="Password Confirmation" required autocomplete="new-password">
+                    <input type="password" name="password" class="form-control input-lg" placeholder="Password">
                   </div>
                   <div class="col-md-12">
-                    <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Reset Password</button>
+                    <div class="d-flex my-2 justify-content-between">
+                      <div class="d-inline-block mr-3">
+                        <label class="control control-checkbox">Remember me
+                          <input type="checkbox" />
+                          <div class="control-indicator"></div>
+                        </label>
+                
+                      </div>
+                      <p><a class="text-blue" href="{{ route('admin.password.request') }}">Forgot Your Password?</a></p>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Sign In</button>
                   </div>
                 </div>
               </form>

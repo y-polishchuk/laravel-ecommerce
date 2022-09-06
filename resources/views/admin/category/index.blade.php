@@ -17,7 +17,6 @@
     <tr>
       <th scope="col">SL No</th>
       <th scope="col">Category Name</th>
-      <th scope="col">User</th>
       <th scope="col">Created At</th>
       <th scope="col">Action</th>
     </tr>
@@ -29,7 +28,6 @@
       <th scope="row"> {{ $categories->firstItem()+$loop->index }} </th> 
       <!-- get a number of the first element in result + the index of the current item -->
       <td> {{ $category->category_name }} </td>
-      <td> {{ $category->user->name }} </td>
       <td> 
         @if($category->created_at == null)
         <span class="text-danger">No Date Set</span>
@@ -90,7 +88,6 @@
     <tr>
       <th scope="col">SL No</th>
       <th scope="col">Category Name</th>
-      <th scope="col">User</th>
       <th scope="col">Created At</th>
       <th scope="col">Action</th>
     </tr>
@@ -102,7 +99,6 @@
       <th scope="row"> {{ $categories->firstItem()+$loop->index }} </th> 
       <!-- get a number of the first element in result + the index of the current item -->
       <td> {{ $category->category_name }} </td>
-      <td> {{ $category->user->name }} </td>
       <td> 
         @if($category->created_at == null)
         <span class="text-danger">No Date Set</span>

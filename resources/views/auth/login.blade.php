@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Admin Login</title>
+  <title>User Login</title>
 
   <!-- GOOGLE FONTS -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet"/>
@@ -56,7 +56,7 @@
                       <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
                     </g>
                   </svg>
-                  <span class="brand-name">Dashboard</span>
+                  <span class="brand-name">User Dashboard</span>
                 </a>
               </div>
             </div>
@@ -86,13 +86,15 @@
                           <input type="checkbox" />
                           <div class="control-indicator"></div>
                         </label>
-                
                       </div>
                       <p><a class="text-blue" href="{{ route('password.request') }}">Forgot Your Password?</a></p>
                     </div>
                     <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Sign In</button>
-                    <p>Don't have an account yet ?
+                    <p>Don't have an account yet?
                       <a class="text-blue" href="{{ route('register') }}">Sign Up</a>
+                    </p><br>
+                    <p>Are you Admin?
+                      <a class="text-blue" href="{{ route('admin.login.form') }}">Login</a>
                     </p>
                   </div>
                 </div>
