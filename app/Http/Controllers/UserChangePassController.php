@@ -46,16 +46,6 @@ class UserChangePassController extends Controller
         }
     }
 
-    public function profileUpdate()
-    {
-        if(Auth::user()) {
-            $user = User::find(Auth::user()->id);
-            if($user) {
-                return view('user.body.update_profile', compact('user'));
-            }
-        }
-    }
-
     public function userUpdateProfile(Request $request)
     {
         $validated = $request->validate([

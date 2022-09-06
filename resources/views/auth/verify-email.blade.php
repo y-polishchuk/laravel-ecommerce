@@ -68,7 +68,7 @@
                       {{ __('Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
                       </div>
                       @if (session('status') == 'verification-link-sent')
-                        <div class="form-group col-md-12 mb-4 text-green-600">
+                        <div class="form-group col-md-12 mb-4 font-medium text-sm text-green-600">
                             {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
                         </div>
                       @endif

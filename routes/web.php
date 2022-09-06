@@ -88,7 +88,7 @@ Route::get('/admin/reset-password/{token}', 'App\Http\Controllers\Admin\NewPassw
 
 
 
-Route::middleware('auth:admin')->group(function () {
+Route::middleware(['auth:sanctum,admin', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.index');
     })->name('admin.dashboard');
@@ -243,17 +243,20 @@ Route::post('/admin/contact/update/{id}', 'App\Http\Controllers\ContactControlle
 Route::get('/admin/contact/delete/{id}', 'App\Http\Controllers\ContactController@adminDeleteContact')->name('contact.delete');
 Route::get('/admin/message', 'App\Http\Controllers\ContactController@adminMessage')->name('admin.message');
 Route::get('/admin/message/delete/{id}', 'App\Http\Controllers\ContactController@adminDeleteMessage')->name('message.delete');
+});
 
 //* ********* */
+
+Route::middleware('auth:admin')->group(function () {
 
 // Change Password and Admin Profile Route
 
 Route::get('/admin/password', 'App\Http\Controllers\ChangePassController@changePass')->name('admin.password.change');
 Route::post('/admin/password/update', 'App\Http\Controllers\ChangePassController@updatePass')->name('admin.password.update');
 
-// User Profile
+// Admin Profile
 
-Route::get('/admin/profile', 'App\Http\Controllers\ChangePassController@profileUpdate')->name('admin.profile.update');
+Route::get('/admin/profile', 'App\Http\Controllers\Admin\AdminProfileController@show')->name('admin.profile.show');
 Route::post('/admin/profile/update', 'App\Http\Controllers\ChangePassController@adminUpdateProfile')->name('update.admin.profile');
 Route::get('/admin/logout', 'App\Http\Controllers\ChangePassController@logout')->name('admin.logout');
 });

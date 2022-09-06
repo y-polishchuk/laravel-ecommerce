@@ -78,7 +78,10 @@
                         <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Resend Verification Email</button>
                       </div>
                       </form>
-                      <form method="GET" action="{{ route('admin.logout') }}">
+                      <div class="form-group col-md-12 mb-4">
+                        <a href="{{ route('admin.profile.show') }}" class="underline text-sm">Edit Profile</a>
+                      </div>
+                      <form method="POST" action="{{ route('logout') }}">
                         @csrf
                       <div class="col-md-12">
                         <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Log Out</button>

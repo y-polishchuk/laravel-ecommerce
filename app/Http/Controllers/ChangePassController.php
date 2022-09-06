@@ -46,16 +46,6 @@ class ChangePassController extends Controller
         }
     }
 
-    public function profileUpdate()
-    {
-        if(Auth::user()) {
-            $admin = Admin::find(Auth::user()->id);
-            if($admin) {
-                return view('admin.body.update_profile', compact('admin'));
-            }
-        }
-    }
-
     public function adminUpdateProfile(Request $request)
     {
         $validated = $request->validate([
