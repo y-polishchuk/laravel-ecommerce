@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,10 +16,20 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+})->middleware('auth:web')->name('verification.notice');
+
+Route::middleware('auth:admin')->group(function () {
+
+Route::get('/admin/email/verify', function () {
+    return view('admin.auth.verify-email');
+})->name('admin.verification.notice');
+
+Route::post('/admin/email/verification-notification', 'App\Http\Controllers\Admin\EmailVerificationNotificationController@store')->name('admin.verification.send');
+Route::get('/admin/email/verify/{id}/{hash}', 'App\Http\Controllers\Admin\VerifyEmailController@__invoke')->name('admin.verification.verify');
+});
+
 
 Route::get('/', function () {
     $brands = DB::table('brands')->get();
@@ -88,7 +99,7 @@ Route::get('/admin/reset-password/{token}', 'App\Http\Controllers\Admin\NewPassw
 
 
 
-Route::middleware(['auth:sanctum,admin', config('jetstream.auth_session'), 'verified'])->group(function () {
+Route::middleware(['auth:sanctum,admin', config('jetstream.auth_session'), 'admin.verified'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.index');
     })->name('admin.dashboard');

@@ -72,7 +72,7 @@
                             {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
                         </div>
                       @endif
-                      <form method="POST" action="{{ route('verification.send') }}">
+                      <form method="POST" action="{{ route('admin.verification.send') }}">
                         @csrf
                       <div class="col-md-12">
                         <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Resend Verification Email</button>
