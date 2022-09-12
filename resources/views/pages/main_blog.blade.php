@@ -40,7 +40,7 @@
                 <ul>
                   <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href="">{{ $authors[$article->author_id] }}</a></li>
                   <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <a href=""><time>{{ date("Y-m-d",strtotime($article->created_at)) }}</time></a></li>
-                  <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="">12 Comments</a></li>
+                  <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="">{{ $article->comments_count }} Comments</a></li>
                 </ul>
               </div>
 

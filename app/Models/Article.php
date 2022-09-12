@@ -25,6 +25,7 @@ class Article extends Model
     ];
 
     protected $with = ['tags'];
+    protected $withCount = ['comments'];
 
     public function category()
     {
