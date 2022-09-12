@@ -11,7 +11,7 @@ class AuthorController extends Controller
 {
     public function authorship()
     {
-        $authors = Author::all();
+        $authors = Author::paginate(10);
         return view('admin.author.authorship', compact('authors'));
     }
 

@@ -40,18 +40,17 @@
                     <ul  class="collapse show"  id="dashboard"
                       data-parent="#sidebar-menu">
                       <div class="sub-menu">
-                        
-                        
-                          
-<li  class="active" >
-  <a class="sidenav-item-link" href="{{ route('dashboard') }}">
-    <span class="nav-text">Home</span>
-    
-  </a>
+
+                                           
+  <li  class="active" >
+    <a class="sidenav-item-link" href="{{ route('user.comments', Auth::guard('web')->user()->id) }}">
+      <span class="nav-text">My Comments</span>
+    </a>
+  </li>
+
+    </div>
+  </ul>
 </li>
-                      </div>
-                    </ul>
-                  </li>
                
 
                 

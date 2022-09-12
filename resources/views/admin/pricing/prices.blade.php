@@ -39,7 +39,7 @@
       
       <td> {{ $price->title }} </td>
       <td> {{ $price->price }} </td>
-      <td> {{ $price->features }} </td>
+      <td> {{ Illuminate\Support\Str::limit($price->features, 100) }} </td>
       <td> {{ $price->advanced }} </td>
     <td><a href="{{ route('price.edit', $price->id) }}" class="btn btn-info">Edit</a>
     <a href="{{ route('price.delete', $price->id) }}" onclick="return confirm('Are you sure, you want to delete this Price?')" class="btn btn-danger">Delete</a>

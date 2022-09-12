@@ -81,7 +81,7 @@
         <div class="col-md-8">
         <div class="card">
 
-        <div class="card-header">Trash List</div>
+        <div class="card-header">Trash Category List</div>
 
 <table class="table">
   <thead>

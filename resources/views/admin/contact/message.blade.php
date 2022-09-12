@@ -35,8 +35,8 @@
       
       <td> {{ $mess->name }} </td>
       <td> {{ $mess->email }} </td>
-      <td> {{ $mess->subject }} </td>
-      <td> {{ $mess->message }} </td>
+      <td> {{ Illuminate\Support\Str::limit($mess->subject, 100) }} </td>
+      <td> {{ Illuminate\Support\Str::limit($mess->message, 100) }} </td>
       
     <td>
     <a href="{{ route('message.delete', $mess->id) }}" onclick="return confirm('Are you sure, you want to delete this Message?')" class="btn btn-danger">Delete</a>

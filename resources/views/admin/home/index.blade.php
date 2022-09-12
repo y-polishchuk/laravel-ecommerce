@@ -24,7 +24,7 @@
   <thead>
     <tr>
       <th scope="col" width="5%">SL No</th>
-      <th scope="col" width="15%">Home Title</th>
+      <th scope="col" width="15%">Home About Title</th>
       <th scope="col" width="20%">Short Description</th>
       <th scope="col" width="25%">Long Description</th>
       <th scope="col" width="15%">Action</th>
@@ -36,9 +36,9 @@
     <tr>
       <th scope="row"> {{ $i++ }} </th> 
       
-      <td> {{ $about->title }} </td>
-      <td> {{ $about->short_des }} </td>
-      <td> {{ $about->long_des }} </td>
+      <td> {{ Illuminate\Support\Str::limit($about->title, 100) }} </td>
+      <td> {{ Illuminate\Support\Str::limit($about->short_des, 100) }} </td>
+      <td> {{ Illuminate\Support\Str::limit($about->long_des, 100) }} </td>
       
     <td><a href="{{ route('about.edit', $about->id) }}" class="btn btn-info">Edit</a>
     <a href="{{ route('about.delete', $about->id) }}" onclick="return confirm('Are you sure, you want to delete this About?')" class="btn btn-danger">Delete</a>

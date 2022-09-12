@@ -44,7 +44,7 @@
       
       <td> {{ $member->name }} </td>
       <td> {{ $member->position }} </td>
-      <td> {{ $member->photo }} </td>
+      <td> <img src="{{ asset($member->photo) }}" style="height:80px;"> </td>
       <td> {{ $member->twitter }} </td>
       <td> {{ $member->facebook }} </td>
       <td> {{ $member->instagram }} </td>

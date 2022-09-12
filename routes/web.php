@@ -218,11 +218,23 @@ Route::get('/admin/blog/author/delete/{id}', 'App\Http\Controllers\AuthorControl
 // Articles Routes
 
 Route::get('/admin/blog/articles', 'App\Http\Controllers\ArticleController@adminArticle')->name('admin.articles');
+Route::get('/admin/blog/articles/trashed', 'App\Http\Controllers\ArticleController@trashed')->name('admin.articles.trashed');
 Route::get('/admin/blog/articles/add', 'App\Http\Controllers\ArticleController@adminAddArticle')->name('article.add');
 Route::post('/admin/blog/articles/store', 'App\Http\Controllers\ArticleController@adminStoreArticle')->name('article.store');
 Route::get('/admin/blog/articles/edit/{id}', 'App\Http\Controllers\ArticleController@adminEditArticle')->name('article.edit');
 Route::post('/admin/blog/articles/update/{id}', 'App\Http\Controllers\ArticleController@adminUpdateArticle')->name('article.update');
-Route::get('/admin/blog/articles/delete/{id}', 'App\Http\Controllers\ArticleController@adminDeleteArticle')->name('article.delete');
+Route::get('/admin/blog/articles/softdelete/{id}', 'App\Http\Controllers\ArticleController@softDelete')->name('softdelete.article');
+Route::get('/admin/blog/articles/restore/{id}', 'App\Http\Controllers\ArticleController@restore')->name('article.restore');
+Route::get('/admin/blog/articles/permdelete/{id}', 'App\Http\Controllers\ArticleController@permDelete')->name('article.permdelete');
+
+// Comments Routes
+
+Route::get('/admin/comments', 'App\Http\Controllers\CommentController@adminComments')->name('admin.comments');
+Route::get('/admin/comments/trashed', 'App\Http\Controllers\CommentController@trashed')->name('admin.comments.trashed');
+Route::get('/admin/comments/delete/{id}', 'App\Http\Controllers\CommentController@adminDeleteComment')->name('admin.comment.delete');
+Route::get('/admin/comments/softdelete/{id}', 'App\Http\Controllers\CommentController@softDelete')->name('admin.softdelete.comment');
+Route::get('/admin/comments/restore/{id}', 'App\Http\Controllers\CommentController@restore')->name('admin.comment.restore');
+Route::get('/admin/comments/permdelete/{id}', 'App\Http\Controllers\CommentController@permDelete')->name('admin.comment.permdelete');
 
 // Categories Routes
 
@@ -277,6 +289,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/dashboard', function () {
         return view('user.index');
     })->name('dashboard');
+
+    // Comments Routes
+
+Route::get('/user/{id}/comments', 'App\Http\Controllers\CommentController@userComments')->name('user.comments');
+Route::get('/user/comments/delete/{id}', 'App\Http\Controllers\CommentController@userDeleteComment')->name('user.comment.delete');
 });
 
 Route::middleware('auth:web')->group(function () {
@@ -292,3 +309,6 @@ Route::get('/user/profile', 'App\Http\Controllers\User\UserProfileController@sho
 Route::post('/user/profile/update', 'App\Http\Controllers\UserChangePassController@userUpdateProfile')->name('update.user.profile');
 Route::get('/user/logout', 'App\Http\Controllers\UserChangePassController@logout')->name('user.logout');
 });
+
+Route::post('/comment/store', 'App\Http\Controllers\CommentController@store')->name('comment.add');
+Route::post('/reply/store', 'App\Http\Controllers\CommentController@replyStore')->name('reply.add');

@@ -36,20 +36,21 @@ class BlogController extends Controller
         ->paginate(4);
         $categories = Category::withCount('articles')->get();
 
-        $article = Article::find($id);
+        $article = Article::findOrFail($id);
         $author = Author::find($article->author_id);
         $category = Article::find($id)->category()->first();
 
         $tags = Article::find($id)->tags()->get();
+        $comments = $article->comments()->latest()->paginate(5);
 
-        return view('pages.blog.blog_single', compact('articles', 'search', 'categories', 'article', 'author', 'category', 'tags'));
+        return view('pages.blog.blog_single', compact('articles', 'search', 'categories', 'article', 'author', 'category', 'tags', 'comments'));
     }
 
     public function category(Request $request, $id)
     {
         $search = $request->input('search');
 
-        $articles = Category::find($id)->articles()->latest()
+        $articles = Category::findOrFail($id)->articles()->latest()
         ->where('title', 'like', "%{$search}%")
         ->paginate(4);
 
@@ -67,7 +68,7 @@ class BlogController extends Controller
     {
         $search = $request->input('search');
 
-        $articles = Tag::find($id)->articles()->latest()
+        $articles = Tag::findOrFail($id)->articles()->latest()
         ->where('title', 'like', "%{$search}%")
         ->paginate(4);
 

@@ -41,8 +41,8 @@
       
       <td> {{ $tes->name }} </td>
       <td> {{ $tes->position }} </td>
-      <td> {{ $tes->text }} </td>
-      <td> {{ $tes->photo }} </td>
+      <td> {{ Illuminate\Support\Str::limit($tes->text, 100) }} </td>
+      <td> <img src="{{ asset($tes->photo) }}" style="height:80px;"></td>
       
     <td><a href="{{ route('tes.edit', $tes->id) }}" class="btn btn-info">Edit</a>
     <a href="{{ route('tes.delete', $tes->id) }}" onclick="return confirm('Are you sure, you want to delete this Testimonial?')" class="btn btn-danger">Delete</a>

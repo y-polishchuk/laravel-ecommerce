@@ -42,8 +42,8 @@
       <th scope="row"> {{ $i++ }} </th> 
       
       <td> {{ $author->full_name }} </td>
-      <td> {{ $author->photo }} </td>
-      <td> {{ $author->about }} </td>
+      <td> <img src="{{ asset($author->photo) }}" style="height:80px;"> </td>
+      <td> {{ Illuminate\Support\Str::limit($author->about, 100) }} </td>
       <td> {{ $author->twitter }} </td>
       <td> {{ $author->facebook }} </td>
       <td> {{ $author->instagram }} </td>
@@ -57,6 +57,7 @@
 </table>
 
     </div>
+    {{ $authors->links() }}
     </div>
         </div>
 

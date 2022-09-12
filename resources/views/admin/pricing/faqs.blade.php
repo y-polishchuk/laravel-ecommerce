@@ -36,7 +36,7 @@
       <th scope="row"> {{ $i++ }} </th> 
       
       <td> {{ $faq->question }} </td>
-      <td> {{ $faq->answer }} </td>
+      <td> {{ Illuminate\Support\Str::limit($faq->answer, 100) }} </td>
     <td><a href="{{ route('faq.edit', $faq->id) }}" class="btn btn-info">Edit</a>
     <a href="{{ route('faq.delete', $faq->id) }}" onclick="return confirm('Are you sure, you want to delete this FAQ?')" class="btn btn-danger">Delete</a>
     </td>

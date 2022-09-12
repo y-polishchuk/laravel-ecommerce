@@ -84,6 +84,14 @@ class UserChangePassController extends Controller
        }
     }
 
+    public function gravatar()
+    {
+        Gravatar::get('test@example.com');
+
+        Gravatar::fallback('https://www.nicesnippets.com/.....image_url')->get('test@example.com');
+        return view('gravatar');
+    }
+
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();

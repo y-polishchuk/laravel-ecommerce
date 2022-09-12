@@ -23,7 +23,7 @@
     <tr>
       <th scope="col" width="5%">SL No</th>
       <th scope="col" width="15%">Skill Name</th>
-      <th scope="col" width="10%">Value</th>
+      <th scope="col" width="10%">Value, %</th>
       <th scope="col" width="15%">Action</th>
     </tr>
   </thead>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\Category;
 use App\Models\Article;
+use App\Models\Comment;
 use Image;
 
 class ArticleController extends Controller
@@ -18,8 +19,14 @@ class ArticleController extends Controller
 
     public function adminArticle()
     {
-        $articles = Article::paginate(3);
+        $articles = Article::latest()->paginate(10);
         return view('admin.article.articles', compact('articles'));
+    }
+
+    public function trashed()
+    {
+        $trashed = Article::onlyTrashed()->latest()->paginate(3);
+        return view('admin.article.trashed', compact('trashed'));
     }
 
     public function adminAddArticle()
@@ -99,8 +106,10 @@ class ArticleController extends Controller
         Image::make($entry_img->getRealPath())->resize(768, 576)->save($path);
         $article->entry_img = $path;
         $article->save();
-        
+
+        if($old_image) {
         unlink($old_image);
+        }
         }
         $article->update($request->except('entry_img', 'tags'));
         $article->tags()->sync($request->tags);
@@ -113,18 +122,43 @@ class ArticleController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function adminDeleteArticle($id)
+    public function softDelete($id)
     {
-        $article = Article::find($id);
-        $old_image = $article->entry_img;
-        unlink($old_image);
-        $delete = Article::find($id)->delete();
+        $article = Article::find($id)->delete();
+        
+        $notification = array(
+            'message' => 'Article Is SoftDeleted Successfully!',
+            'alert-type' => 'info',
+        );
+        
+        return Redirect()->back()->with($notification);
+    }
+
+    public function restore($id)
+    {
+        $delete = Article::withTrashed()->find($id)->restore();
+        Comment::withTrashed()->where('commentable_id', $id)->restore();
 
         $notification = array(
-            'message' => 'Article Is Deleted Successfully!',
+            'message' => 'Article Is Restored Successfully!',
+            'alert-type' => 'info',
+        );
+        
+        return Redirect()->back()->with($notification);
+    }
+
+    public function permDelete($id)
+    {
+        $article = Article::onlyTrashed()->find($id);
+        $old_image = $article->entry_img;
+        unlink($old_image);
+        $article->forceDelete();
+
+        $notification = array(
+            'message' => 'Article Is Deleted Permanently!',
             'alert-type' => 'warning',
         );
-
+        
         return Redirect()->back()->with($notification);
     }
 }

@@ -170,6 +170,11 @@
                         </a>
                       </li>
                       <li class="active" >
+                        <a class="sidenav-item-link" href="{{ route('admin.comments') }}">
+                          <span class="nav-text">Comments</span>
+                        </a>
+                      </li>
+                      <li class="active" >
                         <a class="sidenav-item-link" href="{{ route('categories') }}">
                           <span class="nav-text">Categories</span>
                         </a>
