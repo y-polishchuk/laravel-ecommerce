@@ -294,6 +294,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
 Route::get('/user/{id}/comments', 'App\Http\Controllers\CommentController@userComments')->name('user.comments');
 Route::get('/user/comments/delete/{id}', 'App\Http\Controllers\CommentController@userDeleteComment')->name('user.comment.delete');
+
+// Checkout
+
+Route::get('/user/checkout/{id}', 'App\Http\Controllers\CheckoutController@checkout')->name('user.checkout');
 });
 
 Route::middleware('auth:web')->group(function () {
