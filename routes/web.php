@@ -37,7 +37,7 @@ Route::get('/', function () {
     $services = DB::table('home_services')->get();
     $images = DB::table('multipics')->get();
     return view('home', compact('brands', 'abouts', 'services', 'images'));
-});
+})->name('home');
 
 Route::get('/about', function () {
     return view('about');
@@ -296,8 +296,15 @@ Route::get('/user/{id}/comments', 'App\Http\Controllers\CommentController@userCo
 Route::get('/user/comments/delete/{id}', 'App\Http\Controllers\CommentController@userDeleteComment')->name('user.comment.delete');
 
 // Checkout
-
 Route::get('/user/checkout/{id}', 'App\Http\Controllers\CheckoutController@checkout')->name('user.checkout');
+
+// Payment Step
+
+Route::post('/user/payment', 'App\Http\Controllers\CheckoutController@paymentPage')->name('payment.step');
+Route::post('/user/payment/process', 'App\Http\Controllers\CheckoutController@payment')->name('subscribe.post');
+
+Route::get('/invoices', 'App\Http\Controllers\CheckoutController@invoices')->name('invoices');
+Route::middleware(['payingCustomer'])->get('/user/invoice/{invoice}', 'App\Http\Controllers\CheckoutController@invoicesPost')->name('invoices.post');
 });
 
 Route::middleware('auth:web')->group(function () {
@@ -313,6 +320,8 @@ Route::get('/user/profile', 'App\Http\Controllers\User\UserProfileController@sho
 Route::post('/user/profile/update', 'App\Http\Controllers\UserChangePassController@userUpdateProfile')->name('update.user.profile');
 Route::get('/user/logout', 'App\Http\Controllers\UserChangePassController@logout')->name('user.logout');
 });
+
+Route::post('/stripe/webhook', 'App\Http\Controllers\WebhookController@handleWebhook');
 
 Route::post('/comment/store', 'App\Http\Controllers\CommentController@store')->name('comment.add');
 Route::post('/reply/store', 'App\Http\Controllers\CommentController@replyStore')->name('reply.add');

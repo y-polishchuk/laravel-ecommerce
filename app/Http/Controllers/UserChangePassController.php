@@ -80,7 +80,11 @@ class UserChangePassController extends Controller
 
         return redirect()->back()->with($notification);
        } else {
-        return redirect()->back();
+        $notification = array(
+            'message' => 'User Profile Is Not Updated. Check Your Settings',
+            'alert-type' => 'success',
+        );
+        return redirect()->back()->with($notification);
        }
     }
 

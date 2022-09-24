@@ -2,19 +2,19 @@
 
 @section('user')
 
-    <div class="py-12">
+  <div class="py-12">
         
-        <div class="container">
-        <div class="row">
+    <div class="container">
+      <div class="row">
 
         
         <h4>Checkout Page</h4>
         <br><br>
 
-        <div class="col-md-12">
-        <div class="card">
+          <div class="col-md-12">
+            <div class="card">
 
-        <div class="card-header">Subscription Plan</div>
+              <div class="card-header">Subscription Plan</div>
 
 <table class="table">
   <thead>
@@ -38,11 +38,24 @@
     </tr>
   </tbody>
 </table>
-    </div>
-    </div>
+            </div>
+    
+          </div>
         </div>
-
-
     </div>
+  </div>
+    <br>
+    <form action="{{ route('payment.step') }}" method="POST">
+    @csrf
+    <input type="hidden" name="price_id" value="{{ $plan->price_id }}">
+    @if ($plan->price_id == 'none')
+    <div class="row justify-content-center">
+                <button type="submit" class="btn btn-success">Get A Free Plan</button>
+    </div>
+    @else
+    <div class="row justify-content-center">
+                <button type="submit" class="btn btn-success">To The Payment Step</button>
+    </div>
+    @endif
 
 @endsection

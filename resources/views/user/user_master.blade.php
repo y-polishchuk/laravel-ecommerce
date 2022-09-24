@@ -38,6 +38,7 @@
   <![endif]-->
   <script src="{{ asset('backend/assets/plugins/nprogress/nprogress.js') }}"></script>
   <script src="https://cdn.tiny.cloud/1/r8r412l1lee864u4n30scz4udpz3what0jtke2jt92pb8n5y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 
 
@@ -207,7 +208,7 @@
       </div>
     </div>
 
-    
+@stack('scripts')    
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCn8TFXGg17HAUcNpkwtxxyT9Io9B_NcM" defer></script>
 <script src="{{ asset('backend/assets/plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('backend/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -263,6 +264,5 @@ switch(type) {
 }
 @endif
 </script>
-
   </body>
 </html>

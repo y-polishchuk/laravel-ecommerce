@@ -32,7 +32,7 @@
     @foreach($comments as $com) 
     <tr>
       <th scope="row"> {{ $i++ }} </th> 
-      <td> - </td>
+      <td> MY COMMENT </td>
       <td> {{ $com->parent_id ? 'Reply' : 'Comment' }} </td>
       <td> {{ $com->body }} </td>
       <td> <a href="{{ route('blog.single', $com->commentable_id) }}">{{ route('blog.single', $com->commentable_id) }}</a> </td>

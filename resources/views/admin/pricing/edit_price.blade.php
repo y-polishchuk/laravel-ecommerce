@@ -18,8 +18,15 @@
     <span class="text-danger"> {{ $message }}</span>
 @enderror
 <div class="form-group">
-    <label for="exampleFormControlInput2">Unit Price</label>
-    <input type="text" name="price" class="form-control" id="exampleFormControlInput2" value="{{ $price->price }}">
+    <label for="exampleFormControlInput2">Unit Price_id</label>
+    <input type="text" name="price_id" class="form-control" id="exampleFormControlInput2" value="{{ $price->price_id }}">
+</div>
+@error('price_id')
+    <span class="text-danger"> {{ $message }}</span>
+@enderror
+<div class="form-group">
+    <label for="exampleFormControlInput3">Unit Price</label>
+    <input type="text" name="price" class="form-control" id="exampleFormControlInput3" value="{{ $price->price }}">
 </div>
 @error('price')
     <span class="text-danger"> {{ $message }}</span>

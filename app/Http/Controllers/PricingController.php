@@ -31,13 +31,16 @@ class PricingController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required',
+            'price_id' => 'required',
             'price' => 'required',
             'features' => 'required',
             'advanced' => 'required'
         ]);
 
+ 
         Price::insert([
             'title' => $request->title,
+            'price_id' => $request->price_id,
             'price' => $request->price,
             'features' => $request->features,
             'advanced' => $request->advanced,
@@ -62,6 +65,7 @@ class PricingController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required',
+            'price_id' => 'required',
             'price' => 'required',
             'features' => 'required',
             'advanced' => 'required'
@@ -69,6 +73,7 @@ class PricingController extends Controller
 
         Price::find($id)->update([
             'title' => $request->title,
+            'price_id' => $request->price_id,
             'price' => $request->price,
             'features' => $request->features,
             'advanced' => $request->advanced,

@@ -30,8 +30,9 @@
               <h3>{{ $price->title }}</h3>
               <h4><sup>$</sup>{{ $price->price }}<span> / month</span></h4>
               {!! $price->features !!}
+              
               <div class="btn-wrap">
-                <a href="{{ route('user.checkout', $price->id) }}" class="btn-buy">Buy Now</a>
+                <a href="{{ route('user.checkout', $price->id) }}" class="btn btn-buy">Buy Now</a>
               </div>
             </div>
           </div>

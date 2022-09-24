@@ -25,6 +25,7 @@
     <tr>
       <th scope="col" width="5%">SL No</th>
       <th scope="col" width="10%">Unit Title</th>
+      <th scope="col" width="10%">Unit Price_id</th>
       <th scope="col" width="10%">Unit Price</th>
       <th scope="col" width="25%">Features</th>
       <th scope="col" width="5%">Advanced</th>
@@ -38,6 +39,7 @@
       <th scope="row"> {{ $i++ }} </th> 
       
       <td> {{ $price->title }} </td>
+      <td> {{ $price->price_id }} </td>
       <td> {{ $price->price }} </td>
       <td> {{ Illuminate\Support\Str::limit($price->features, 100) }} </td>
       <td> {{ $price->advanced }} </td>

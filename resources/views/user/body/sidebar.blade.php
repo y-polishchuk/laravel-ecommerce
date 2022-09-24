@@ -47,6 +47,13 @@
       <span class="nav-text">My Comments</span>
     </a>
   </li>
+  @if(auth()->user()->subscribed('plans'))
+  <li  class="active" >
+    <a class="sidenav-item-link" href="{{ route('invoices') }}">
+      <span class="nav-text">Invoices</span>
+    </a>
+  </li>
+  @endif
 
     </div>
   </ul>
