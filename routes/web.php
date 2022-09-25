@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\DB;
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth:web')->name('verification.notice');
+
+// Admin Email Verify
 
 Route::middleware('auth:admin')->group(function () {
 
@@ -38,6 +41,8 @@ Route::get('/', function () {
     $images = DB::table('multipics')->get();
     return view('home', compact('brands', 'abouts', 'services', 'images'));
 })->name('home');
+
+Route::post('/newsletter', App\Http\Controllers\NewsletterController::class)->name('newsletter');
 
 Route::get('/about', function () {
     return view('about');
@@ -83,7 +88,7 @@ Route::get('/blog/articles/{id}', 'App\Http\Controllers\ArticleController@articl
 Route::get('/contact', 'App\Http\Controllers\ContactController@contact')->name('contact');
 Route::post('/contact/form', 'App\Http\Controllers\ContactController@contactForm')->name('contact.form');
 
-
+// Admin profile Routes
 
 Route::middleware('admin:admin')->group(function () {
 Route::get('/admin/login', 'App\Http\Controllers\AdminController@loginForm')->name('admin.login.form');

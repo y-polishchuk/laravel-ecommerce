@@ -46,9 +46,14 @@ $contacts = DB::table('contacts')->first();
           <div class="col-lg-4 col-md-6 footer-newsletter">
             <h4>Join Our Newsletter</h4>
             <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+            <form action="{{ route('newsletter') }}" method="post">
+              @csrf
+              <input pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" type="email" name="email" id="subscriber_email" placeholder="Enter Email.." required>
+              <input type="submit" value="Subscribe">
             </form>
+            @error('email')
+                  <span class="text-danger"> {{ $message }}</span>
+          @enderror
           </div>
 
         </div>
