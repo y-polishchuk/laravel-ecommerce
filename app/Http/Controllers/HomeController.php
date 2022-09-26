@@ -10,7 +10,8 @@ use Auth;
 
 class HomeController extends Controller
 {
-    public function homeSlider()
+
+    public function adminSlider()
     {
         $sliders = Slider::latest()->get();
         return view('admin.slider.index', compact('sliders'));
@@ -25,6 +26,7 @@ class HomeController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|unique:sliders|min:5',
+            'page_id' => 'required',
             'description' => 'required|unique:sliders|min:25',
             'image' => 'required|mimes:jpg,jpeg,png',
         ],
@@ -41,6 +43,7 @@ class HomeController extends Controller
 
         Slider::insert([
             'title' => $request->title,
+            'page_id' => $request->page_id,
             'description' => $request->description,
             'image' => $last_img,
             'created_at' => Carbon::now()
@@ -65,6 +68,7 @@ class HomeController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|min:4',
+            'page_id' => 'required',
             'description' => 'required|min:25',
         ],
         [

@@ -33,6 +33,13 @@
     <span class="text-danger"> {{ $message }}</span>
 @enderror
 <div class="form-group">
+    <label for="exampleFormControlInput2">Update Slider Page_id</label>
+    <input type="text" name="page_id" class="form-control" id="exampleFormControlInput2" placeholder="Slider Page_id" value="{{ $slider->page_id }}">
+</div>
+@error('page_id')
+    <span class="text-danger"> {{ $message }}</span>
+@enderror
+<div class="form-group">
     <label for="exampleFormControlTextarea1">Update Slider Description</label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description">{{ $slider->description }}</textarea>
 </div>

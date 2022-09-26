@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('sliders', function (Blueprint $table) {
-            //
+            $table->string('page_id')->nullable()->after('title');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('sliders', function (Blueprint $table) {
-            //
+            $table->dropColumn('page_id');
         });
     }
 };

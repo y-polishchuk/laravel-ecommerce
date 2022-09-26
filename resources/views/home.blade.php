@@ -71,13 +71,13 @@
 
         <div class="row portfolio-container" data-aos="fade-up">
 @foreach($images as $img)
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          <div class="col-lg-4 col-md-6 portfolio-item">
             <img src="{{ $img->image }}" class="img-fluid" alt="">
             <div class="portfolio-info">
               <h4>App 1</h4>
               <p>App</p>
               <a href="{{ $img->image }}" data-gall="portfolioGallery" class="venobox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"></a>
+              
             </div>
           </div>
 @endforeach

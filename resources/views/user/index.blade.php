@@ -3,7 +3,7 @@
 @section('user')
 
   @php
-  $sliders = DB::table('sliders')->get();
+  $sliders = DB::table('sliders')->where('page_id', 'user')->get();
 
   @endphp
   
@@ -13,7 +13,7 @@
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 100vh;
+  height: 70vh;
   background-color: rgba(0, 0, 0, 0.8);
   overflow: hidden;
   position: relative;
@@ -47,7 +47,7 @@
   color: #fff;
   -webkit-animation-duration: .5s;
   animation-duration: .5s;
-  border-top: 5px solid #1bbd36;
+  border-top: 5px solid #4c84ff;
 }
 
 #hero .carousel-content h2 {
@@ -71,11 +71,11 @@
   color: #fff;
   -webkit-animation-delay: 0.8s;
   animation-delay: 0.8s;
-  border: 2px solid #1bbd36;
+  border: 2px solid #4c84ff;
 }
 
 #hero .btn-get-started:hover {
-  background: #1bbd36;
+  background: #4c84ff;
   color: #fff;
   text-decoration: none;
 }
@@ -143,7 +143,7 @@
 
 #hero .carousel-indicators li.active {
   opacity: 1;
-  background: #1bbd36;
+  background: #4c84ff;
 }
 
 @media (min-width: 1024px) {

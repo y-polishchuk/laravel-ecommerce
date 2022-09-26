@@ -35,11 +35,12 @@ Route::get('/admin/email/verify/{id}/{hash}', 'App\Http\Controllers\Admin\Verify
 
 
 Route::get('/', function () {
+    $sliders = DB::table('sliders')->where('page_id', 'home')->get();
     $brands = DB::table('brands')->get();
     $abouts = DB::table('home_abouts')->first();
     $services = DB::table('home_services')->get();
     $images = DB::table('multipics')->get();
-    return view('home', compact('brands', 'abouts', 'services', 'images'));
+    return view('home', compact('brands', 'abouts', 'services', 'images', 'sliders'));
 })->name('home');
 
 Route::post('/newsletter', App\Http\Controllers\NewsletterController::class)->name('newsletter');
@@ -111,7 +112,7 @@ Route::middleware(['auth:sanctum,admin', config('jetstream.auth_session'), 'admi
 
     // Home Sliders Routes
 
-Route::get('/admin/sliders', 'App\Http\Controllers\HomeController@homeSlider')->name('sliders.home');
+Route::get('/admin/sliders', 'App\Http\Controllers\HomeController@adminSlider')->name('sliders.admin');
 Route::get('/admin/sliders/add', 'App\Http\Controllers\HomeController@add')->name('sliders.add');
 Route::post('/admin/sliders/store', 'App\Http\Controllers\HomeController@store')->name('sliders.store');
 Route::get('/admin/sliders/edit/{id}', 'App\Http\Controllers\HomeController@edit')->name('sliders.edit');

@@ -44,7 +44,7 @@
                         
                           
 <li  class="active" >
-  <a class="sidenav-item-link" href="{{ route('sliders.home') }}">
+  <a class="sidenav-item-link" href="{{ route('sliders.admin') }}">
     <span class="nav-text">Home Slider</span>
     
   </a>

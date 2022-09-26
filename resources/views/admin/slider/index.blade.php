@@ -30,6 +30,7 @@
     <tr>
       <th scope="col" width="5%">SL No</th>
       <th scope="col" width="15%">Slider Title</th>
+      <th scope="col" width="10%">Slider Page_id</th>
       <th scope="col" width="25%">Description</th>
       <th scope="col" width="10%">Image</th>
       <th scope="col" width="15%">Action</th>
@@ -42,6 +43,7 @@
       <th scope="row"> {{ $i++ }} </th> 
       
       <td> {{ $slider->title }} </td>
+      <td> {{ $slider->page_id }} </td>
       <td> {{ $slider->description }} </td>
       <td> <img src="{{ asset($slider->image) }}" style="height:40px;"> </td>
       

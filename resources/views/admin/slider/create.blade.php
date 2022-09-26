@@ -18,6 +18,13 @@
     <span class="text-danger"> {{ $message }}</span>
 @enderror
 <div class="form-group">
+    <label for="exampleFormControlInput2">Slider Page_id</label>
+    <input type="text" name="page_id" class="form-control" id="exampleFormControlInput2" placeholder="Slider Page_id">
+</div>
+@error('page_id')
+    <span class="text-danger"> {{ $message }}</span>
+@enderror
+<div class="form-group">
     <label for="exampleFormControlTextarea1">Slider Description</label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
 </div>
