@@ -64,9 +64,8 @@ class ChangePassController extends Controller
         $last_img = 'profile-photos/'.$name_gen;
         Image::make($admin_image)->fit(400,400)->save('storage/'.$last_img);
 
-        if($old_image) {
-            unlink('storage/'.$old_image);
-        }
+        if(file_exists($old_image)) unlink('storage/'.$old_image);
+
         $admin->profile_photo_path = $last_img; 
         }
         $admin->name = $request->name;

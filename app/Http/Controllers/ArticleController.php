@@ -106,10 +106,8 @@ class ArticleController extends Controller
         Image::make($entry_img->getRealPath())->resize(768, 576)->save($path);
         $article->entry_img = $path;
         $article->save();
-
-        if($old_image) {
-        unlink($old_image);
-        }
+        
+        if(file_exists($old_image)) unlink($old_image);
         }
         $article->update($request->except('entry_img', 'tags'));
         $article->tags()->sync($request->tags);
@@ -151,7 +149,7 @@ class ArticleController extends Controller
     {
         $article = Article::onlyTrashed()->find($id);
         $old_image = $article->entry_img;
-        unlink($old_image);
+        if(file_exists($old_image)) unlink($old_image);
         $article->forceDelete();
 
         $notification = array(

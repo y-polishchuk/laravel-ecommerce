@@ -308,6 +308,7 @@ Route::get('/user/checkout/{id}', 'App\Http\Controllers\CheckoutController@check
 
 Route::post('/user/payment', 'App\Http\Controllers\CheckoutController@paymentPage')->name('payment.step');
 Route::post('/user/payment/process', 'App\Http\Controllers\CheckoutController@payment')->name('subscribe.post');
+Route::get('/user/unsubscribe', 'App\Http\Controllers\CheckoutController@unsubscribe')->name('unsubscribe');
 
 Route::get('/invoices', 'App\Http\Controllers\CheckoutController@invoices')->name('invoices');
 Route::middleware(['payingCustomer'])->get('/user/invoice/{invoice}', 'App\Http\Controllers\CheckoutController@invoicesPost')->name('invoices.post');

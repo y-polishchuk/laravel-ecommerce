@@ -87,7 +87,7 @@ class HomeController extends Controller
             $slider->image = $path;
             $slider->save();
     
-            unlink($old_image);
+            if(file_exists($old_image)) unlink($old_image);
         }
         $slider->update($request->except('image'));
     
@@ -104,7 +104,7 @@ class HomeController extends Controller
     {
         $slider = Slider::find($id);
         $old_image = $slider->image;
-        unlink($old_image);
+        if(file_exists($old_image)) unlink($old_image);
         $delete = Slider::find($id)->delete();
 
         $notification = array(

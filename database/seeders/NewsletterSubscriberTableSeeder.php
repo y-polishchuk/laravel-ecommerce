@@ -15,6 +15,8 @@ class NewsletterSubscriberTableSeeder extends Seeder
      */
     public function run()
     {
+        NewsletterSubscriber::truncate();
+        
         $subscribersRecords = [
             ['id'=>1, 'email'=>'subscriber1@gmail.com', 'status'=>1],
             ['id'=>2, 'email'=>'subscriber2@gmail.com', 'status'=>1],

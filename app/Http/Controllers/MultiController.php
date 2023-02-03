@@ -54,7 +54,7 @@ class MultiController extends Controller
     {
         $multipic = Multipic::find($id);
         $old_image = $multipic->image;
-        unlink($old_image);
+        if(file_exists($old_image)) unlink($old_image);
         $delete = Multipic::find($id)->delete();
 
         $notification = array(

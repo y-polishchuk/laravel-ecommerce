@@ -47,6 +47,17 @@ class CheckoutController extends Controller
         return redirect('dashboard')->with($notification);
     }
 
+    public function unsubscribe(Request $request)
+    {
+        Auth::user()->subscription('plans')->cancel();
+
+        $notification = array(
+            'message' => "You've Cancelled Subscribtion For Charging Plan.",
+            'alert-type' => 'info',
+        );
+        return redirect('invoices')->with($notification);
+    }
+
     public function invoices()
     {
         $invoices = Auth::user()->invoices();

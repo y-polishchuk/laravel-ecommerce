@@ -83,7 +83,7 @@ class TestimonialController extends Controller
         $tes->photo = $path;
         $tes->save();
     
-        unlink($old_image);
+        if(file_exists($old_image)) unlink($old_image);
         }
         $tes->update($request->except('photo'));
 
@@ -99,7 +99,7 @@ class TestimonialController extends Controller
     {
         $testimonial = Testimonial::find($id);
         $old_image = $testimonial->photo;
-        unlink($old_image);
+        if(file_exists($old_image)) unlink($old_image);
         $delete = Testimonial::find($id)->delete();
 
         $notification = array(

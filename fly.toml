@@ -1,0 +1,70 @@
+# fly.toml file generated for arey-ecommerce on 2023-01-31T14:43:11+02:00
+
+app = "arey-ecommerce"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[build]
+  [build.args]
+    NODE_VERSION = "14"
+    PHP_VERSION = "8.2"
+
+[env]
+  APP_ENV = "production"
+  LOG_CHANNEL = "stderr"
+  LOG_LEVEL = "info"
+  LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
+  APP_URL = "https://arey-ecommerce.fly.dev"
+
+  DB_CONNECTION = "mysql"
+  DB_HOST = "eu-central.connect.psdb.cloud"
+  DB_PORT = 3306
+  DB_DATABASE = "arey-ecommerce"
+  MYSQL_ATTR_SSL_CA = "/etc/ssl/certs/ca-certificates.crt"
+
+  BROADCAST_DRIVER = "log"
+  CACHE_DRIVER = "file"
+  FILESYSTEM_DISK = "local"
+  QUEUE_CONNECTION = "sync"
+  SESSION_DRIVER = "file"
+  SESSION_LIFETIME = 120
+
+  MEMCACHED_HOST = "memcached"
+
+  MAIL_MAILER = "smtp"
+  MAIL_HOST = "sandbox.smtp.mailtrap.io"
+  MAIL_PORT = 2525
+  MAIL_ENCRYPTION = "tls"
+  MAIL_FROM_ADDRESS = "info@ecommercex.com"
+  MAIL_FROM_NAME = "EcommerceX"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"

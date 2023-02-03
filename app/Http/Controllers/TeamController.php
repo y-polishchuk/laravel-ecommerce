@@ -91,7 +91,7 @@ class TeamController extends Controller
         $member->photo = $path;
         $member->save();
     
-        unlink($old_image);
+        if(file_exists($old_image)) unlink($old_image);
         }
 
         $member->update($request->except('photo'));
@@ -108,7 +108,7 @@ class TeamController extends Controller
     {
         $member = TeamMember::find($id);
         $old_image = $member->photo;
-        unlink($old_image);
+        if(file_exists($old_image)) unlink($old_image);
         $delete = TeamMember::find($id)->delete();
 
         $notification = array(

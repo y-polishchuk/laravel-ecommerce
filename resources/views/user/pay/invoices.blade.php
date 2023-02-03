@@ -7,8 +7,17 @@
         <div class="container">
         <div class="row">
 
-        
+        @if(auth()->user()->subscribed('plans'))
+        <div class="col-md-9">
         <h4>Invoice Page</h4>
+        </div>
+
+        <div class="col-md-3">
+        <a href="{{ route('unsubscribe') }}"><button class="btn btn-info">Unsubscribe</button></a>
+        </div>
+        @else
+        <h4>Invoice Page</h4>
+        @endif
         <br><br>
 
         <div class="col-md-12">
@@ -25,6 +34,7 @@
     </tr>
   </thead>
 <tbody>
+    @if(!empty($invoices))
 @foreach ($invoices as $invoice)
     <tr>
         <td>{{ $invoice->date()->toFormattedDateString() }}</td>
@@ -32,6 +42,11 @@
         <td><a href="/user/invoice/{{ $invoice->id }}">Download</a></td>
     </tr>
     @endforeach
+    @else
+    <tr>
+        <p>You don`t have any invoices.</p>
+    </tr>
+    @endif
 </tbody>
 </table>
 {{ $invoices->links() }}

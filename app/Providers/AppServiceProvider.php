@@ -40,13 +40,13 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
     //check that app is local
-    if ($this->app->isLocal()) {
-    //if local register your services you require for development
-        $this->app->register('Barryvdh\Debugbar\ServiceProvider');
-    } else {
-    //else register your services you require for production
-        $this->app['request']->server->set('HTTPS', true);
-    }
+    // if ($this->app->isLocal()) {
+    // //if local register your services you require for development
+    //     $this->app->register('Barryvdh\Debugbar\ServiceProvider');
+    // } else {
+    // //else register your services you require for production
+    //     $this->app['request']->server->set('HTTPS', true);
+    // }
 
     Collection::macro('paginate', function($perPage, $total = null, $page = null, $pageName = 'page') {
         $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);

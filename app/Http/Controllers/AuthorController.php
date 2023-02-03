@@ -82,7 +82,7 @@ class AuthorController extends Controller
         $author->photo = $path;
         $author->save();
     
-        unlink($old_image);
+        if(file_exists($old_image)) unlink($old_image);
         }
 
         $author->update($request->except('photo'));
@@ -99,7 +99,7 @@ class AuthorController extends Controller
     {
         $author = Author::find($id);
         $old_image = $author->photo;
-        unlink($old_image);
+        if(file_exists($old_image)) unlink($old_image);
         $delete = Author::find($id)->delete();
 
         $notification = array(

@@ -76,7 +76,7 @@ class BrandController extends Controller
             $brand->brand_image = $path;
             $brand->save();
 
-            unlink($old_image);
+            if(file_exists($old_image)) unlink($old_image);
         }
         $brand->update($request->except('brand_image'));
 
@@ -93,7 +93,7 @@ class BrandController extends Controller
     {
         $brand = Brand::find($id);
         $old_image = $brand->brand_image;
-        unlink($old_image);
+        if(file_exists($old_image)) unlink($old_image);
         $delete = Brand::find($id)->delete();
 
         $notification = array(
