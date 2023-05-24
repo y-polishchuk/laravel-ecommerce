@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\Price;
 use App\Models\FAQ;
+use App\DataTables\PricesDataTable;
+use Yajra\DataTables\DataTables;
 
 class PricingController extends Controller
 {
@@ -16,15 +18,29 @@ class PricingController extends Controller
         return view('pages.pricing', compact('prices', 'faqs'));
     }
 
-    public function adminPricing()
+    public function adminPrices(PricesDataTable $dataTable)
     {
-        $prices = Price::all();
-        return view('admin.pricing.prices', compact('prices'));
+        return $dataTable->render('admin.pricing.price.prices');
+    }
+
+    public function dataPrices(Request $request)
+    {
+        $prices = Price::get();
+ 
+        return DataTables::of($prices)
+        ->editColumn('features', function ($price) {
+            return strip_tags($price->features);
+        })
+        ->addColumn('action', function ($price) {
+            return view('admin.pricing.price.action', ['price' => $price]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
     }
 
     public function adminAddPrice()
     {
-        return view('admin.pricing.create_price');
+        return view('admin.pricing.price.create_price');
     }
 
     public function adminStorePrice(Request $request)
@@ -55,13 +71,12 @@ class PricingController extends Controller
         return Redirect()->route('admin.pricing')->with($notification);
     }
 
-    public function adminEditPrice($id)
+    public function adminEditPrice(Price $price)
     {
-        $price = Price::findOrFail($id);
-        return view('admin.pricing.edit_price', compact('price'));
+        return view('admin.pricing.price.edit_price', compact('price'));
     }
 
-    public function adminUpdatePrice(Request $request, $id)
+    public function adminUpdatePrice(Request $request, Price $price)
     {
         $validated = $request->validate([
             'title' => 'required',
@@ -71,7 +86,7 @@ class PricingController extends Controller
             'advanced' => 'required'
         ]);
 
-        Price::find($id)->update([
+        $price->update([
             'title' => $request->title,
             'price_id' => $request->price_id,
             'price' => $request->price,
@@ -88,9 +103,9 @@ class PricingController extends Controller
         return Redirect()->route('admin.pricing')->with($notification);
     }
 
-    public function adminDeletePrice($id)
+    public function adminDeletePrice(Price $price)
     {
-        $delete = Price::find($id)->delete();
+        $price->delete();
 
         $notification = array(
             'message' => 'Price Is Deleted Successfully!',

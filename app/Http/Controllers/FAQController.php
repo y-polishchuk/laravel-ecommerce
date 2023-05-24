@@ -5,18 +5,37 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\FAQ;
+use App\DataTables\FAQsDataTable;
+use Yajra\DataTables\DataTables;
 
 class FAQController extends Controller
 {
-    public function adminFAQ()
+        public function adminFAQs(FAQsDataTable $dataTable)
     {
-        $faqs = FAQ::all();
-        return view('admin.pricing.faqs', compact('faqs'));
+        return $dataTable->render('admin.pricing.faq.faqs');
+    }
+
+    public function dataFAQs(Request $request)
+    {
+        $faqs = FAQ::get();
+ 
+        return DataTables::of($faqs)
+        ->editColumn('question', function ($faq) {
+            return strip_tags($faq->question);
+        })
+        ->editColumn('answer', function ($faq) {
+            return strip_tags($faq->answer);
+        })
+        ->addColumn('action', function ($faq) {
+            return view('admin.pricing.faq.action', ['faq' => $faq]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
     }
 
     public function adminAddFAQ()
     {
-        return view('admin.pricing.create_faq');
+        return view('admin.pricing.faq.create_faq');
     }
 
     public function adminStoreFAQ(Request $request)
@@ -40,20 +59,19 @@ class FAQController extends Controller
         return Redirect()->route('admin.faq')->with($notification);
     }
 
-    public function adminEditFAQ($id)
+    public function adminEditFAQ(FAQ $faq)
     {
-        $faq = FAQ::findOrFail($id);
-        return view('admin.pricing.edit_faq', compact('faq'));
+        return view('admin.pricing.faq.edit_faq', compact('faq'));
     }
 
-    public function adminUpdateFAQ(Request $request, $id)
+    public function adminUpdateFAQ(Request $request, FAQ $faq)
     {
         $validated = $request->validate([
             'question' => 'required',
             'answer' => 'required'
         ]);
 
-        FAQ::find($id)->update([
+        $faq->update([
             'question' => $request->question,
             'answer' => $request->answer,
             'updated_at' => Carbon::now()
@@ -67,9 +85,9 @@ class FAQController extends Controller
         return Redirect()->route('admin.faq')->with($notification);
     }
 
-    public function adminDeleteFAQ($id)
+    public function adminDeleteFAQ(FAQ $faq)
     {
-        $delete = FAQ::find($id)->delete();
+        $faq->delete();
 
         $notification = array(
             'message' => 'FAQ Is Deleted Successfully!',

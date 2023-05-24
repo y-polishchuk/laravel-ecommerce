@@ -39,19 +39,19 @@
             <div class="info-wrap">
               <div class="row">
                 <div class="col-lg-4 info">
-                  <i class="icofont-google-map"></i>
+                  <i class="bi bi-geo-alt"></i>
                   <h4>Location:</h4>
-                  <p>{{ $contacts->address }}</p>
+                  <p>{!! $contacts->address !!}</p>
                 </div>
 
                 <div class="col-lg-4 info mt-4 mt-lg-0">
-                  <i class="icofont-envelope"></i>
+                  <i class="bi bi-envelope"></i>
                   <h4>Email:</h4>
                   <p>{{ $contacts->email }}</p>
                 </div>
 
                 <div class="col-lg-4 info mt-4 mt-lg-0">
-                  <i class="icofont-phone"></i>
+                  <i class="bi bi-phone"></i>
                   <h4>Call:</h4>
                   <p>{{ $contacts->phone }}</p>
                 </div>
@@ -64,27 +64,27 @@
 
         <div class="row mt-5 justify-content-center" data-aos="fade-up">
           <div class="col-lg-10">
-            <form action="{{ route('contact.form') }}" method="post">
+            <form action="{{ route('contact.form') }}" method="post" class="php-email-form">
                 @csrf
-              <div class="form-row">
+              <div class="row">
                 <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" placeholder="Your Name"/>
+                  <input type="text" name="name" class="form-control" placeholder="Your Name" required>
                   
                 </div>
                 <div class="col-md-6 form-group">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email"/>
+                  <input type="email" class="form-control" name="email" placeholder="Your Email" required>
                   
                 </div>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="subject" placeholder="Subject"/>
+                <input type="text" class="form-control" name="subject" placeholder="Subject" required>
                 
               </div>
               <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
+                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
                 
               </div>
-              <button class="btn btn-success" type="submit">Send Message</button>  
+              <div class="text-center"><button class="btn btn-success" type="submit">Send Message</button></div>  
             </form>
           </div>
 

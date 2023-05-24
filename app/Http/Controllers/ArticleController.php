@@ -3,30 +3,63 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use App\Models\Category;
 use App\Models\Article;
 use App\Models\Comment;
 use Image;
+use App\DataTables\ArticlesDataTable;
+use App\DataTables\ArticlesTrashedDataTable;
+use Yajra\DataTables\DataTables;
 
 class ArticleController extends Controller
 {
-    public function article($id)
+
+    public function adminArticles(ArticlesDataTable $dataTable)
     {
-        $article = Article::findOrFail($id);
-        return view('blog.article', compact('article'));
+        return $dataTable->render('admin.article.articles');
     }
 
-    public function adminArticle()
+    public function dataArticles(Request $request)
     {
-        $articles = Article::latest()->paginate(10);
-        return view('admin.article.articles', compact('articles'));
+        $articles = Article::with(['category', 'author'])->get();
+ 
+        return DataTables::of($articles)
+        ->editColumn('title', function ($article) {
+            return '<a href="'. route('blog.single', $article->id) .'">'. $article->title .'</a>';
+        })
+        ->editColumn('entry_content', function ($article) {
+            return strip_tags($article->entry_content);
+        })
+        ->addColumn('entry_img', function ($article) {
+            return '<img src="'. asset($article->entry_img) .'" height="80px" />';
+        })
+        ->addColumn('action', function ($article) {
+            return view('admin.article.action', ['article' => $article]);
+        })
+        ->rawColumns(['title', 'entry_img', 'action'])
+        ->toJson();
     }
 
-    public function trashed()
+    public function adminArticlesTrashed(ArticlesTrashedDataTable $dataTable)
     {
-        $trashed = Article::onlyTrashed()->latest()->paginate(3);
-        return view('admin.article.trashed', compact('trashed'));
+        return $dataTable->render('admin.article.trashed.trashed');
+    }
+
+    public function dataArticlesTrashed(Request $request)
+    {
+        $articles = Article::with(['category', 'author'])->onlyTrashed()->latest();
+ 
+        return DataTables::of($articles)
+        ->editColumn('entry_content', function ($article) {
+            return strip_tags($article->entry_content);
+        })
+        ->addColumn('entry_img', function ($article) {
+            return '<img src="'. asset($article->entry_img) .'" height="80px" />';
+        })
+        ->addColumn('action', function ($article) {
+            return view('admin.article.trashed.action', ['article' => $article]);
+        })
+        ->rawColumns(['entry_img', 'action'])
+        ->toJson();
     }
 
     public function adminAddArticle()
@@ -60,7 +93,7 @@ class ArticleController extends Controller
 			$image = $request->file('entry_img');
             $filename  = time() . '.' . $image->getClientOriginalExtension();
             $path = 'image/article/'.$filename;
-            Image::make($image->getRealPath())->resize(768, 576)->save($path);
+            Image::make($image->getRealPath())->resize(1024, 768)->save($path);
             $article->entry_img = 'image/article/'.$filename;
             $article->save();
 
@@ -75,16 +108,15 @@ class ArticleController extends Controller
 
     }
 
-    public function adminEditArticle($id)
+    public function adminEditArticle(Article $article)
     {
-        $article = Article::findOrFail($id);
         $formCats = formCats();
         $formAuthors = formAuthors();
         $tags = tagsHelper();
         return view('admin.article.edit_article', compact('article', 'formCats', 'formAuthors', 'tags'));
     }
 
-    public function adminUpdateArticle(Request $request, $id)
+    public function adminUpdateArticle(Request $request, Article $article)
     {
         $validated = $this->validate($request, [
             'title' => 'required|min:25',
@@ -96,14 +128,13 @@ class ArticleController extends Controller
             'tags' => 'required'
         ]);
 
-        $article = Article::find($id);
         $old_image = $request->old_image;
         $entry_img = $request->file('entry_img');
 
         if($entry_img) {
         $filename  = time().'.'.$entry_img->getClientOriginalExtension();
         $path = 'image/article/'.$filename;
-        Image::make($entry_img->getRealPath())->resize(768, 576)->save($path);
+        Image::make($entry_img->getRealPath())->resize(1024, 768)->save($path);
         $article->entry_img = $path;
         $article->save();
         
@@ -120,12 +151,12 @@ class ArticleController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function softDelete($id)
+    public function softDelete(Article $article)
     {
-        $article = Article::find($id)->delete();
+        $article->delete();
         
         $notification = array(
-            'message' => 'Article Is SoftDeleted Successfully!',
+            'message' => 'Article Is Deleted Successfully To The Trash!',
             'alert-type' => 'info',
         );
         
@@ -134,7 +165,7 @@ class ArticleController extends Controller
 
     public function restore($id)
     {
-        $delete = Article::withTrashed()->find($id)->restore();
+        Article::withTrashed()->find($id)->restore();
         Comment::withTrashed()->where('commentable_id', $id)->restore();
 
         $notification = array(
@@ -147,7 +178,7 @@ class ArticleController extends Controller
 
     public function permDelete($id)
     {
-        $article = Article::onlyTrashed()->find($id);
+        $article = Article::withTrashed()->find($id);
         $old_image = $article->entry_img;
         if(file_exists($old_image)) unlink($old_image);
         $article->forceDelete();

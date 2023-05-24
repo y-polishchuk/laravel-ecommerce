@@ -4,17 +4,50 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Slider;
+use App\Models\Brand;
+use App\Models\HomeAbout;
+use App\Models\HomeService;
+use App\Models\Multipic;
+use App\DataTables\SliderDataTable;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Carbon;
 use Image;
-use Auth;
 
 class HomeController extends Controller
 {
 
-    public function adminSlider()
+    public function home()
     {
-        $sliders = Slider::latest()->get();
-        return view('admin.slider.index', compact('sliders'));
+        $sliders = Slider::where('page_id', 'home')->get();
+        $brands = Brand::all();
+        $abouts = HomeAbout::first();
+        $services = HomeService::all();
+        $images = Multipic::all();
+        return view('home', compact('brands', 'abouts', 'services', 'images', 'sliders'));
+    }
+    
+    
+    public function adminSlider(SliderDataTable $dataTable)
+    {
+        return $dataTable->render('admin.slider.index');
+    }
+
+    public function dataSlider(Request $request)
+    {
+        $sliders = Slider::get();
+ 
+        return DataTables::of($sliders)
+        ->editColumn('description', function ($slider) {
+            return strip_tags($slider->description);
+        })
+        ->addColumn('image', function ($slider) {
+            return '<img src="'. asset($slider->image) .'" height="60px" />';
+        })
+        ->addColumn('action', function ($slider) {
+            return view('admin.slider.action', ['slider' => $slider]);
+        })
+        ->rawColumns(['image', 'action'])
+        ->toJson();
     }
 
     public function add()
@@ -54,19 +87,17 @@ class HomeController extends Controller
             'alert-type' => 'success',
         );
 
-        return Redirect()->route('sliders.home')->with($notification);
+        return Redirect()->route('sliders.admin')->with($notification);
     }
 
-    public function edit($id)
+    public function edit(Slider $slider)
     {
-        $slider = Slider::findOrFail($id);
-        
         return view('admin.slider.edit', compact('slider'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Slider $slider)
     {
-        $validated = $request->validate([
+        $request->validate([
             'title' => 'required|min:4',
             'page_id' => 'required',
             'description' => 'required|min:25',
@@ -76,7 +107,6 @@ class HomeController extends Controller
             'title.min' => 'Slider Title Must Be Longer Than 4 Chars.',
         ]);
 
-        $slider = Slider::find($id);
         $old_image = $request->old_image;
         $slider_image = $request->file('image');
 
@@ -96,16 +126,15 @@ class HomeController extends Controller
             'alert-type' => 'info',
         );
 
-        return Redirect()->back()->with($notification);
+        return Redirect()->route('sliders.admin')->with($notification);
         
     }
 
-    public function delete($id)
+    public function delete(Slider $slider)
     {
-        $slider = Slider::find($id);
         $old_image = $slider->image;
         if(file_exists($old_image)) unlink($old_image);
-        $delete = Slider::find($id)->delete();
+        $slider->delete();
 
         $notification = array(
             'message' => 'Slider Is Deleted Successfully!',

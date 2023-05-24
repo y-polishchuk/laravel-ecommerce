@@ -18,7 +18,7 @@
 
     <!-- ======= Blog Section ======= -->
     <section id="blog" class="blog">
-      <div class="container">
+      <div class="container" data-aos="fade-up">
 
         <div class="row">
 
@@ -26,21 +26,21 @@
 
 @foreach($articles as $article)
 
-            <article class="entry" data-aos="fade-up">
+            <article class="entry">
 
               <div class="entry-img">
                 <img src="{{ $article->entry_img }}" alt="" class="img-fluid">
               </div>
 
               <h2 class="entry-title">
-                <a href="">{{ $article->title }}</a>
+                <a href="{{ route('blog.single', $article->id) }}">{{ $article->title }}</a>
               </h2>
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href="">{{ $authors[$article->author_id] }}</a></li>
-                  <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <a href=""><time>{{ date("Y-m-d",strtotime($article->created_at)) }}</time></a></li>
-                  <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="">{{ $article->comments_count }} Comments</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="">{{ $article->author->full_name }}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href=""><time>{{ date("Y-m-d",strtotime($article->created_at)) }}</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="">{{ $article->comments_count }} Comments</a></li>
                 </ul>
               </div>
 

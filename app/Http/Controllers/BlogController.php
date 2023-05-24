@@ -6,79 +6,45 @@ use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
-use App\Models\Author;
-
-
 class BlogController extends Controller
 {
     public function blog(Request $request)
     {
         $search = $request->input('search');
-
         $articles = Article::withCount('comments')->latest()->where('title', 'like', "%{$search}%")
         ->paginate(4);
-        
-        $categories = Category::withCount('articles')->get();
 
-        $recent = Article::latest()->limit(5)->get();
-
-        $tags = Tag::all();
-
-        $authors = formAuthors();
-
-        return view('pages.main_blog', compact('articles', 'search', 'categories', 'recent', 'tags', 'authors'));
+        return view('pages.main_blog', compact('articles'));
     }
 
-    public function blogSingle(Request $request, $id)
+    public function blogSingle(Request $request, Article $article)
     {
-        $search = $request->input('search');
-        $articles = Article::withCount('comments')->latest()->where('title', 'like', "%{$search}%")
-        ->paginate(4);
-        $categories = Category::withCount('articles')->get();
-
-        $article = Article::withCount('comments')->findOrFail($id);
-        $author = Author::find($article->author_id);
-        $category = Article::find($id)->category()->first();
-
-        $tags = Article::find($id)->tags()->get();
-        $comments = $article->comments()->latest()->paginate(5);
-
-        return view('pages.blog.blog_single', compact('articles', 'search', 'categories', 'article', 'author', 'category', 'tags', 'comments'));
+        return view('pages.blog.blog_single', compact('article'));
     }
 
-    public function category(Request $request, $id)
+    public function category(Request $request, Category $category)
     {
         $search = $request->input('search');
 
-        $articles = Category::findOrFail($id)->articles()->withCount('comments')->latest()
+        $articles = $category->articles()->withCount('comments')->latest()
         ->where('title', 'like', "%{$search}%")
         ->paginate(4);
 
-        $categories = Category::withCount('articles')->get();
-        $recent = Category::find($id)->articles()->latest()->limit(5)->get();
-        $tags = Tag::all();
-        $authors = formAuthors();
+        $recent = $category->articles()->limit(5)->latest()->get();
 
-        $category = Category::find($id);
-
-        return view('pages.blog.category', compact('articles', 'search', 'categories', 'recent', 'tags', 'category', 'authors'));
+        return view('pages.blog.category', compact('category', 'articles', 'recent'));
     }
 
-    public function tag(Request $request, $id)
+    public function tag(Request $request, Tag $tag)
     {
         $search = $request->input('search');
 
-        $articles = Tag::findOrFail($id)->articles()->withCount('comments')->latest()
+        $articles = $tag->articles()->withCount('comments')->latest()
         ->where('title', 'like', "%{$search}%")
         ->paginate(4);
 
-        $categories = Category::withCount('articles')->get();
-        $recent = Tag::find($id)->articles()->latest()->limit(5)->get();
-        $tags = Tag::all();
-        $authors = formAuthors();
+        $recent = $tag->articles()->latest()->limit(5)->get();
 
-        $tag = Tag::find($id);
-
-        return view('pages.blog.tag', compact('articles', 'search', 'categories', 'recent', 'tags', 'tag', 'authors'));
+        return view('pages.blog.tag', compact('tag', 'articles', 'recent'));
     }
 }

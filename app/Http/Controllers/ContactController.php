@@ -7,6 +7,8 @@ use App\Models\Contact;
 use App\Models\ContactForm;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\DataTables\MessagesDataTable;
+use Yajra\DataTables\DataTables;
 
 
 class ContactController extends Controller
@@ -46,13 +48,12 @@ class ContactController extends Controller
         return Redirect()->route('admin.contact')->with($notification);
     }
 
-    public function adminEditContact($id)
+    public function adminEditContact(Contact $contact)
     {
-        $contact = Contact::findOrFail($id);
         return view('admin.contact.edit', compact('contact'));
     }
 
-    public function adminUpdateContact(Request $request, $id)
+    public function adminUpdateContact(Request $request, Contact $contact)
     {
         $validated = $request->validate([
             'email' => 'required',
@@ -60,7 +61,7 @@ class ContactController extends Controller
             'address' => 'required',
         ]);
 
-        Contact::find($id)->update([
+        $contact->update([
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
@@ -74,9 +75,9 @@ class ContactController extends Controller
         return Redirect()->route('admin.contact')->with($notification);
     }
 
-    public function adminDeleteContact($id)
+    public function adminDeleteContact(Contact $contact)
     {
-        $delete = Contact::find($id)->delete();
+        $contact->delete();
 
         $notification = array(
             'message' => 'Contact Is Deleted Successfully!',
@@ -94,19 +95,18 @@ class ContactController extends Controller
 
     public function contactForm(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required',
             'email' => 'required',
             'subject' => 'required',
             'message' => 'required',
         ]);
 
-        ContactForm::insert([
+        ContactForm::create([
             'name' => $request->name,
             'email' => $request->email,
             'subject' => $request->subject,
             'message' => $request->message,
-            'created_at' => Carbon::now(),
         ]);
 
         $notification = array(
@@ -117,15 +117,26 @@ class ContactController extends Controller
         return Redirect()->route('contact')->with($notification);
     }
 
-    public function adminMessage()
+    public function adminMessages(MessagesDataTable $dataTable)
     {
-        $messages = ContactForm::all();
-        return view('admin.contact.message', compact('messages'));
+        return $dataTable->render('admin.contact.messages');
     }
 
-    public function adminDeleteMessage($id)
+    public function dataMessages(Request $request)
     {
-        $delete = ContactForm::find($id)->delete();
+        $messages = ContactForm::get();
+ 
+        return DataTables::of($messages)
+        ->addColumn('action', function ($message) {
+            return view('admin.contact.action', ['message' => $message]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
+    }
+
+    public function adminDeleteMessage(ContactForm $message)
+    {
+        $message->delete();
 
         $notification = array(
             'message' => 'Message Is Deleted Successfully!',

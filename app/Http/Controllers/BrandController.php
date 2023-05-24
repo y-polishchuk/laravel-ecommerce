@@ -4,17 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Brand;
-use App\Models\Multipic;
 use Illuminate\Support\Carbon;
 use Image;
-use Auth;
+use App\DataTables\BrandsDataTable;
+use Yajra\DataTables\DataTables;
 
 class BrandController extends Controller
 {
-    public function all()
+    public function adminBrand(BrandsDataTable $dataTable)
     {
-        $brands = Brand::latest()->paginate(5);
-        return view('admin.brand.index', compact('brands'));
+        return $dataTable->render('admin.brand.index');
+    }
+
+    public function dataBrands(Request $request)
+    {
+        $brands = Brand::get();
+ 
+        return DataTables::of($brands)
+        ->editColumn('brand_image', function ($brand) {
+            return '<img src="'. asset($brand->brand_image) .'" height="60px" />';
+        })
+        ->editColumn('created_at', function ($brand) {
+            return $brand->created_at->diffForHumans();
+        })
+        ->addColumn('action', function ($brand) {
+            return view('admin.brand.action', ['brand' => $brand]);
+        })
+        ->rawColumns(['brand_image', 'action'])
+        ->toJson();
     }
 
     public function addBrand(Request $request)
@@ -48,14 +65,12 @@ class BrandController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function edit($id)
-    {
-        $brand = Brand::findOrFail($id);
-        
+    public function edit(Brand $brand)
+    {   
         return view('admin.brand.edit', compact('brand'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Brand $brand)
     {
         $validated = $request->validate([
             'brand_name' => 'required|min:4'
@@ -65,7 +80,6 @@ class BrandController extends Controller
             'brand_name.min' => 'Brand Name Must Be Longer Than 4 Chars.',
         ]);
 
-        $brand = Brand::find($id);
         $old_image = $request->old_image;
         $brand_image = $request->file('brand_image');
 
@@ -89,12 +103,11 @@ class BrandController extends Controller
         
     }
 
-    public function delete($id)
+    public function delete(Brand $brand)
     {
-        $brand = Brand::find($id);
         $old_image = $brand->brand_image;
         if(file_exists($old_image)) unlink($old_image);
-        $delete = Brand::find($id)->delete();
+        $brand->delete();
 
         $notification = array(
             'message' => 'Brand Is Deleted Successfully!',

@@ -5,23 +5,54 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Auth;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\DataTables\CategoriesDataTable;
+use App\DataTables\CategoriesTrashedDataTable;
+use Yajra\DataTables\DataTables;
 
 class CategoryController extends Controller
 {
 
-    public function all()
+    public function adminCategories(CategoriesDataTable $dataTable)
     {
-        // $categories = DB::table('categories')
-        //     ->join('users', 'categories.user_id', 'users.id')
-        //     ->select('categories.*', 'users.name')
-        //     ->latest()->paginate(5);
-    
-        $categories = Category::paginate(5);
-        $trashCat = Category::onlyTrashed()->latest()->paginate(3);
-        
-        return view('admin.category.index', compact('categories', 'trashCat'));
+        return $dataTable->render('admin.category.index');
+    }
+
+    public function dataCategories(Request $request)
+    {
+        $categories = Category::get();
+ 
+        return DataTables::of($categories)
+        ->editColumn('created_at', function ($category) {
+            return $category->created_at->diffForHumans();
+        })
+        ->addColumn('action', function ($category) {
+            return view('admin.category.action', ['category' => $category]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
+    }
+
+    public function adminCategoriesTrashed(CategoriesTrashedDataTable $dataTable)
+    {
+        return $dataTable->render('admin.category.trashed.trashed');
+    }
+
+    public function dataCategoriesTrashed(Request $request)
+    {
+        $categories = Category::onlyTrashed()->latest();
+ 
+        return DataTables::of($categories)
+        ->editColumn('created_at', function ($category) {
+            return $category->created_at->diffForHumans();
+        })
+        ->editColumn('deleted_at', function ($category) {
+            return $category->deleted_at->diffForHumans();
+        })
+        ->addColumn('action', function ($category) {
+            return view('admin.category.trashed.action', ['category' => $category]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
     }
 
     public function add(Request $request)
@@ -34,10 +65,9 @@ class CategoryController extends Controller
             'category_name.max' => 'Category Name Less Than 255Chars.',
         ]);
 
-        Category::insert([
+        Category::create([
             'category_name' => $request->category_name,
-            'user_id' => Auth::user()->id,
-            'created_at' => Carbon::now()
+            'user_id' => Auth::user()->id
         ]);
 
         // $category = new Category();
@@ -58,24 +88,17 @@ class CategoryController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $category = Category::find($id);
-        // $category = DB::table('categories')->where('id', $id)->first();
         return view('admin.category.edit', compact('category'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        // $update = Category::find($id)->update([
-        //     'category_name' => $request->category_name,
-        //     'user_id' => Auth::user()->id,
-        // ]);
-        $data = [];
-        $data['category_name'] = $request->category_name;
-        $data['user_id'] = Auth::user()->id;
-
-        DB::table('categories')->where('id', $id)->update($data);
+        $category->update([
+            'category_name' => $request->category_name,
+            'user_id' => Auth::user()->id,
+        ]);
 
         $notification = array(
             'message' => 'Category Is Updated Successfully!',
@@ -85,9 +108,9 @@ class CategoryController extends Controller
         return Redirect()->route('categories')->with($notification);
     }
 
-    public function softDelete($id)
+    public function softDelete(Category $category)
     {
-        $delete = Category::find($id)->delete();
+        $category->delete();
 
         $notification = array(
             'message' => 'Category Is SoftDeleted Successfully!',
@@ -99,7 +122,7 @@ class CategoryController extends Controller
 
     public function restore($id)
     {
-        $delete = Category::withTrashed()->find($id)->restore();
+        Category::withTrashed()->find($id)->restore();
 
         $notification = array(
             'message' => 'Category Is Restored Successfully!',
@@ -111,7 +134,7 @@ class CategoryController extends Controller
 
     public function permDelete($id)
     {
-        $delete = Category::onlyTrashed()->find($id)->forceDelete();
+        Category::withTrashed()->find($id)->forceDelete();
 
         $notification = array(
             'message' => 'Category Is Deleted Permanently!',

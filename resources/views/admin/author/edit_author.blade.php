@@ -8,7 +8,7 @@
         <h2>Edit Author</h2>
     </div>
     <div class="card-body">
-    <form action="{{ route('author.update', $author->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('author.update', $author) }}" method="POST" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="old_image" value="{{ $author->photo }}">
 <div class="form-group">

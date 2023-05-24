@@ -9,6 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use MailchimpMarketing\ApiClient;
 use App\Services\Newsletter;
 use App\Services\MailchimpNewsletter;
+use Yajra\DataTables\Html\Builder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Builder::useVite();
         Paginator::useBootstrap();
 
     //check that app is local

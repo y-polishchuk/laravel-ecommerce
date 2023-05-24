@@ -4,10 +4,10 @@
 
 <h3 class="sidebar-title">Search</h3>
 <div class="sidebar-item search-form">
-    <form action="{{ route('blog.tag', $tag->id) }}" method="GET">
+    <form action="{{ route('blog.tag', $tag) }}" method="GET">
         @csrf
     <input type="text" name="search" value="{{ $search }}" required>
-    <button type="submit"><i class="icofont-search"></i></button>
+    <button type="submit"><i class="bi bi-search"></i></button>
     </form>
 
 </div><!-- End sidebar search formn-->  
@@ -16,7 +16,7 @@
 <div class="sidebar-item categories">
 <ul>
 @foreach($categories as $cat)
-<li><a href="{{ route('blog.category', $cat->id) }}">{{ $cat->category_name }} <span>({{ $cat->articles_count }})</span></a></li>
+<li><a href="{{ route('blog.category', $cat) }}">{{ $cat->category_name }} <span>({{ $cat->articles_count }})</span></a></li>
 @endforeach
 </ul>
 
@@ -27,7 +27,7 @@
 @foreach($recent as $post)
 <div class="post-item clearfix">
 <img src="{{asset($post->entry_img)}}" alt="">
-<h4><a href="{{ route('blog.single', $post->id) }}">{{$post->title}}</a></h4>
+<h4><a href="{{ route('blog.single', $post) }}">{{$post->title}}</a></h4>
 <time>{{date("Y-m-d",strtotime($post->created_at))}}</time>
 </div>
 @endforeach
@@ -37,7 +37,7 @@
 <div class="sidebar-item tags">
 <ul>
 @foreach($tags as $tag)
-<li><a href="{{ route('blog.tag', $tag->id) }}">{{ $tag->name }}</a></li>
+<li><a href="{{ route('blog.tag', $tag) }}">{{ $tag->name }}</a></li>
 @endforeach
 </ul>
 

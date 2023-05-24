@@ -2,86 +2,74 @@
 
 @section('admin')
 
-    <div class="py-12">
-        
-        <div class="container">
+    <div class="breadcrumb-wrapper">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Home</li>
+          <li class="breadcrumb-item active" aria-current="page">Brands</li>
+        </ol>
+      </nav>
+    </div>
         <div class="row">
 
-        <div class="col-md-8">
-        <div class="card">
+          <div class="col-md-12">
+            <div class="card card-default">
+              <div class="card-header card-header-border-bottom d-flex justify-content-between">
+                <h2>Brands</h2>
+                <button type="button" class="btn btn-info btn-pill" data-toggle="modal" data-target="#addBrandForm">
+                  Add Brand
+                </button>
+              </div>
 
-        <div class="card-header">All Brands</div>
+              <div class="card-body">
+                <div class="responsive-data-table">
+                  {{ $dataTable->table(['class' => 'table dt-responsive']) }}
+                </div>
+              </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">SL No</th>
-      <th scope="col">Brand Name</th>
-      <th scope="col">Brand Image</th>
-      <th scope="col">Created At</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- @php($i = 1) -->
-    @foreach($brands as $brand) 
-    <tr>
-      <th scope="row"> {{ $brands->firstItem()+$loop->index }} </th> 
-      <!-- get a number of the first element in result + the index of the current item -->
-      <td> {{ $brand->brand_name }} </td>
-      <td> <img src="{{ asset($brand->brand_image) }}" height="40px"> </td>
-      <td> 
-        @if($brand->created_at == null)
-        <span class="text-danger">No Date Set</span>
-        @else
-      {{ Carbon\Carbon::parse($brand->created_at)->diffForHumans() }} 
-        @endif
-    </td>
-    <td><a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-info">Edit</a>
-    <a href="{{ route('brands.delete', $brand->id) }}" onclick="return confirm('Are you sure, you want to delete this Brand?')" class="btn btn-danger">Delete</a>
-    </td>
-    </tr>
-    @endforeach
-  </tbody>
-</table>
-{{ $brands->links() }}
+            </div>  
+
+          </div> 
+        </div> 
+
+
+
+<!-- Form Modal -->
+<div class="modal fade" id="addBrandForm" tabindex="-1" role="dialog" aria-labelledby="addBrandFormTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBrandFormTitle">Add Brand</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form action="{{ route('brands.store') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+              <div class="mb-3">
+                  <label for="nameInput" class="form-label">Brand Name</label>
+                  <input type="text" name="brand_name" class="form-control" id="nameInput" aria-describedby="nameHelp">
+                  @error('brand_name')
+                  <span class="text-danger"> {{ $message }}</span>
+                  @enderror
+              </div>
+
+              <div class="mb-3">
+                  <label for="imageInput" class="form-label">Brand Image</label>
+                  <input type="file" name="brand_image" class="form-control" id="imageInput" aria-describedby="imageHelp">
+                  @error('brand_image')
+                  <span class="text-danger"> {{ $message }}</span>
+                  @enderror
+              </div>           
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary btn-pill">Add Brand</button>
+            </div>
+            </form>
+        </div>
     </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card">
-        <div class="card-header">Add Brand</div>
-
-        <div class="card-body">
-        
-<form action="{{ route('brands.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-<div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Brand Name</label>
-    <input type="text" name="brand_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    @error('brand_name')
-    <span class="text-danger"> {{ $message }}</span>
-    @enderror
 </div>
-
-<div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Brand Image</label>
-    <input type="file" name="brand_image" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    @error('brand_image')
-    <span class="text-danger"> {{ $message }}</span>
-    @enderror
-</div>
-  
-  <button type="submit" class="btn btn-primary">Add Brand</button>
-</form>
-</div>
-        </div>
-        </div>
-
-        </div>
-        </div>
-
-
-    </div>
 
 @endsection

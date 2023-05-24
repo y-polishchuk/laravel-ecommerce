@@ -5,53 +5,37 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Easy - Admin Dashboard</title>
-
-  <!-- GOOGLE FONTS -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet"/>
-  <link href="https://cdn.materialdesignicons.com/3.0.39/css/materialdesignicons.min.css" rel="stylesheet" />
-
-  <!-- PLUGINS CSS STYLE -->
-  <link href="{{ asset('backend/assets/plugins/toaster/toastr.min.css') }}" rel="stylesheet" />
-  <link href="{{ asset('backend/assets/plugins/nprogress/nprogress.css') }}" rel="stylesheet" />
-  <link href="{{ asset('backend/assets/plugins/flag-icons/css/flag-icon.min.css') }}" rel="stylesheet"/>
-  <link href="{{ asset('backend/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css') }}" rel="stylesheet" />
-  <link href="{{ asset('backend/assets/plugins/ladda/ladda.min.css') }}" rel="stylesheet" />
-  <link href="{{ asset('backend/assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
-  <link href="{{ asset('backend/assets/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
-
-  <!-- SLEEK CSS -->
-  <link id="sleek-css" rel="stylesheet" href="{{ asset('backend/assets/css/sleek.css') }}" />
-
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+  <title>AREY - Admin Dashboard</title>
 
   <!-- FAVICON -->
-  <link href="{{ asset('backend/assets/img/favicon.png') }}" rel="shortcut icon" />
-
-  <!--
-    HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
-  -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-  <script src="{{ asset('backend/assets/plugins/nprogress/nprogress.js') }}"></script>
+  <link href="{{ asset('assets/img/admin/favicon.png') }}" rel="shortcut icon" />
+  
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <style>  .tox-notifications-container{  display: none !important; } </style>
+  @vite('resources/js/admin-panel.js')
 </head>
 
 
   <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
-    <script>
+    <!-- <script>
       NProgress.configure({ showSpinner: false });
       NProgress.start();
-    </script>
-
-    <div class="mobile-sticky-body-overlay"></div>
+    </script> -->
 
     <div class="wrapper">
-      
+      <!-- Github Link Button -->
+    <a href="https://github.com/MandalorianFighter/laravel-ecommerce"  target="_blank" class="github-link">
+        <svg width="70" height="70" viewBox="0 0 250 250" aria-hidden="true">
+          <defs>
+            <linearGradient id="grad1" x1="0%" y1="75%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#896def;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#482271;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <path d="M 0,0 L115,115 L115,115 L142,142 L250,250 L250,0 Z" fill="url(#grad1)"></path>
+        </svg>
+        <i class="mdi mdi-github-circle"></i>
+      </a>
               <!--
           ====================================
           ——— LEFT SIDEBAR WITH FOOTER
@@ -75,7 +59,7 @@
                   <button type="button" name="search" id="search-btn" class="btn btn-flat">
                     <i class="mdi mdi-magnify"></i>
                   </button>
-                  <input type="text" name="query" id="search-input" class="form-control" placeholder="'button', 'chart' etc."
+                  <input type="text" name="query" id="search-input" class="form-control" placeholder="'dashboard', 'home' etc."
                     autofocus autocomplete="off" />
                 </div>
                 <div id="search-results-container">
@@ -85,14 +69,7 @@
 
               <div class="navbar-right ">
                 <ul class="nav navbar-nav">
-                  <!-- Github Link Button -->
-                  <li class="github-link mr-3">
-                    <a class="btn btn-outline-secondary btn-sm" href="https://github.com/tafcoder/sleek-dashboard" target="_blank">
-                      <span class="d-none d-md-inline-block mr-2">Source Code</span>
-                      <i class="mdi mdi-github-circle"></i>
-                    </a>
-
-                  </li>
+                  
                   <li class="dropdown notifications-menu">
                     <button class="dropdown-toggle" data-toggle="dropdown">
                       <i class="mdi mdi-bell-outline"></i>
@@ -186,15 +163,15 @@
           </div>
         </div>
 
-                  <footer class="footer mt-auto">
+          <footer class="footer mt-auto">
             <div class="copyright bg-white">
               <p>
                 &copy; <span id="copy-year">2019</span> Copyright Sleek Dashboard Bootstrap Template by
                 <a
                   class="text-primary"
-                  href="http://www.iamabdus.com/"
+                  href="https://themefisher.com"
                   target="_blank"
-                  >Abdus</a
+                  >Themefisher</a
                 >.
               </p>
             </div>
@@ -208,30 +185,8 @@
       </div>
     </div>
 
-    
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCn8TFXGg17HAUcNpkwtxxyT9Io9B_NcM" defer></script>
-<script src="{{ asset('backend/assets/plugins/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/toaster/toastr.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/slimscrollbar/jquery.slimscroll.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/charts/Chart.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/ladda/spin.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/ladda/ladda.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/jquery-mask-input/jquery.mask.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/select2/js/select2.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/jvectormap/jquery-jvectormap-world-mill.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/daterangepicker/moment.min.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/jekyll-search.min.js') }}"></script>
-<script src="{{ asset('backend/assets/js/sleek.js') }}"></script>
-<script src="{{ asset('backend/assets/js/chart.js') }}"></script>
-<script src="{{ asset('backend/assets/js/date-range.js') }}"></script>
-<script src="{{ asset('backend/assets/js/map.js') }}"></script>
-<script src="{{ asset('backend/assets/js/custom.js') }}"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>tinymce.init({selector:'textarea'});</script>
-<script>
+<script type="module">
 @if(Session::has('message'))
 var type = "{{ Session::get('alert-type', 'info') }}"
 switch(type) {
@@ -254,6 +209,7 @@ switch(type) {
 }
 @endif
 </script>
+
 
   </body>
 </html>

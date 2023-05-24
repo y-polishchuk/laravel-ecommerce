@@ -6,24 +6,40 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\TeamMember;
 use Image;
+use App\DataTables\TeamMembersDataTable;
+use Yajra\DataTables\DataTables;
 
 class TeamController extends Controller
 {
-    public function aboutTeam()
+    public function webTeam()
     {
         $teamMembers = TeamMember::all();
         return view('pages.team', compact('teamMembers'));
     }
 
-    public function team()
+    public function adminTeam(TeamMembersDataTable $dataTable)
     {
-        $teamMembers = TeamMember::all();
-        return view('admin.about.team', compact('teamMembers'));
+        return $dataTable->render('admin.about.team.team');
+    }
+
+    public function dataTeam(Request $request)
+    {
+        $members = TeamMember::get();
+ 
+        return DataTables::of($members)
+        ->addColumn('photo', function ($member) {
+            return '<img src="'. asset($member->photo) .'" height="60px" />';
+        })
+        ->addColumn('action', function ($member) {
+            return view('admin.about.team.action', ['member' => $member]);
+        })
+        ->rawColumns(['photo', 'action'])
+        ->toJson();
     }
 
     public function adminAddMember()
     {
-        return view('admin.about.create_member');
+        return view('admin.about.team.create_member');
     }
 
     public function adminStoreMember(Request $request)
@@ -63,13 +79,12 @@ class TeamController extends Controller
         return Redirect()->route('admin.team')->with($notification);
     }
 
-    public function adminEditMember($id)
+    public function adminEditMember(TeamMember $member)
     {
-        $teamMember = TeamMember::findOrFail($id);
-        return view('admin.about.edit_member', compact('teamMember'));
+        return view('admin.about.team.edit_member', compact('member'));
     }
 
-    public function adminUpdateMember(Request $request, $id)
+    public function adminUpdateMember(Request $request, TeamMember $member)
     {
         $validated = $request->validate([
             'name' => 'required',
@@ -80,7 +95,6 @@ class TeamController extends Controller
             'linkedin' => 'required'
         ]);
 
-        $member = TeamMember::find($id);
         $old_image = $request->old_image;
         $member_photo = $request->file('photo');
 
@@ -104,12 +118,11 @@ class TeamController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function adminDeleteMember($id)
+    public function adminDeleteMember(TeamMember $member)
     {
-        $member = TeamMember::find($id);
         $old_image = $member->photo;
         if(file_exists($old_image)) unlink($old_image);
-        $delete = TeamMember::find($id)->delete();
+        $member->delete();
 
         $notification = array(
             'message' => 'Team Member Is Deleted Successfully!',

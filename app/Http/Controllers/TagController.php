@@ -5,15 +5,54 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\Tag;
+use App\DataTables\TagsDataTable;
+use App\DataTables\TagsTrashedDataTable;
+use Yajra\DataTables\DataTables;
 
 class TagController extends Controller
 {
-    public function adminTag()
+
+    public function adminTags(TagsDataTable $dataTable)
     {
-        $tags = Tag::paginate(5);
-        $trashTag = Tag::onlyTrashed()->latest()->paginate(3);
-        
-        return view('admin.tag.tags', compact('tags', 'trashTag'));
+        return $dataTable->render('admin.tag.tags');
+    }
+
+    public function dataTags(Request $request)
+    {
+        $tags = Tag::get();
+ 
+        return DataTables::of($tags)
+        ->editColumn('created_at', function ($tag) {
+            return $tag->created_at->diffForHumans();
+        })
+        ->addColumn('action', function ($tag) {
+            return view('admin.tag.action', ['tag' => $tag]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
+    }
+
+    public function adminTagsTrashed(TagsTrashedDataTable $dataTable)
+    {
+        return $dataTable->render('admin.tag.trashed.trashed');
+    }
+
+    public function dataTagsTrashed(Request $request)
+    {
+        $tags = Tag::onlyTrashed()->latest();
+ 
+        return DataTables::of($tags)
+        ->editColumn('created_at', function ($tag) {
+            return $tag->created_at->diffForHumans();
+        })
+        ->editColumn('deleted_at', function ($tag) {
+            return $tag->deleted_at->diffForHumans();
+        })
+        ->addColumn('action', function ($tag) {
+            return view('admin.tag.trashed.action', ['tag' => $tag]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
     }
 
     public function adminStoreTag(Request $request)
@@ -35,15 +74,14 @@ class TagController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function adminEditTag($id)
+    public function adminEditTag(Tag $tag)
     {
-        $tag = Tag::find($id);
         return view('admin.tag.edit', compact('tag'));
     }
 
-    public function adminUpdateTag(Request $request, $id)
+    public function adminUpdateTag(Request $request, Tag $tag)
     {
-        $update = Tag::find($id)->update([
+        $tag->update([
             'name' => $request->name,
         ]);
 
@@ -55,9 +93,9 @@ class TagController extends Controller
         return Redirect()->route('admin.tags')->with($notification);
     }
 
-    public function tagSoftDelete($id)
+    public function tagSoftDelete(Tag $tag)
     {
-        $delete = Tag::find($id)->delete();
+        $tag->delete();
 
         $notification = array(
             'message' => 'Tag Is SoftDeleted Successfully!',
@@ -69,7 +107,7 @@ class TagController extends Controller
 
     public function tagRestore($id)
     {
-        $delete = Tag::withTrashed()->find($id)->restore();
+        Tag::withTrashed()->find($id)->restore();
 
         $notification = array(
             'message' => 'Tag Is Restored Successfully!',
@@ -81,7 +119,7 @@ class TagController extends Controller
 
     public function tagPermDelete($id)
     {
-        $delete = Tag::onlyTrashed()->find($id)->forceDelete();
+        Tag::onlyTrashed()->find($id)->forceDelete();
 
         $notification = array(
             'message' => 'Tag Is Deleted Permanently!',

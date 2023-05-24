@@ -8,7 +8,7 @@
         <h2>Edit Feature</h2>
     </div>
     <div class="card-body">
-    <form action="{{ route('feature.update', $feature->id) }}" method="POST">
+    <form action="{{ route('feature.update', $feature) }}" method="POST">
     @csrf
 <div class="form-group">
     <label for="exampleFormControlInput1">Feature Title</label>

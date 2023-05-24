@@ -18,7 +18,7 @@ class Author extends Model
         'instagram'
     ];
 
-    protected $with = ['articles'];
+    
     protected $withCount = ['articles'];
 
     public function articles()

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\HomeService;
 use App\Models\Feature;
+use App\DataTables\FeaturesDataTable;
+use Yajra\DataTables\DataTables;
 
 class ServicesPageController extends Controller
 {
@@ -16,10 +18,21 @@ class ServicesPageController extends Controller
         return view('pages.services', compact('services', 'features'));
     }
 
-    public function features()
+    public function adminFeatures(FeaturesDataTable $dataTable)
     {
-        $features = Feature::all();
-        return view('admin.services.features', compact('features'));
+        return $dataTable->render('admin.services.features');
+    }
+
+    public function dataFeatures(Request $request)
+    {
+        $features = Feature::get();
+ 
+        return DataTables::of($features)
+        ->addColumn('action', function ($feature) {
+            return view('admin.services.action', ['feature' => $feature]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
     }
 
     public function adminAddFeature()
@@ -50,13 +63,12 @@ class ServicesPageController extends Controller
         return Redirect()->route('admin.services.features')->with($notification);
     }
 
-    public function adminEditFeature($id)
+    public function adminEditFeature(Feature $feature)
     {
-        $feature = Feature::findOrFail($id);
         return view('admin.services.edit_feature', compact('feature'));
     }
 
-    public function adminUpdateFeature(Request $request, $id)
+    public function adminUpdateFeature(Request $request, Feature $feature)
     {
         $validated = $request->validate([
             'title' => 'required',
@@ -64,7 +76,7 @@ class ServicesPageController extends Controller
             'form' => 'required',
         ]);
 
-        Feature::find($id)->update([
+        $feature->update([
             'title' => $request->title,
             'color' => $request->color,
             'form' => $request->form
@@ -78,9 +90,9 @@ class ServicesPageController extends Controller
         return Redirect()->route('admin.services.features')->with($notification);
     }
 
-    public function adminDeleteFeature($id)
+    public function adminDeleteFeature(Feature $feature)
     {
-        $delete = Feature::find($id)->delete();
+        $feature->delete();
 
         $notification = array(
             'message' => 'Feature Is Deleted Successfully!',

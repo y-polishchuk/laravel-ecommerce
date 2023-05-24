@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\Models\Contact;
 use App\Models\Price;
 use App\Support\Collection;
+use App\DataTables\InvoicesDataTable;
+use Yajra\DataTables\DataTables;
 
 class CheckoutController extends Controller
 {
@@ -13,7 +16,8 @@ class CheckoutController extends Controller
     {
         if(Auth::user()) {
             $plan = Price::findOrFail($id);
-            return view('user.pages.checkout', compact('plan'));
+            $contacts = Contact::first();
+            return view('user.pages.checkout', compact('plan', 'contacts'));
         } else {
             return redirect()->route('login');
         }
@@ -67,11 +71,34 @@ class CheckoutController extends Controller
         ]);
     }
 
+    public function userInvoices(InvoicesDataTable $dataTable)
+    {
+        return $dataTable->render('user.pay.invoices');
+    }
+
+    public function dataUserInvoices(Request $request)
+    {
+        $invoices = Auth::user()->invoices();
+ 
+        return DataTables::of($invoices)
+        ->addColumn('total', function ($invoice) {
+            return $invoice->total();
+        })
+        ->addColumn('date', function ($invoice) {
+            return $invoice->date()->toFormattedDateString();
+        })
+        ->addColumn('action', function ($invoice) {
+            return view('user.pay.action', ['invoice' => $invoice]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
+    }
+
     public function invoicesPost(Request $request, $invoiceId)
     {
         return $request->user()->downloadInvoice($invoiceId, [
             'vendor' => 'AREY',
-            'product' => 'Plan Subscription',
+            'product' => 'Subscription',
         ]);
     }
 }

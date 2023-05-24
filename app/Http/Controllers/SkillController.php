@@ -5,13 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\Skill;
+use App\DataTables\SkillsDataTable;
+use Yajra\DataTables\DataTables;
 
 class SkillController extends Controller
 {
-    public function skills()
+
+    public function adminSkills(SkillsDataTable $dataTable)
     {
-        $skills = Skill::all(); 
-        return view('admin.about.skills', compact('skills'));
+        return $dataTable->render('admin.about.skills.skills');
+    }
+
+    public function dataSkills(Request $request)
+    {
+        $skills = Skill::get();
+ 
+        return DataTables::of($skills)
+        ->addColumn('action', function ($skill) {
+            return view('admin.about.skills.action', ['skill' => $skill]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
     }
 
     public function adminStoreSkill(Request $request)
@@ -38,7 +52,7 @@ class SkillController extends Controller
     public function adminEditSkill($id)
     {
         $skill = Skill::find($id);
-        return view('admin.about.edit_skill', compact('skill'));
+        return view('admin.about.skills.edit_skill', compact('skill'));
     }
 
     public function adminUpdateSkill(Request $request, $id)

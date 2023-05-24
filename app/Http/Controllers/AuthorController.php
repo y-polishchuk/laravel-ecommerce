@@ -6,13 +6,32 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\Author;
 use Image;
+use App\DataTables\AuthorsDataTable;
+use Yajra\DataTables\DataTables;
 
 class AuthorController extends Controller
 {
-    public function authorship()
+    public function adminAuthors(AuthorsDataTable $dataTable)
     {
-        $authors = Author::paginate(10);
-        return view('admin.author.authorship', compact('authors'));
+        return $dataTable->render('admin.author.authorship');
+    }
+
+    public function dataAuthors(Request $request)
+    {
+        $authors = Author::get();
+ 
+        return DataTables::of($authors)
+        ->addColumn('photo', function ($author) {
+            return '<img src="'. asset($author->photo) .'" height="80px" />';
+        })
+        ->editColumn('about', function ($author) {
+            return strip_tags($author->about);
+        })
+        ->addColumn('action', function ($author) {
+            return view('admin.author.action', ['author' => $author]);
+        })
+        ->rawColumns(['photo', 'action'])
+        ->toJson();
     }
 
     public function adminAddAuthor()
@@ -55,13 +74,12 @@ class AuthorController extends Controller
         return Redirect()->route('admin.authorship')->with($notification);
     }
 
-    public function adminEditAuthor($id)
+    public function adminEditAuthor(Author $author)
     {
-        $author = Author::findOrFail($id);
         return view('admin.author.edit_author', compact('author'));
     }
 
-    public function adminUpdateAuthor(Request $request, $id)
+    public function adminUpdateAuthor(Request $request, Author $author)
     {
         $validated = $request->validate([
             'full_name' => 'required',
@@ -71,7 +89,6 @@ class AuthorController extends Controller
             'instagram' => 'required'
         ]);
 
-        $author = Author::find($id);
         $old_image = $request->old_image;
         $author_photo = $request->file('photo');
 
@@ -95,12 +112,11 @@ class AuthorController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function adminDeleteAuthor($id)
+    public function adminDeleteAuthor(Author $author)
     {
-        $author = Author::find($id);
         $old_image = $author->photo;
         if(file_exists($old_image)) unlink($old_image);
-        $delete = Author::find($id)->delete();
+        $author->delete();
 
         $notification = array(
             'message' => 'Author Is Deleted Successfully!',

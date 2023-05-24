@@ -36,9 +36,9 @@
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href="">{{ $author->full_name }}</a></li>
-                  <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <a href=""><time>{{ $article->created_at }}</time></a></li>
-                  <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="">{{ $article->comments_count }} Comments</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="">{{ $article->author->full_name }}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href=""><time>{{ $article->created_at }}</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="">{{ $article->comments_count }} Comments</a></li>
                 </ul>
               </div>
 
@@ -51,45 +51,48 @@
 
               <div class="entry-footer clearfix">
                 <div class="float-left">
-                  <i class="icofont-folder"></i>
+                  <i class="bi bi-folder"></i>
                   <ul class="cats">
-                    <li><a href="{{ route('blog.category', $category->id) }}">{{ $category->category_name }}</a></li>
+                    <li><a href="{{ route('blog.category', $article->category->id) }}">{{ $article->category->category_name }}</a></li>
                   </ul>
 
-                  <i class="icofont-tags"></i>
+                  <i class="bi bi-tags"></i>
                   <ul class="tags">
-                  @foreach($tags as $tag)
+                  @foreach($article->tags as $tag)
                     <li><a href="{{ route('blog.tag', $tag->id) }}">{{ $tag->name }}</a></li>
                   @endforeach
                   </ul>
                 </div>
 
                 <div class="float-right share">
-                  <a href="" title="Share on Twitter"><i class="icofont-twitter"></i></a>
-                  <a href="" title="Share on Facebook"><i class="icofont-facebook"></i></a>
-                  <a href="" title="Share on Instagram"><i class="icofont-instagram"></i></a>
+                  <a href="" title="Share on Twitter"><i class="icofont icofont-twitter"></i></a>
+                  <a href="" title="Share on Facebook"><i class="icofont icofont-facebook"></i></a>
+                  <a href="" title="Share on Instagram"><i class="icofont icofont-instagram"></i></a>
                 </div>
 
               </div>
 
             </article><!-- End blog entry -->
 
-            <div class="blog-author clearfix" data-aos="fade-up">
-              <img src="{{ asset($author->photo) }}" class="rounded-circle float-left" alt="">
-              <h4>{{ $author->full_name }}</h4>
+            <div class="blog-author d-flex align-items-center">
+              <img src="{{ asset($article->author->photo) }}" class="rounded-circle float-left" alt="">
+              <div>
+                <h4>{{ $article->author->full_name }}</h4>
               <div class="social-links">
-                <a href="https://twitters.com/#"><i class="icofont-twitter"></i></a>
-                <a href="https://facebook.com/#"><i class="icofont-facebook"></i></a>
-                <a href="https://instagram.com/#"><i class="icofont-instagram"></i></a>
+                <a href="https://twitters.com/#"><i class="bi bi-twitter"></i></a>
+                <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
+                <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
               </div>
-              {!! $author->about !!}
+              <p>{!! $article->author->about !!}</p>
+              </div>
+              
             </div><!-- End blog author bio -->
 
             <div class="blog-comments" data-aos="fade-up">
 
-            <h4 class="comments-count">{{ count($comments) }} Comments</h4>
+            <h4 class="comments-count">{{ $article->comments->count() }} Comments</h4>
 
-            @include('pages.blog.partials._comment_replies', ['comments' => $comments, 'article_id' => $article->id])
+            @include('pages.blog.partials._comment_replies', ['comments' => $article->comments, 'article' => $article])
 
             @if(Auth::guard('web')->user())
   <div class="reply-form">
@@ -113,7 +116,7 @@
 @endif
 
             </div><!-- End blog comments -->
-          {{ $comments->links('vendor.pagination.blog') }}
+          
 
           </div><!-- End blog entries list -->
 

@@ -3,21 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use App\Models\HomeService;
+use App\DataTables\ServicesDataTable;
+use Yajra\DataTables\DataTables;
 
 class ServiceController extends Controller
 {
-    public function homeService()
+    public function adminService(ServicesDataTable $dataTable)
     {
-        $homeservice = HomeService::latest()->get();
-        return view('admin.home_service.index', compact('homeservice'));
+        return $dataTable->render('admin.home_service.index');
     }
 
-    public function addService()
+    public function dataService(Request $request)
     {
-        $homeservice = HomeService::latest()->get();
-        return view('admin.home_service.create', compact('homeservice'));
+        $services = HomeService::get();
+ 
+        return DataTables::of($services)
+        ->editColumn('description', function ($service) {
+            return strip_tags($service->description);
+        })
+        ->addColumn('action', function ($service) {
+            return view('admin.home_service.action', ['service' => $service]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
+    }
+
+    public function addService(HomeService $service)
+    {
+        $service->latest();
+        return view('admin.home_service.create', compact('service'));
     }
 
     public function storeService(Request $request)
@@ -33,29 +48,27 @@ class ServiceController extends Controller
             'title.min' => 'HomeService Title Must Be Longer Than 5 Chars.',
         ]);
 
-        HomeService::insert([
+        HomeService::create([
             'title' => $request->title,
             'description' => $request->description,
             'icon_color' => strtolower($request->icon_color),
             'icon_form' => strtolower($request->icon_form),
-            'created_at' => Carbon::now()
         ]);
 
         $notification = array(
-            'message' => 'Service Is Inserted Successfully!',
+            'message' => 'Service Is Created Successfully!',
             'alert-type' => 'success',
         );
 
-        return Redirect()->route('services.home')->with($notification);
+        return Redirect()->route('services.admin')->with($notification);
     }
 
-    public function edit($id)
+    public function edit(HomeService $service)
     {
-        $homeservice = HomeService::findOrFail($id);
-        return view('admin.home_service.edit', compact('homeservice'));
+        return view('admin.home_service.edit', compact('service'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, HomeService $service)
     {
         $validated = $request->validate([
             'title' => 'required|min:5',
@@ -68,7 +81,7 @@ class ServiceController extends Controller
             'title.min' => 'HomeService Title Must Be Longer Than 5 Chars.',
         ]);
 
-        HomeService::find($id)->update([
+        $service->update([
             'title' => $request->title,
             'description' => $request->description,
             'icon_color' => strtolower($request->icon_color),
@@ -80,12 +93,12 @@ class ServiceController extends Controller
             'alert-type' => 'info',
         );
 
-        return Redirect()->route('services.home')->with($notification);
+        return Redirect()->route('services.admin')->with($notification);
     }
 
-    public function delete($id)
+    public function delete(HomeService $service)
     {
-        $delete = HomeService::find($id)->delete();
+        $service->delete();
 
         $notification = array(
             'message' => 'Service Is Deleted Successfully!',

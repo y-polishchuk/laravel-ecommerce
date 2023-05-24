@@ -3,21 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use App\Models\HomeAbout;
+use App\DataTables\AboutDataTable;
+use Yajra\DataTables\DataTables;
 
 class AboutController extends Controller
 {
-    public function homeAbout()
+    public function adminAbout(AboutDataTable $dataTable)
     {
-        $homeabout = HomeAbout::first()->get();
-        return view('admin.home.index', compact('homeabout'));
+        return $dataTable->render('admin.home_about.index');
+    }
+
+    public function dataAbout(Request $request)
+    {
+        $abouts = HomeAbout::get();
+ 
+        return DataTables::of($abouts)
+        ->editColumn('short_des', function ($about) {
+            return $about->limitIntro();
+        })
+        ->editColumn('long_des', function ($about) {
+            return $about->limitText();
+        })
+        ->addColumn('action', function ($about) {
+            return view('admin.home_about.action', ['about' => $about]);
+        })
+        ->rawColumns(['action'])
+        ->toJson();
     }
 
     public function addAbout()
     {
-        $homeabout = HomeAbout::latest()->get();
-        return view('admin.home.create', compact('homeabout'));
+        $about = HomeAbout::latest()->get();
+        return view('admin.home_about.create', compact('about'));
     }
 
     public function storeAbout(Request $request)
@@ -32,28 +50,26 @@ class AboutController extends Controller
             'title.min' => 'HomeAbout Title Must Be Longer Than 5 Chars.',
         ]);
 
-        HomeAbout::insert([
+        HomeAbout::create([
             'title' => $request->title,
             'short_des' => $request->short_des,
             'long_des' => $request->long_des,
-            'created_at' => Carbon::now()
         ]);
 
         $notification = array(
-            'message' => 'About Is Inserted Successfully!',
+            'message' => 'About Section Is Created Successfully!',
             'alert-type' => 'success',
         );
 
-        return Redirect()->route('about.home')->with($notification);
+        return Redirect()->route('about.admin')->with($notification);
     }
 
-    public function edit($id)
+    public function edit(HomeAbout $about)
     {
-        $homeabout = HomeAbout::findOrFail($id);
-        return view('admin.home.edit', compact('homeabout'));
+        return view('admin.home_about.edit', compact('about'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, HomeAbout $about)
     {
         $validated = $request->validate([
             'title' => 'required|min:5',
@@ -65,7 +81,7 @@ class AboutController extends Controller
             'title.min' => 'Title Must Be Longer Than 5 Chars.',
         ]);
 
-        HomeAbout::find($id)->update([
+        $about->update([
             'title' => $request->title,
             'short_des' => $request->short_des,
             'long_des' => $request->long_des
@@ -76,15 +92,15 @@ class AboutController extends Controller
             'alert-type' => 'info',
         );
 
-        return Redirect()->route('about.home')->with($notification);
+        return Redirect()->route('about.admin')->with($notification);
     }
 
-    public function delete($id)
+    public function delete(HomeAbout $about)
     {
-        $delete = HomeAbout::find($id)->delete();
+        $about->delete();
 
         $notification = array(
-            'message' => 'About Is Deleted Successfully!',
+            'message' => 'About Section Is Deleted Successfully!',
             'alert-type' => 'warning',
         );
 

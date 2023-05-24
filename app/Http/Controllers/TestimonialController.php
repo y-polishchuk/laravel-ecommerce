@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\Testimonial;
 use Image;
+use App\DataTables\TestimonialsDataTable;
+use Yajra\DataTables\DataTables;
 
 class TestimonialController extends Controller
 {
@@ -15,15 +17,32 @@ class TestimonialController extends Controller
         return view('pages.testimonials', compact('testimonials'));
     }
 
-    public function tes()
+    public function adminTes(TestimonialsDataTable $dataTable)
     {
-        $testimonials = Testimonial::all();
-        return view('admin.about.testimonials', compact('testimonials'));
+        return $dataTable->render('admin.about.testimonials.testimonials');
+    }
+
+    public function dataTes(Request $request)
+    {
+        $testimonials = Testimonial::get();
+ 
+        return DataTables::of($testimonials)
+        ->editColumn('text', function ($testimonial) {
+            return strip_tags($testimonial->text);
+        })
+        ->addColumn('photo', function ($testimonial) {
+            return '<img src="'. asset($testimonial->photo) .'" height="60px" />';
+        })
+        ->addColumn('action', function ($testimonial) {
+            return view('admin.about.testimonials.action', ['testimonial' => $testimonial]);
+        })
+        ->rawColumns(['photo', 'action'])
+        ->toJson();
     }
 
     public function adminAddTes()
     {
-        return view('admin.about.create_tes');
+        return view('admin.about.testimonials.create_tes');
     }
 
     public function adminStoreTes(Request $request)
@@ -57,13 +76,12 @@ class TestimonialController extends Controller
         return Redirect()->route('admin.tes')->with($notification);
     }
 
-    public function adminEditTes($id)
+    public function adminEditTes(Testimonial $testimonial)
     {
-        $tes = Testimonial::findOrFail($id);
-        return view('admin.about.edit_tes', compact('tes'));
+        return view('admin.about.testimonials.edit_tes', compact('testimonial'));
     }
 
-    public function adminUpdateTes(Request $request, $id)
+    public function adminUpdateTes(Request $request, Testimonial $testimonial)
     {
         $validated = $request->validate([
             'name' => 'required',
@@ -72,7 +90,6 @@ class TestimonialController extends Controller
             'photo' => 'mimes:jpg,jpeg,png',
         ]);
 
-        $tes = Testimonial::find($id);
         $old_image = $request->old_image;
         $tes_photo = $request->file('photo');
 
@@ -80,12 +97,12 @@ class TestimonialController extends Controller
         $name_gen = hexdec(uniqid()).'.'.$tes_photo->getClientOriginalExtension();
         $path = 'image/testims/'.$name_gen;
         Image::make($tes_photo->getRealPath())->fit(400, 400)->save($path);
-        $tes->photo = $path;
-        $tes->save();
+        $testimonial->photo = $path;
+        $testimonial->save();
     
         if(file_exists($old_image)) unlink($old_image);
         }
-        $tes->update($request->except('photo'));
+        $testimonial->update($request->except('photo'));
 
         $notification = array(
             'message' => 'Testimonial Is Updated Successfully!',
@@ -95,12 +112,11 @@ class TestimonialController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function adminDeleteTes($id)
+    public function adminDeleteTes(Testimonial $testimonial)
     {
-        $testimonial = Testimonial::find($id);
         $old_image = $testimonial->photo;
         if(file_exists($old_image)) unlink($old_image);
-        $delete = Testimonial::find($id)->delete();
+        $testimonial->delete();
 
         $notification = array(
             'message' => 'Testimonial Is Deleted Successfully!',

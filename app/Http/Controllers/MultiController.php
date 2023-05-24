@@ -18,7 +18,7 @@ class MultiController extends Controller
 
     public function multipic()
     {
-        $images = Multipic::all();
+        $images = Multipic::paginate(12);
         return view('admin.multipic.index', compact('images'));
     }
 
@@ -50,12 +50,11 @@ class MultiController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function deleteMulti($id)
+    public function deleteMulti(Multipic $image)
     {
-        $multipic = Multipic::find($id);
-        $old_image = $multipic->image;
+        $old_image = $image->image;
         if(file_exists($old_image)) unlink($old_image);
-        $delete = Multipic::find($id)->delete();
+        $image->delete();
 
         $notification = array(
             'message' => 'Image Is Deleted Successfully!',

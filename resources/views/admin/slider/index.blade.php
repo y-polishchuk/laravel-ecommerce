@@ -2,64 +2,37 @@
 
 @section('admin')
 
-    <div class="py-12">
-        
-        <div class="container">
+    <div class="breadcrumb-wrapper">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Home</li>
+          <li class="breadcrumb-item active" aria-current="page">All Sliders</li>
+        </ol>
+      </nav>
+    </div>
         <div class="row">
 
-        <div class="col-md-9">
-        <h4>Home Slider</h4>
-        </div>
-        
-        <div class="col-md-3">
-        <a href="{{ route('sliders.add') }}"><button class="btn btn-info">Add Slider</button></a>
-        </div>
+          <div class="col-md-12">
+            <div class="card card-default">
+                @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>{{ session('success') }}</strong>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+              <div class="card-header card-header-border-bottom d-flex justify-content-between">
+                <h2>All Sliders</h2>
+                <a href="{{ route('sliders.add') }}"><button class="btn btn-info">Add Slider</button></a>
+              </div>
 
-        <div class="col-md-12">
-        <div class="card">
-@if(session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>{{ session('success') }}</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-        <div class="card-header">All Sliders</div>
+              <div class="card-body">
+                <div class="responsive-data-table">
+                  {{ $dataTable->table(['class' => 'table dt-responsive']) }}
+                </div>
+              </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col" width="5%">SL No</th>
-      <th scope="col" width="15%">Slider Title</th>
-      <th scope="col" width="10%">Slider Page_id</th>
-      <th scope="col" width="25%">Description</th>
-      <th scope="col" width="10%">Image</th>
-      <th scope="col" width="15%">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    @php($i = 1)
-    @foreach($sliders as $slider) 
-    <tr>
-      <th scope="row"> {{ $i++ }} </th> 
-      
-      <td> {{ $slider->title }} </td>
-      <td> {{ $slider->page_id }} </td>
-      <td> {{ $slider->description }} </td>
-      <td> <img src="{{ asset($slider->image) }}" style="height:40px;"> </td>
-      
-    <td><a href="{{ route('sliders.edit', $slider->id) }}" class="btn btn-info">Edit</a>
-    <a href="{{ route('sliders.delete', $slider->id) }}" onclick="return confirm('Are you sure, you want to delete this Slider?')" class="btn btn-danger">Delete</a>
-    </td>
-    </tr>
-    @endforeach
-  </tbody>
-</table>
+            </div>  
 
-    </div>
-    </div>
-        </div>
-
-
-    </div>
-
+          </div> 
+        </div> 
 @endsection

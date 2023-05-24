@@ -4,10 +4,10 @@
 
 <h3 class="sidebar-title">Search</h3>
 <div class="sidebar-item search-form">
-    <form action="{{ route('blog.category', $category->id) }}" method="GET">
+    <form action="{{ route('blog.category', $category) }}" method="GET">
         @csrf
     <input type="text" name="search" value="{{ $search }}" required>
-    <button type="submit"><i class="icofont-search"></i></button>
+    <button type="submit"><i class="bi bi-search"></i></button>
     </form>
 
 </div><!-- End sidebar search formn-->  

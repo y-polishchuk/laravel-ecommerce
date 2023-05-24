@@ -1,11 +1,11 @@
 <div class="blog-pagination">
 @if ($paginator->hasPages())
-    <ul class="justify-content-center">
+    <ul class="justify-content-center pagination">
        
         @if ($paginator->onFirstPage())
-        <li class="disabled"><i class="icofont-rounded-left"></i></li>
+        <li class="disabled"><span class="page-link"><i class="bi bi-chevron-left"></i></span></li>
         @else
-            <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev"><i class="icofont-rounded-left"></i></a></li>
+            <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev"><i class="bi bi-chevron-left"></i></a></li>
         @endif
 
 
@@ -32,9 +32,9 @@
 
         
         @if ($paginator->hasMorePages())
-            <li><a href="{{ $paginator->nextPageUrl() }}" rel="next"><i class="icofont-rounded-right"></i></a></li>
+            <li><a href="{{ $paginator->nextPageUrl() }}" rel="next"><i class="bi bi-chevron-right"></i></a></li>
         @else
-            <li class="disabled"><i class="icofont-rounded-right"></i></li>
+            <li class="disabled"><span class="page-link"><i class="bi bi-chevron-right"></i></span></li>
         @endif
     </ul>
 @endif 

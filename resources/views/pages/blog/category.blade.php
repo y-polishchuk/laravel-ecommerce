@@ -42,9 +42,9 @@
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href="">{{ $authors[$article->author_id] }}</a></li>
-                  <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <a href=""><time>{{ date("Y-m-d",strtotime($article->created_at)) }}</time></a></li>
-                  <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="">{{ $article->comments_count }} Comments</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="">{{ $article->author->full_name }}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href=""><time>{{ date("Y-m-d",strtotime($article->created_at)) }}</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="">{{ $article->comments_count }} Comments</a></li>
                 </ul>
               </div>
 

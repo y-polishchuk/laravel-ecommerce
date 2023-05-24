@@ -1,8 +1,4 @@
-@php
-$contacts = DB::table('contacts')->first();
-@endphp
-
-<!-- ======= Footer ======= -->
+  <!-- ======= Footer ======= -->
   <footer id="footer">
 
     <div class="footer-top">
@@ -12,12 +8,10 @@ $contacts = DB::table('contacts')->first();
           <div class="col-lg-3 col-md-6 footer-contact">
             <h3>Company</h3>
             <p>
-            {{ $contacts->address }} 
-            <br><br>
-              <strong>Phone:</strong>
-              <p>{{ $contacts->phone }}</p>
-              <strong>Email:</strong> 
-              <p>{{ $contacts->email }}</p>
+            {!! $contacts->address !!}
+             <br><br>
+              <strong>Phone:</strong> {{ $contacts->phone }}<br>
+              <strong>Email:</strong> {{ $contacts->email }}<br>
             </p>
           </div>
 
@@ -62,7 +56,7 @@ $contacts = DB::table('contacts')->first();
 
     <div class="container d-md-flex py-4">
 
-      <div class="mr-md-auto text-center text-md-left">
+      <div class="me-md-auto text-center text-md-start">
         <div class="copyright">
           &copy; Copyright <strong><span>Company</span></strong>. All Rights Reserved
         </div>

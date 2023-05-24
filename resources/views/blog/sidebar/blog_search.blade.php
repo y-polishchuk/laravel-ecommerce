@@ -1,9 +1,3 @@
-@php
-$recent = DB::table('articles')->latest()->limit(5)->get();
-
-$tags = DB::table('tags')->get();
-@endphp
-
 
 <div class="col-lg-4">
 
@@ -14,7 +8,7 @@ $tags = DB::table('tags')->get();
     <form action="{{ route('page.blog') }}" method="GET">
         @csrf
     <input type="text" name="search" value="{{ $search }}" required>
-    <button type="submit"><i class="icofont-search"></i></button>
+    <button type="submit"><i class="bi bi-search"></i></button>
     </form>
 
 </div><!-- End sidebar search formn-->  
